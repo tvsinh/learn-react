@@ -1,0 +1,8 @@
+.color-box {
+  $box-size: 250px;
+
+  width: $box-size;
+  height: 25px;
+  transition: all 0.35s ease-in-out 0s;
+  cursor: pointer;
+}
