@@ -4,6 +4,8 @@ import productApi from 'api/productApi';
 import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import FilterViewer from '../components/FilterViewer';
+import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
@@ -117,12 +119,15 @@ function ListPage(props) {
       <Container>
         <Grid container spacing={1}>
           <Grid item className={classes.left}>
-            <Paper elevation={0}> Filter Left</Paper>
+            <Paper elevation={0}>
+              <ProductFilters filters={queryParams} onChange={handleFiltersChange} />
+            </Paper>
           </Grid>
 
           <Grid item className={classes.right}>
             <Paper elevation={0}>
               <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
+              <FilterViewer filters={queryParams} onChange={setNewFilters} />
 
               {loading ? <ProductSkeletonList length={9} /> : <ProductList data={productList} />}
 
