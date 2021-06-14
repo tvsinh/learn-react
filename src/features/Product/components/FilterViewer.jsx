@@ -56,7 +56,8 @@ const FILTER_LIST = [
     getLabel: (filters) => `Từ ${filters.salePrice_gte} đến ${filters.salePrice_lte}`,
     isActive: () => true,
     isVisible: (filters) =>
-      Object.keys(filters).includes('salePrice_lte') && Object.keys(filters).includes('salePrice_gte'),
+      Object.keys(filters).includes('salePrice_lte') &&
+      Object.keys(filters).includes('salePrice_gte'),
     isRemovable: true,
     onRemove: (filters) => {
       const newFilters = { ...filters };
@@ -68,13 +69,13 @@ const FILTER_LIST = [
   },
   {
     id: 4,
-    getLabel: (filters) => `Danh mục: ${filters['category.id']}`,
+    getLabel: (filters) => `Danh mục: ${filters['category.name']}`,
     isActive: () => true,
-    isVisible: (filters) => filters['category.id'],
+    isVisible: (filters) => filters['category.name'],
     isRemovable: true,
     onRemove: (filters) => {
       const newFilters = { ...filters };
-      delete newFilters['category.id'];
+      delete newFilters['category.name'];
       return newFilters;
     },
     onToggle: (filters) => {},
