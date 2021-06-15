@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-Counter.propTypes = {
-
-};
+Counter.propTypes = {};
 
 function Counter(props) {
   const [count, setCount] = useState(0);
@@ -11,11 +9,9 @@ function Counter(props) {
     <div>
       {count}
 
-      <button onClick={() => setCount(x => x + 1)}>Increase</button>
+      <button onClick={() => setCount((x) => x + 1)}>Increase</button>
     </div>
   );
 }
 
 export default Counter;
-
-

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { increase, decrease } from './counterSlice';
 import { makeStyles } from '@material-ui/core/styles';

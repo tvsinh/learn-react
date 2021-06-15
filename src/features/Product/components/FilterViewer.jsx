@@ -69,7 +69,8 @@ const FILTER_LIST = [
   },
   {
     id: 4,
-    getLabel: (filters) => `Danh mục: ${filters['category.name']}`,
+    // getLabel: (filters) => `Danh mục: ${filters['category.name']}`,
+    getLabel: (filters) => filters['category.name'],
     isActive: () => true,
     isVisible: (filters) => filters['category.name'],
     isRemovable: true,
