@@ -10,12 +10,13 @@ ProductFilters.propTypes = {
   onChange: PropTypes.func,
 };
 
-function ProductFilters({ filters, onChange }) {
+function ProductFilters({ filters, onChange = {} }) {
   const handleCategoryChange = (newCategoryName) => {
     if (!onChange) return;
 
     const newFilters = {
       'category.name': newCategoryName,
+      _page: 1, // Reset page to first
     };
     onChange(newFilters);
   };

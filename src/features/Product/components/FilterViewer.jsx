@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Chip, makeStyles } from '@material-ui/core';
+import { formatPrice } from 'utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +54,7 @@ const FILTER_LIST = [
   },
   {
     id: 3,
-    getLabel: (filters) => `Từ ${filters.salePrice_gte} đến ${filters.salePrice_lte}`,
+    getLabel: (filters) => `Từ ${formatPrice(filters.salePrice_gte)} đến ${formatPrice(filters.salePrice_lte)}`,
     isActive: () => true,
     isVisible: (filters) =>
       Object.keys(filters).includes('salePrice_lte') &&

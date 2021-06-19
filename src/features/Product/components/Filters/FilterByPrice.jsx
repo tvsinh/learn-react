@@ -1,6 +1,7 @@
 import { Box, Button, makeStyles, TextField, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import { formatPrice } from './../../../../utils/common';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(1),
     },
   },
+  inputPrice: {
+    width: '250px',
+    // height: '14px',
+  },
 }));
 
 FilterByPrice.propTypes = {
@@ -30,8 +35,8 @@ FilterByPrice.propTypes = {
 function FilterByPrice({ onChange }) {
   const classes = useStyles();
   const [values, setValues] = useState({
-    salePrice_gte: 0,
-    salePrice_lte: 0,
+    salePrice_gte: '',
+    salePrice_lte: '',
   });
 
   const handleChange = (e) => {
@@ -39,16 +44,17 @@ function FilterByPrice({ onChange }) {
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
+      _page: 1, // Reset page to first
     }));
   };
 
   const handleSubmit = () => {
     if (onChange) onChange(values);
 
-    setValues({
-      salePrice_gte: 0,
-      salePrice_lte: 0,
-    });
+    // setValues({
+    //   salePrice_gte: 0,
+    //   salePrice_lte: 0,
+    // });
   };
 
   return (
@@ -56,9 +62,25 @@ function FilterByPrice({ onChange }) {
       <Typography variant="subtitle2">CHỌN KHOẢNG GIÁ</Typography>
 
       <Box className={classes.range}>
-        <TextField name="salePrice_gte" value={values.salePrice_gte} onChange={handleChange} />
+        <TextField
+          className={classes.inputPrice}
+          variant="outlined"
+          name="salePrice_gte"
+          value={values.salePrice_gte}
+          onChange={handleChange}
+          size="small"
+          placeholder={formatPrice(0)}
+        />
         <span>-</span>
-        <TextField name="salePrice_lte" value={values.salePrice_lte} onChange={handleChange} />
+        <TextField
+          className={classes.inputPrice}
+          variant="outlined"
+          name="salePrice_lte"
+          value={values.salePrice_lte}
+          onChange={handleChange}
+          size="small"
+          placeholder={formatPrice(0)}
+        />
       </Box>
 
       <Button variant="outlined" color="primary" size="small" onClick={handleSubmit}>

@@ -1,6 +1,7 @@
 import { Box, Container, Grid, makeStyles, Paper } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import productApi from 'api/productApi';
+import Scroll from 'components/Scroll';
 import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
@@ -87,6 +88,7 @@ function ListPage(props) {
     const filters = {
       ...queryParams,
       _sort: newSortValue,
+      _page: 1, // Reset page to first
     };
 
     history.push({
@@ -116,6 +118,7 @@ function ListPage(props) {
 
   return (
     <Box>
+      <Scroll showBelow={250} />
       <Container>
         <Grid container spacing={1}>
           <Grid item className={classes.left}>
@@ -129,7 +132,7 @@ function ListPage(props) {
               <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
               <FilterViewer filters={queryParams} onChange={setNewFilters} />
 
-              {loading ? <ProductSkeletonList length={9} /> : <ProductList data={productList} />}
+              {loading ? <ProductSkeletonList length={12} /> : <ProductList data={productList} />}
 
               <Box className={classes.pagination}>
                 <Pagination

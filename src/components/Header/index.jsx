@@ -1,4 +1,4 @@
-import { Box, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Badge, Box, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,14 +6,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { AccountCircle, Close } from '@material-ui/icons';
+import { AccountCircle, Close, ShoppingCart } from '@material-ui/icons';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
+import { logout } from 'features/Auth/userSlice';
+import { cartItemsLenghtSelector } from 'features/Cart/selectors';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import { logout } from 'features/Auth/userSlice';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,7 +47,10 @@ const MODE = {
 export default function Header() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.user.current);
+  const cartItemsLenght = useSelector(cartItemsLenghtSelector);
   const isLoggedIn = !!loggedInUser.id;
+  const history = useHistory();
+
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -72,6 +76,11 @@ export default function Header() {
     dispatch(action);
     setAnchorEl(null);
   };
+
+  const handleCartClick = () => {
+    history.push('/cart');
+  };
+
   const classes = useStyles();
 
   return (
@@ -79,30 +88,38 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar>
           <StorefrontIcon className={classes.menuButton} />
+
           <Typography variant="h6" className={classes.title}>
             <Link to="/" className={classes.link}>
-              SHOP NAME
+              REACT SHOP
             </Link>
           </Typography>
+
           <NavLink to="/todos" className={classes.link} activeClassName="active">
             <Button color="inherit">Todos</Button>
           </NavLink>
-          <NavLink to="/albums" className={classes.link} activeClassName="active">
-            <Button color="inherit">Albums</Button>
-          </NavLink>
+
           <NavLink to="/products" className={classes.link} activeClassName="active">
             <Button color="inherit">Products</Button>
           </NavLink>
+
           {!isLoggedIn && (
             <Button color="inherit" onClick={handleClickOpen}>
               Login
             </Button>
           )}
+
           {isLoggedIn && (
             <IconButton color="inherit" onClick={handleUserClick}>
               <AccountCircle></AccountCircle>
             </IconButton>
           )}
+
+          <IconButton aria-label="show 4 new mails" color="inherit" onClick={handleCartClick}>
+            <Badge badgeContent={cartItemsLenght} color="secondary">
+              <ShoppingCart />
+            </Badge>
+          </IconButton>
         </Toolbar>
       </AppBar>
 

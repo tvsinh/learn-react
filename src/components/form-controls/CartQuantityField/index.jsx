@@ -1,4 +1,4 @@
-import { Box, FormHelperText, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Box, FormHelperText, IconButton, makeStyles } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { AddCircleOutline, RemoveCircleOutline } from '@material-ui/icons';
@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 
-QuantityField.propTypes = {
+CartQuantityField.propTypes = {
   form: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
 
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function QuantityField(props) {
+function CartQuantityField(props) {
   const classes = useStyles();
-  const { form, name, label, disabled } = props;
+  const { form, name, value, disabled } = props;
   const {
     formState: { errors },
     setValue,
@@ -36,11 +36,11 @@ function QuantityField(props) {
 
   return (
     <FormControl error={hasError} fullWidth margin="normal" variant="outlined" size="small">
-      <Typography>{label}</Typography>
 
       <Controller
         name={name}
         control={form.control}
+        value={value}
         render={({ field: { onChange, onBlur, value, name } }) => (
           <Box className={classes.box}>
             <IconButton
@@ -76,4 +76,4 @@ function QuantityField(props) {
   );
 }
 
-export default QuantityField;
+export default CartQuantityField;

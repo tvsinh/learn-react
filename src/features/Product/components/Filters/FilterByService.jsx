@@ -31,7 +31,10 @@ function FilterByService({ filters = {}, onChange }) {
     if (!onChange) return;
 
     const { name, checked } = e.target;
-    onChange({ [name]: checked });
+    onChange({
+      [name]: checked,
+      _page: 1, // Reset page to first
+    });
   };
 
   return (
