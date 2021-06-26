@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
 
     padding: 0,
-    margin: theme.spacing(2, 0),
+    margin: theme.spacing(1.5, 0),
     listStyleType: 'none',
 
     '& > li': {
       margin: 0,
-      padding: theme.spacing(1),
+      padding: theme.spacing(0, 1),
     },
   },
 }));
@@ -54,7 +54,8 @@ const FILTER_LIST = [
   },
   {
     id: 3,
-    getLabel: (filters) => `Từ ${formatPrice(filters.salePrice_gte)} đến ${formatPrice(filters.salePrice_lte)}`,
+    getLabel: (filters) =>
+      `Từ ${formatPrice(filters.salePrice_gte)} đến ${formatPrice(filters.salePrice_lte)}`,
     isActive: () => true,
     isVisible: (filters) =>
       Object.keys(filters).includes('salePrice_lte') &&

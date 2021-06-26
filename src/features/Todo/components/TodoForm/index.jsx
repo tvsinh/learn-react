@@ -30,7 +30,7 @@ function TodoForm(props) {
     }
 
     form.reset();
-    console.log('Todo Form', values);
+    console.log('Todo form add', values);
   };
 
   return (

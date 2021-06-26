@@ -1,5 +1,5 @@
 import { Box, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
-import Scroll from 'components/Scroll';
+import Header from 'components/Header';
 import { addToCart } from 'features/Cart/cartSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -15,18 +15,31 @@ import useProductDetail from '../hooks/useProductDetail';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingBottom: theme.spacing(3),
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      paddingTop: theme.spacing(5),
+    },
   },
 
   left: {
     width: '400px',
     padding: theme.spacing(1.5),
     borderRight: `1px solid ${theme.palette.grey[300]}`,
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      padding: theme.spacing(0),
+      borderRight: '0px',
+    },
   },
 
   right: {
     flex: '1 1 0',
     padding: theme.spacing(1.5),
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      padding: theme.spacing(0),
+    },
   },
 
   loading: {
@@ -39,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DetailPage() {
   const classes = useStyles();
+
   const {
     params: { productId },
     url,
@@ -64,34 +78,36 @@ function DetailPage() {
   };
 
   return (
-    <Box className={classes.root}>
-      <Scroll showBelow={400} />
-      <Container>
-        <Paper elevation={0}>
-          <Grid container>
-            <Grid item className={classes.left}>
-              <ProductThumbnail product={product} />
+    <>
+      <Header />
+      <Box pt={4}>
+        <Container>
+          <Paper elevation={0}>
+            <Grid container className={classes.root}>
+              <Grid item className={classes.left}>
+                <ProductThumbnail product={product} width="100%" />
+              </Grid>
+
+              <Grid item className={classes.right}>
+                <ProductInfo product={product} />
+                <AddToCartForm onSubmit={handleAddToCartSubmit} />
+              </Grid>
             </Grid>
+          </Paper>
 
-            <Grid item className={classes.right}>
-              <ProductInfo product={product} />
-              <AddToCartForm onSubmit={handleAddToCartSubmit} />
-            </Grid>
-          </Grid>
-        </Paper>
+          <ProductMenu />
 
-        <ProductMenu />
+          <Switch>
+            <Route exact path={url}>
+              <ProductDescription product={product} />
+            </Route>
 
-        <Switch>
-          <Route exact path={url}>
-            <ProductDescription product={product} />
-          </Route>
-
-          <Route path={`${url}/additional`} component={ProductAdditional} />
-          <Route path={`${url}/reviews`} component={ProductReviews} />
-        </Switch>
-      </Container>
-    </Box>
+            <Route path={`${url}/additional`} component={ProductAdditional} />
+            <Route path={`${url}/reviews`} component={ProductReviews} />
+          </Switch>
+        </Container>
+      </Box>
+    </>
   );
 }
 

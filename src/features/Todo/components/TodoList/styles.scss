@@ -1,11 +1,19 @@
 .todo-list {
-  & > li {
+  & > div {
+    display: flex;
+  }
+  & > div > li {
     cursor: pointer;
+    width: 250px;
   }
 
-  & > li.completed {
+  & > div > li.completed {
     color: #ccc;
     font-style: italic;
     text-decoration: line-through;
+  }
+  & > div >button {
+    z-index: 1;
+    margin-left: 10px;
   }
 }

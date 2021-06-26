@@ -10,7 +10,11 @@ CartPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    padding: theme.spacing(0, 17),
+    padding: theme.spacing(7, 12, 0),
+    height: 'auto',
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(5, 5, 0),
+    },
   },
   left: {
     width: '800px',
@@ -22,6 +26,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '25px',
   },
 
+  userInfo: {
+    padding: '0 10px',
+    height: '47px',
+  },
+
+  cartTotal: {
+    marginTop: '10px',
+    padding: '5px 10px',
+  },
   button: {
     marginTop: '10px',
   },
@@ -39,17 +52,18 @@ const useStyles = makeStyles((theme) => ({
   },
   emptyButton: {
     marginTop: '20px',
-    marginBottom: '20px',
-    flex: '1',
+    paddingBottom: '20px',
 
-    display: 'inline',
-    marginLeft: '420px',
+    display: 'flex',
+    justifyContent: 'center',
+    // flexDirection: 'row',
   },
 }));
 
 function CartPage(props) {
   const classes = useStyles();
   const cartList = useSelector((state) => state.cart.cartItems);
+  const user = useSelector((state) => state.user.current);
   const cartTotal = useSelector(cartTotalSelector);
   const history = useHistory();
   const handleCartClick = () => {
@@ -64,7 +78,19 @@ function CartPage(props) {
             <CartList cartList={cartList} />
           </Grid>
           <Box className={classes.right}>
-            <Paper>
+            {user.id ? (
+              <Paper className={classes.userInfo}>
+                <Typography>Tên: {user.fullName}</Typography>
+                <Typography>Email: {user.email}</Typography>
+              </Paper>
+            ) : (
+              <Paper className={classes.userInfo}>
+                <Typography>Chưa đăng nhập</Typography>
+                <Typography>Vui lòng đăng nhập để mua hàng</Typography>
+              </Paper>
+            )}
+
+            <Paper className={classes.cartTotal}>
               <Typography>Tổng cộng: {formatPrice(cartTotal)}</Typography>
             </Paper>
             <Paper className={classes.button}>
@@ -76,7 +102,7 @@ function CartPage(props) {
     );
   } else {
     return (
-      <Box>
+      <Box className={classes.empty}>
         <Container className={classes.root}>
           <Grid className={classes.empty}>
             <Typography>Giỏ hàng</Typography>
@@ -90,14 +116,16 @@ function CartPage(props) {
               <Typography className={classes.emptyText}>
                 Không có sản phẩm trong giỏ hàng
               </Typography>
-              <Button
-                variant="outlined"
-                color="primary"
-                className={classes.emptyButton}
-                onClick={handleCartClick}
-              >
-                Tiếp tục mua sắm
-              </Button>
+              <Box className={classes.emptyButton}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  // className={classes.emptyButton}
+                  onClick={handleCartClick}
+                >
+                  Tiếp tục mua sắm
+                </Button>
+              </Box>
             </Paper>
           </Grid>
         </Container>

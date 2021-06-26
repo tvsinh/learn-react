@@ -23,8 +23,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   inputPrice: {
-    width: '250px',
-    // height: '14px',
+    // width: '250px',
+    // height: '40px',
   },
 }));
 
@@ -45,6 +45,7 @@ function FilterByPrice({ onChange }) {
       ...prevValues,
       [name]: value,
       _page: 1, // Reset page to first
+      // 'category.searchTerm': null,
     }));
   };
 

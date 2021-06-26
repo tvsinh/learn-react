@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   box_product: {
     cursor: 'pointer',
-    // boxShadow: '0 1px 2px 0 rgba(0, 0, 0, .08)',
+    // boxShadow: '0 1px 2px 0 rgba(0, 0, 0, .1)',
     '&:hover': {
       // opacity: 0.8,
       transform: 'translateY(-1.5px)',
@@ -43,7 +43,7 @@ function Product({ product }) {
 
   return (
     <Box padding={1} onClick={handleClick} className={classes.box_product}>
-      <Box padding={1} minHeight="215px">
+      <Box padding={1}>
         <img src={thumbnailUrl} alt={product.name} width="100%" />
       </Box>
       <Box className={classes.info}>

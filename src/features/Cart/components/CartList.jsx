@@ -9,7 +9,9 @@ CartList.propTypes = {
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginBottom: '20px',
+  },
   list: {
     width: '800px',
   },
@@ -21,20 +23,20 @@ const useStyles = makeStyles((theme) => ({
   },
 
   navName: {
-    width: '327px',
+    width: '325px',
     textAlign: 'center',
   },
   navPrice: {
-    width: '100px',
-    // textAlign: 'center',
+    width: '110px',
+    padding: '0 5px',
   },
   navQty: {
-    width: '180px',
+    width: '155px',
     textAlign: 'center',
   },
   navTotal: {
-    width: '130px',
-    // textAlign: 'center',
+    width: '145px',
+    paddingLeft: '10px',
   },
   iconDel: {
     width: '50px',
@@ -50,7 +52,7 @@ function CartList({ cartList }) {
   const classes = useStyles();
 
   return (
-    <Box>
+    <Box className={classes.root}>
       <Grid item className={classes.list}>
         <Paper className={classes.itemNav}>
           <Typography className={classes.navName}>Sản phẩm</Typography>

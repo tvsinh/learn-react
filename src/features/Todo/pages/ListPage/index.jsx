@@ -48,12 +48,19 @@ function ListPage(props) {
   const handleTodoClick = (todo, idx) => {
     // clone current array to the new one
     const newTodoList = [...todoList];
-
     // toggle state
     newTodoList[idx] = {
       ...newTodoList[idx],
       status: newTodoList[idx].status === 'new' ? 'completed' : 'new',
     };
+    // update todo list
+    setTodoList(newTodoList);
+    localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
+  };
+  const handleTodoDel = (todo, idx) => {
+    const { id } = todo;
+    console.log(id);
+    const newTodoList = todoList.filter((todo) => todo.id !== id);
 
     // update todo list
     setTodoList(newTodoList);
@@ -109,7 +116,11 @@ function ListPage(props) {
         <TodoForm onSubmit={handleTodoFormSubmit} />
 
         <h3>Todo List</h3>
-        <TodoList todoList={renderedTodoList} onTodoClick={handleTodoClick} />
+        <TodoList
+          todoList={renderedTodoList}
+          onTodoClick={handleTodoClick}
+          onTodoDel={handleTodoDel}
+        />
 
         <div>
           <button onClick={handleShowAllClick}>Show All</button>

@@ -57,6 +57,7 @@ function FilterByCategory({ onChange }) {
       }
       setLoading(false);
     })();
+    return null;
   }, []);
 
   const handleCategoryClick = (category) => {

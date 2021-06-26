@@ -26,6 +26,13 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(2, 0, 2, 0),
   },
+
+  progress: {
+    position: 'absolute',
+    top: theme.spacing(0),
+    left: 0,
+    right: 0,
+  },
 }));
 LoginForm.propTypes = {
   onSubmit: PropTypes.func,

@@ -34,6 +34,7 @@ function FilterByService({ filters = {}, onChange }) {
     onChange({
       [name]: checked,
       _page: 1, // Reset page to first
+      // 'category.searchTerm': null,
     });
   };
 

@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
     '& > li': {
       padding: theme.spacing(2, 4),
     },
+    [theme.breakpoints.down('md')]: {
+      '& > li': {
+        padding: theme.spacing(2, 1),
+      },
+    },
 
     '& > li > a': {
       color: theme.palette.grey[700],
