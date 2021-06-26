@@ -12,7 +12,7 @@ function CartFeature() {
   return (
     <>
       <Header />
-      <Box pt={4}>
+      <Box>
         <Switch>
           <Route path={match.url} exact component={CartPage} />
           <Route path={`${match.url}/:productId`} component={DetailPage} />
