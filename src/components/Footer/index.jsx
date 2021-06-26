@@ -5,9 +5,12 @@ import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'static',
     left: '0',
     right: '0',
     bottom: '0',
+    zIndex: '1',
+    backgroundColor: '#FFF',
   },
   footer: {
     marginTop: '20px',
