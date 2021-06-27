@@ -256,6 +256,7 @@ function ListPage() {
           ></Pagination>
         </Box>
       </Box>
+      <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
     </>
   );
 }

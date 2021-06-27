@@ -25,7 +25,8 @@ function App() {
         </Switch>
         <Footer />
       </div>
-      <script>window.onbeforeunload(function(){window.scrollTo({ top: 0 })});</script>
+      {/* <script>window.onbeforeunload(function(){window.scrollTo({ top: 0 })});</script> */}
+      <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
     </>
   );
 }
