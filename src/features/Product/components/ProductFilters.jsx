@@ -14,13 +14,7 @@ ProductFilters.propTypes = {
 };
 const useStyles = makeStyles((theme) => ({
   root: {
-    // [theme.breakpoints.down('md')]: {
-    //   position: 'fixed',
-    //   backgroundColor: 'white',
-    //   right: '0',
-    //   zIndex: '1',
-    //   transition: '5000ms',
-    // },
+    position: 'relative',
   },
   iconRight: {
     [theme.breakpoints.down('md')]: {
@@ -30,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    padding: '0 10px 10px 10px',
+    position: 'fixed',
+    padding: '11px',
     bottom: '0',
-    right: '0',
-    display: 'flex',
-    justifyContent: 'center',
-    // flexDirection: 'row',
+    width: '80%',
+    backgroundColor: '#fff',
+    borderTop: '1px solid rgba(0,0,0,0.1)',
   },
   sectionDesktop: {
     display: 'none',
@@ -44,14 +38,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sectionMobile: {
-    display: 'block',
     position: 'fixed',
     backgroundColor: 'white',
     right: '0',
     zIndex: '1',
     transition: '500ms',
-    marginBottom: '10px',
+    paddingBottom: '110px',
     width: '80%',
+    height: '100%',
+    overflowY: 'scroll',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -86,15 +81,18 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
         <FilterByService filters={filters} onChange={handeChange} />
       </Box>
 
-      <Box className={classes.sectionMobile}>
-        <Close onClick={handleClose} className={classes.iconRight} />
-        <FilterByCategory onChange={handleCategoryChange} />
-        <FilterByPrice onChange={handeChange} />
-        <FilterByService filters={filters} onChange={handeChange} />
-        <Box className={classes.button}>
-          <Button onClick={handleClose} variant="contained" color="primary" fullWidth>
-            Xong
-          </Button>
+      <Box className={classes.root}>
+        <Box className={classes.sectionMobile}>
+          <Close onClick={handleClose} className={classes.iconRight} />
+          <FilterByCategory onChange={handleCategoryChange} />
+          <FilterByPrice onChange={handeChange} />
+          <FilterByService filters={filters} onChange={handeChange} />
+
+          <Box className={classes.button}>
+            <Button onClick={handleClose} variant="contained" color="primary" fullWidth>
+              Xong
+            </Button>
+          </Box>
         </Box>
       </Box>
     </>

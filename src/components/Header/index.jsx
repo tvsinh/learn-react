@@ -24,7 +24,6 @@ import Register from 'features/Auth/components/Register';
 import { logout } from 'features/Auth/userSlice';
 import { cartItemsLenghtSelector } from 'features/Cart/selectors';
 import SearchInput from 'features/SearchInput';
-import { searchValue } from 'features/SearchInput/seachSlice';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -196,14 +195,12 @@ export default function Header() {
       pathname: '/products',
       search: queryString.stringify(formValue),
     });
-    dispatch(searchValue(value));
   };
 
   const handleHome = () => {
     history.push({
       pathname: '/',
     });
-    dispatch(searchValue(''));
   };
 
   // const handleProfileMenuOpen = (event) => {

@@ -10,20 +10,23 @@ import AccountFeature from './features/Account';
 
 function App() {
   return (
-    <div className="app">
-      <Switch>
-        <Redirect from="/" to="/products" exact />
-        <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
+    <>
+      <div className="app">
+        <Switch>
+          <Redirect from="/" to="/products" exact />
+          <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
 
-        <Route path="/products" component={ProductFeature} />
-        <Route path="/todos" component={TodoFeature} />
-        <Route path="/cart" component={CartFeature} />
-        <Route path="/account" component={AccountFeature} />
+          <Route path="/products" component={ProductFeature} />
+          <Route path="/todos" component={TodoFeature} />
+          <Route path="/cart" component={CartFeature} />
+          <Route path="/account" component={AccountFeature} />
 
-        <Route component={NotFound} />
-      </Switch>
-      <Footer />
-    </div>
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </div>
+      <script>window.onbeforeunload(function(){window.scrollTo({ top: 0 })});</script>
+    </>
   );
 }
 

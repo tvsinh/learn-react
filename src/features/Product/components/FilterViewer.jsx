@@ -12,10 +12,16 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: theme.spacing(1.5, 0),
     listStyleType: 'none',
-
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(1, 0),
+    },
     '& > li': {
       margin: 0,
       padding: theme.spacing(0, 1),
+      [theme.breakpoints.down('md')]: {
+        padding: theme.spacing(0.2, 0.5),
+        fontSize: '12px',
+      },
     },
   },
 }));

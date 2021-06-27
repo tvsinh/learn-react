@@ -13,8 +13,7 @@ function AccountFaeture(props) {
   return (
     <>
       <Header />
-      <Box pt={10}>
-        User
+      <Box>
         <Switch>
           <Route path={match.url} exact component={AccountPage} />
         </Switch>

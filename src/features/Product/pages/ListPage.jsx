@@ -10,7 +10,6 @@ import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
 import { useDispatch } from 'react-redux';
-import { searchValue } from 'features/SearchInput/seachSlice';
 import Header from 'components/Header';
 import { FilterList } from '@material-ui/icons';
 
@@ -185,8 +184,6 @@ function ListPage() {
     history.push({
       pathname: '/',
     });
-    const empty = '';
-    dispatch(searchValue(empty));
   };
   const handleFilterBar = () => {
     setFilterBar(!filterBar);
@@ -204,7 +201,6 @@ function ListPage() {
           <Typography>{queryParams['category.searchTerm']}</Typography>
         </Box>
       ) : null}
-      {overlay && <Box className={classes.overlay} onClick={handleFilterBar}></Box>}
       <Box pt={1} className={classes.sectionDesktop}>
         <Container>
           <Grid container spacing={0}>
@@ -235,18 +231,17 @@ function ListPage() {
         </Container>
       </Box>
       <Box className={classes.sectionMobile}>
+        {overlay && <Box className={classes.overlay} onClick={handleFilterBar}></Box>}
         {filterBar ? (
-          <>
-            <ProductFilters
-              filters={queryParams}
-              onChange={handleFiltersChange}
-              onClick={handleFilterBar}
-            />
-          </>
+          <ProductFilters
+            filters={queryParams}
+            onChange={handleFiltersChange}
+            onClick={handleFilterBar}
+          />
         ) : null}
         <Box className={classes.sort}>
           <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
-          <FilterList className={classes.sectionMobile} color="primary" onClick={handleFilterBar} />
+          <FilterList color="primary" onClick={handleFilterBar} />
         </Box>
         <FilterViewer filters={queryParams} onChange={setNewFilters} />
 

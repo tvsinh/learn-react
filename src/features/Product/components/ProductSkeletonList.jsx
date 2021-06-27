@@ -10,12 +10,16 @@ ProductSkeletonList.propTypes = {
 const useStyles = makeStyles((theme) => ({
   productImg: {
     height: '216px',
-    width: '217px',
-
-    [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    marginBottom: '15px',
+    [theme.breakpoints.down('md')]: {
       width: '100%',
-      height: '180px',
+      height: '25vh',
     },
+    // [theme.breakpoints.down('sm')]: {
+    //   width: '100%',
+    //   height: '25vh',
+    // },
   },
 }));
 

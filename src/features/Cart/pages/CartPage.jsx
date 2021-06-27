@@ -11,8 +11,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     padding: theme.spacing(7, 12, 0),
-    height: '650px',
+    height: '600px',
     [theme.breakpoints.down('md')]: {
+      height: '400px',
       padding: theme.spacing(10, 5, 0),
     },
   },

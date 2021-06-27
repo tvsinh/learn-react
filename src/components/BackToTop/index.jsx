@@ -75,7 +75,6 @@ function ScrollTop(props) {
 }
 ScrollTop.propTypes = {
   children: PropTypes.element.isRequired,
-  // window: PropTypes.func,
 };
 export default function BackToTop(props) {
   const classes = useStyles();
