@@ -5,11 +5,10 @@ import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: 'static',
+    position: 'absolute',
+    // zIndex: '1',
     left: '0',
     right: '0',
-    bottom: '0',
-    zIndex: '1',
     backgroundColor: '#FFF',
   },
   footer: {
@@ -78,7 +77,7 @@ function Footer() {
               <Typography>&nbsp;</Typography>
               <h4>KẾT NỐI VỚI CHÚNG TÔI</h4>
               <Grid item className={classes.social}>
-                <a href="https://www.fb.com/tvs.07" target="_blank" rel="noreferrer noopener">
+                <a href="https://www.fb.com/tvs.Y1" target="_blank" rel="noreferrer noopener">
                   <img src="/facebook.png" alt="logo" width="32px" height="32px" />
                 </a>
                 <a href="https://www.instagram.com/__t.v.s/" target="_blank" rel="noreferrer">

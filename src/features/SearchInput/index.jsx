@@ -96,6 +96,7 @@ function SearchInput({ onSubmit = {} }) {
   };
   const handleOnkeyUp = (e) => {
     if (e.keyCode === 13) {
+      console.log(e.keycode);
       if (!onSubmit) return;
 
       let value = e.target.value;

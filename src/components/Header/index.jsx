@@ -29,14 +29,16 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router';
+import SuccessCart from 'features/Cart/components/SuccessCart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.down('md')]: {
-      position: 'fixed',
-      width: '100%',
-      zIndex: '1',
-      top: '0',
+    position: 'fixed',
+    width: '100%',
+    zIndex: '1',
+    top: '0',
+    [theme.breakpoints.up('md')]: {
+      position: 'static',
     },
   },
   boxUser: {
@@ -239,8 +241,8 @@ export default function Header() {
       }}
       getContentAnchorEl={null}
     >
-      <MenuItem onClick={handleMyAccount}>My account</MenuItem>
-      <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+      <MenuItem onClick={handleMyAccount}>Tài khoản của tôi</MenuItem>
+      <MenuItem onClick={handleLogoutClick}>Thoát tài khoản</MenuItem>
     </Menu>
   );
 
@@ -266,13 +268,12 @@ export default function Header() {
         </MenuItem>
       )}
       {isLoggedIn && (
-        <MenuItem>
+        <MenuItem onClick={handleMyAccount}>
           <IconButton
             color="inherit"
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
-            onClick={handleMyAccount}
           >
             <AccountCircle />
           </IconButton>
@@ -358,6 +359,7 @@ export default function Header() {
               <ShoppingCart />
             </Badge>
           </IconButton>
+          <SuccessCart />
         </Toolbar>
       </AppBar>
 

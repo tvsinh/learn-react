@@ -10,11 +10,11 @@ CartPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    padding: theme.spacing(7, 12, 0),
-    height: '600px',
+    padding: theme.spacing(8, 12, 10),
+    height: 'auto',
     [theme.breakpoints.down('md')]: {
-      height: '400px',
-      padding: theme.spacing(10, 5, 0),
+      height: 'auto',
+      padding: theme.spacing(10, 5, 10),
     },
   },
   left: {
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   empty: {
     flex: '1',
+    height: '500px',
   },
   emptyText: {
     textAlign: 'center',
@@ -64,7 +65,8 @@ const useStyles = makeStyles((theme) => ({
 function CartPage(props) {
   const classes = useStyles();
   const cartList = useSelector((state) => state.cart.cartItems);
-  const user = useSelector((state) => state.user.current);
+  const loggedInUser = useSelector((state) => state.user.current);
+  const isLoggedIn = !!loggedInUser.id;
   const cartTotal = useSelector(cartTotalSelector);
   const history = useHistory();
   const handleCartClick = () => {
@@ -79,10 +81,10 @@ function CartPage(props) {
             <CartList cartList={cartList} />
           </Grid>
           <Box className={classes.right}>
-            {user.id ? (
+            {isLoggedIn ? (
               <Paper className={classes.userInfo}>
-                <Typography>Tên: {user.fullName}</Typography>
-                <Typography>Email: {user.email}</Typography>
+                <Typography>Tên: {loggedInUser.fullName}</Typography>
+                <Typography>Email: {loggedInUser.email}</Typography>
               </Paper>
             ) : (
               <Paper className={classes.userInfo}>
@@ -103,7 +105,7 @@ function CartPage(props) {
     );
   } else {
     return (
-      <Box className={classes.empty}>
+      <Box>
         <Container className={classes.root}>
           <Grid className={classes.empty}>
             <Typography>Giỏ hàng</Typography>

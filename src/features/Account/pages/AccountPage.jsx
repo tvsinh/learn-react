@@ -1,14 +1,12 @@
-import { Box, Container, makeStyles, Paper, Typography, Button, Grid } from '@material-ui/core';
+import { Box, Container, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { formatPrice } from './../../../utils/common';
-import { useHistory } from 'react-router';
 
 AccountPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(7, 12, 0),
-    height: '600px',
+    padding: theme.spacing(8, 12, 8),
+    height: '350px',
     width: '100%',
     [theme.breakpoints.down('md')]: {
       height: '400px',
@@ -32,12 +30,8 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountPage(props) {
   const classes = useStyles();
-  const cartList = useSelector((state) => state.cart.cartItems);
   const user = useSelector((state) => state.user.current);
-  const history = useHistory();
-  const handleCartClick = () => {
-    history.push('/products');
-  };
+
   return (
     <Box>
       <Container className={classes.root}>

@@ -29,7 +29,7 @@ function Register(props) {
         closeDialog();
       }
 
-      enqueueSnackbar('Register successfully!!! 🎉', { variant: 'success' });
+      enqueueSnackbar('Đăng ký tài khoản thành công!', { variant: 'success' });
     } catch (error) {
       console.log('Failed to register:', error);
       enqueueSnackbar(error.message, { variant: 'error' });

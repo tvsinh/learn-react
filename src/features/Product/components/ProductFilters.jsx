@@ -1,11 +1,11 @@
 import { Box, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import FilterByCategory from './Filters/FilterByCategory';
 import FilterByPrice from './Filters/FilterByPrice';
 import FilterByService from './Filters/FilterByService';
-import { makeStyles } from '@material-ui/core/styles';
-import { Close } from '@material-ui/icons';
 
 ProductFilters.propTypes = {
   filters: PropTypes.object.isRequired,

@@ -1,6 +1,8 @@
 import { Box, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
+import { FilterList } from '@material-ui/icons';
 import { Pagination } from '@material-ui/lab';
 import productApi from 'api/productApi';
+import Header from 'components/Header';
 import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
@@ -9,9 +11,6 @@ import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
-import { useDispatch } from 'react-redux';
-import Header from 'components/Header';
-import { FilterList } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -63,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'row nowrap',
     justifyContent: 'center',
-
+    width: 'auto',
     marginTop: '30px',
     paddingBottom: '20px',
   },
@@ -98,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ListPage() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const queryParams = useMemo(() => {

@@ -1,6 +1,6 @@
 import { Box, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
 import Header from 'components/Header';
-import { addToCart } from 'features/Cart/cartSlice';
+import { addToCart, hideMiniCart, showMiniCart } from 'features/Cart/cartSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router';
@@ -52,13 +52,13 @@ const useStyles = makeStyles((theme) => ({
 
 function DetailPage() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const {
     params: { productId },
     url,
   } = useRouteMatch();
   const { product, loading } = useProductDetail(productId);
-  const dispatch = useDispatch();
 
   if (loading) {
     return (
@@ -75,10 +75,17 @@ function DetailPage() {
       quantity,
     });
     dispatch(action);
+    dispatch(hideMiniCart());
+    setTimeout(() => {
+      dispatch(showMiniCart());
+    }, 100);
+  };
+  const handleHideMiniCart = () => {
+    dispatch(hideMiniCart());
   };
 
   return (
-    <>
+    <Box onClick={handleHideMiniCart}>
       <Header />
       <Box pt={4}>
         <Container>
@@ -107,7 +114,8 @@ function DetailPage() {
           </Switch>
         </Container>
       </Box>
-    </>
+      <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
+    </Box>
   );
 }
 

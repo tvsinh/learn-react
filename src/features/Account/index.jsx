@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from 'components/Header';
 import { Box } from '@material-ui/core';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
@@ -7,7 +6,7 @@ import AccountPage from './../Account/pages/AccountPage';
 
 AccountFaeture.propTypes = {};
 
-function AccountFaeture(props) {
+function AccountFaeture() {
   const match = useRouteMatch();
 
   return (

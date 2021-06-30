@@ -8,18 +8,26 @@ ProductSkeletonList.propTypes = {
   length: PropTypes.number,
 };
 const useStyles = makeStyles((theme) => ({
-  productImg: {
-    height: '216px',
+  box: {
+    padding: theme.spacing(1),
+  },
+  boxImg: {
+    position: 'relative',
     width: '100%',
-    marginBottom: '15px',
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-      height: '25vh',
-    },
-    // [theme.breakpoints.down('sm')]: {
-    //   width: '100%',
-    //   height: '25vh',
-    // },
+    paddingTop: '100%',
+  },
+  productImg: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    bottom: '0',
+    right: '0',
+    width: '100%',
+    height: '100%',
+    padding: '8px',
+  },
+  text: {
+    height: '21px',
   },
 }));
 
@@ -31,10 +39,14 @@ function ProductSkeletonList({ length = 6 }) {
         {Array.from(new Array(length)).map((x, index) => (
           <Grid item key={index} xs={6} sm={6} md={4} lg={3}>
             <Box padding={1}>
-              <Skeleton variant="rect" className={classes.productImg} />
+              <Box className={classes.box}>
+                <Box className={classes.boxImg}>
+                  <Skeleton variant="rect" className={classes.productImg} />
+                </Box>
+              </Box>
               <Box>
-                <Skeleton />
-                <Skeleton width="60%" />
+                <Skeleton className={classes.text} />
+                <Skeleton width="60%" className={classes.text} />
               </Box>
             </Box>
           </Grid>

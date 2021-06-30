@@ -10,7 +10,7 @@ function TodoFeature(props) {
   const match = useRouteMatch();
 
   return (
-    <div style={{ margin: '50px 100px' }}>
+    <div style={{ margin: '50px 100px', height: 'auto' }}>
       {/* TODO SHARED UI */}
       <Switch>
         <Route path={match.path} component={ListPage} exact />
