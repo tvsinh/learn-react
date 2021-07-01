@@ -45,12 +45,16 @@ function FilterByPrice({ onChange }) {
   };
   const handleChange = (e) => {
     // handleKeyDown(e);
-    e.persist();
+    // e.persist();
     const { name, value } = e.target;
     console.log(Number(value));
     const newValue = value.replaceAll('.', '');
     console.log(Number(newValue));
     if (isNaN(Number(newValue))) {
+      return setValues(() => ({
+        [name]: '',
+      }));
+    } else if (Number(newValue) <= 0) {
       return setValues(() => ({
         [name]: '',
       }));
@@ -67,7 +71,6 @@ function FilterByPrice({ onChange }) {
       setValues((prevValues) => ({
         ...prevValues,
         [name]: formatCurrency(value),
-        // [name]: value,
         _page: 1, // Reset page to first
       }));
     }
@@ -125,7 +128,6 @@ function FilterByPrice({ onChange }) {
   };
   const formatCurrency = (price) => {
     if (!price) return '';
-    // return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return new Intl.NumberFormat().format(price);
   };
   return (
@@ -135,7 +137,6 @@ function FilterByPrice({ onChange }) {
       <Box className={classes.range}>
         <TextField
           size="small"
-          // type="number"
           variant="outlined"
           name="salePrice_gte"
           value={values.salePrice_gte}
@@ -146,7 +147,6 @@ function FilterByPrice({ onChange }) {
         <span>-</span>
         <TextField
           size="small"
-          // type="number"
           variant="outlined"
           name="salePrice_lte"
           value={values.salePrice_lte}
