@@ -36,7 +36,6 @@ function FilterByPrice({ onChange }) {
   });
 
   const handleKeyDown = (e) => {
-    // console.log(e.keyCode);
     var ASCIICode = e.which ? e.which : e.keyCode;
     if ((ASCIICode < 48 || ASCIICode > 57) & (ASCIICode < 96 || ASCIICode > 105)) {
       return false;
@@ -44,22 +43,24 @@ function FilterByPrice({ onChange }) {
     return true;
   };
   const handleChange = (e) => {
-    // handleKeyDown(e);
-    // e.persist();
+    e.persist();
     const { name, value } = e.target;
-    console.log(Number(value));
     const newValue = value.replaceAll('.', '');
-    console.log(Number(newValue));
+
     if (isNaN(Number(newValue))) {
-      return setValues(() => ({
-        [name]: '',
+      return setValues((prevValues) => ({
+        ...prevValues,
+      }));
+    } else if (Number(newValue) === undefined) {
+      return setValues((prevValues) => ({
+        ...prevValues,
+        [name]: '0',
       }));
     } else if (Number(newValue) <= 0) {
-      return setValues(() => ({
-        [name]: '',
+      return setValues((prevValues) => ({
+        ...prevValues,
       }));
     } else if (value.includes('.')) {
-      // const newValue = value.replaceAll('.', '');
       const finalValue = formatCurrency(value.replaceAll('.', ''));
       console.log(typeof finalValue);
       setValues((prevValues) => ({
@@ -77,18 +78,41 @@ function FilterByPrice({ onChange }) {
   };
 
   const handleSubmit = () => {
-    if (values.salePrice_gte.includes('.') & values.salePrice_lte.includes('.')) {
-      const valueGte = values.salePrice_gte.replaceAll('.', '');
-      const valueLte = values.salePrice_lte.replaceAll('.', '');
-      if (Number(valueGte) > Number(valueLte)) {
-        values.salePrice_lte = valueGte;
-        values.salePrice_gte = valueLte;
+    const gte = values.salePrice_gte;
+    const lte = values.salePrice_lte;
+    console.log(gte, lte);
+
+    if (Number(gte) < 0 || Number(lte) < 0) {
+      return null;
+    } else if ((Number(gte) === 0) & (Number(lte) === 0)) {
+      return null;
+    } else if (isNaN(Number(gte)) || isNaN(Number(lte))) {
+      return null;
+    } else if ((gte === undefined) & (lte === undefined)) {
+      values.salePrice_gte = '0';
+      values.salePrice_lte = '0';
+    } else if ((gte === undefined) & !(lte === undefined)) {
+      values.salePrice_lte = lte;
+      values.salePrice_gte = '0';
+      if (values.salePrice_gte > values.salePrice_lte) {
+        values.salePrice_gte = '0';
+        values.salePrice_lte = gte;
+        if (onChange) onChange(values);
       } else {
-        values.salePrice_gte = valueGte;
-        values.salePrice_lte = valueLte;
+        if (onChange) onChange(values);
+      }
+    } else if ((lte === undefined) & !(gte === undefined)) {
+      values.salePrice_gte = gte;
+      values.salePrice_lte = '0';
+      if (values.salePrice_gte > values.salePrice_lte) {
+        values.salePrice_gte = '0';
+        values.salePrice_lte = gte;
+        if (onChange) onChange(values);
+      } else {
+        if (onChange) onChange(values);
       }
       if (onChange) onChange(values);
-    } else if (values.salePrice_gte.includes('.') & !values.salePrice_lte.includes('.')) {
+    } else if (gte.includes('.') & !lte.includes('.')) {
       const valueGte = values.salePrice_gte.replaceAll('.', '');
       const valueLte = values.salePrice_lte;
       if (Number(valueGte) > Number(valueLte)) {
@@ -99,8 +123,19 @@ function FilterByPrice({ onChange }) {
         values.salePrice_lte = valueLte;
       }
       if (onChange) onChange(values);
-    } else if (values.salePrice_lte.includes('.') & !values.salePrice_gte.includes('.')) {
+    } else if (lte.includes('.') & !gte.includes('.')) {
       const valueGte = values.salePrice_gte;
+      const valueLte = values.salePrice_lte.replaceAll('.', '');
+      if (Number(valueGte) > Number(valueLte)) {
+        values.salePrice_lte = valueGte;
+        values.salePrice_gte = valueLte;
+      } else {
+        values.salePrice_gte = valueGte;
+        values.salePrice_lte = valueLte;
+      }
+      if (onChange) onChange(values);
+    } else if (gte.includes('.') & lte.includes('.')) {
+      const valueGte = values.salePrice_gte.replaceAll('.', '');
       const valueLte = values.salePrice_lte.replaceAll('.', '');
       if (Number(valueGte) > Number(valueLte)) {
         values.salePrice_lte = valueGte;
@@ -111,20 +146,19 @@ function FilterByPrice({ onChange }) {
       }
       if (onChange) onChange(values);
     } else {
-      const valueGte = values.salePrice_gte;
-      const valueLte = values.salePrice_lte;
-      if (Number(valueGte) > Number(valueLte)) {
-        values.salePrice_gte = valueLte;
-        values.salePrice_lte = valueGte;
+      if (Number(gte) > Number(lte)) {
+        values.salePrice_gte = lte;
+        values.salePrice_lte = gte;
         if (onChange) onChange(values);
       } else {
         if (onChange) onChange(values);
       }
     }
-    setValues({
-      salePrice_gte: '',
-      salePrice_lte: '',
-    });
+    setValues((prevValues) => ({
+      ...prevValues,
+      salePrice_gte: (prevValues.salePrice_gte = ''),
+      salePrice_lte: (prevValues.salePrice_lte = ''),
+    }));
   };
   const formatCurrency = (price) => {
     if (!price) return '';
@@ -151,6 +185,7 @@ function FilterByPrice({ onChange }) {
           name="salePrice_lte"
           value={values.salePrice_lte}
           onChange={handleChange}
+          onKeyDown={handleKeyDown}
           placeholder={formatPrice(0)}
         />
       </Box>

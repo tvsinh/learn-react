@@ -62,6 +62,7 @@ const FILTER_LIST = [
     id: 3,
     getLabel: (filters) =>
       `Từ ${formatPrice(filters.salePrice_gte)} đến ${formatPrice(filters.salePrice_lte)}`,
+    // `Từ ${filters.salePrice_gte}₫ đến ${filters.salePrice_lte}₫`,
     isActive: () => true,
     isVisible: (filters) =>
       Object.keys(filters).includes('salePrice_lte') &&

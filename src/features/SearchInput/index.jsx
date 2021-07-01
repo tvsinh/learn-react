@@ -3,7 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { PropTypes } from 'prop-types';
 import queryString from 'query-string';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +68,7 @@ function SearchInput({ onSubmit = {} }) {
   const classes = useStyles();
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState('');
-  // const typingTimeoutRef = useRef(null);
+  const typingTimeoutRef = useRef(null);
 
   useEffect(() => {
     const params = queryString.parse(location.search);
@@ -82,32 +82,30 @@ function SearchInput({ onSubmit = {} }) {
     const value = e.target.value;
     setSearchTerm(value);
 
-    // if (!onSubmit) return;
-    // if (typingTimeoutRef.current) {
-    //   clearTimeout(typingTimeoutRef.current);
-    // }
-    // typingTimeoutRef.current = setTimeout(() => {
-    //   if (value.length > 0) {
-    //     onSubmit(value);
-    //   } else {
-    //     return null;
-    //   }
-    // }, 300);
-  };
-  const handleOnkeyUp = (e) => {
-    if (e.keyCode === 13) {
-      console.log(e.keycode);
-      if (!onSubmit) return;
-
-      let value = e.target.value;
-      value = value.trim();
-
+    if (!onSubmit) return;
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+    }
+    typingTimeoutRef.current = setTimeout(() => {
       if (value.length > 0) {
         onSubmit(value);
       } else {
         return null;
       }
-    }
+    }, 300);
+  };
+  const handleOnkeyUp = (e) => {
+    // if (e.keyCode === 13) {
+    //   console.log(e.keycode);
+    //   if (!onSubmit) return;
+    //   let value = e.target.value;
+    //   value = value.trim();
+    //   if (value.length > 0) {
+    //     onSubmit(value);
+    //   } else {
+    //     return null;
+    //   }
+    // }
   };
 
   return (

@@ -130,8 +130,7 @@ function ListPage() {
       } catch (error) {
         console.log('Failed to fetch product list: ', error);
       }
-
-      setLoading(false);
+      setLoading(false)
     })();
   }, [queryParams]);
   const handlePageChange = (e, page) => {
