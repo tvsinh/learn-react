@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
 
   description: {
     margin: theme.spacing(2, 0),
+    [theme.breakpoints.down('md')]: {
+      overflowX: 'scroll',
+    },
   },
 
   priceBox: {

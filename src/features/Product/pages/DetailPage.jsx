@@ -1,9 +1,9 @@
-import { Box, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
+import { Box, Container, Grid, LinearProgress, makeStyles, Paper, Button } from '@material-ui/core';
 import Header from 'components/Header';
 import { addToCart, hideMiniCart, showMiniCart } from 'features/Cart/cartSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Switch, useRouteMatch } from 'react-router';
+import { Route, Switch, useRouteMatch, useHistory } from 'react-router';
 import AddToCartForm from '../components/AddToCartForm';
 import ProductAdditional from '../components/ProductAdditional';
 import ProductDescription from '../components/ProductDescription';
@@ -18,7 +18,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       display: 'flex',
       flexDirection: 'column',
-      paddingTop: theme.spacing(5),
+      padding: theme.spacing(5, 1, 0, 1),
+    },
+  },
+  buttonBack: {
+    marginBottom: '3px',
+    textTransform: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
 
@@ -53,11 +60,14 @@ const useStyles = makeStyles((theme) => ({
 function DetailPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const {
     params: { productId },
     url,
   } = useRouteMatch();
+  // const matchs = useRouteMatch();
+  // console.log(matchs);
   const { product, loading } = useProductDetail(productId);
 
   if (loading) {
@@ -83,14 +93,20 @@ function DetailPage() {
   const handleHideMiniCart = () => {
     dispatch(hideMiniCart());
   };
+  const handleBack = () => {
+    history.goBack();
+  };
 
   return (
     <Box onClick={handleHideMiniCart}>
       <Header />
-      <Box pt={4}>
-        <Container>
+      <Box pt={3}>
+        <Container className={classes.root}>
+          <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
+            Trở lại
+          </Button>
           <Paper elevation={0}>
-            <Grid container className={classes.root}>
+            <Grid container>
               <Grid item className={classes.left}>
                 <ProductThumbnail product={product} width="100%" />
               </Grid>

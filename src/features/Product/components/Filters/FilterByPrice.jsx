@@ -31,8 +31,8 @@ FilterByPrice.propTypes = {
 function FilterByPrice({ onChange }) {
   const classes = useStyles();
   const [values, setValues] = useState({
-    salePrice_gte: '0',
-    salePrice_lte: '0',
+    salePrice_gte: '',
+    salePrice_lte: '',
   });
 
   const handleKeyDown = (e) => {
@@ -43,7 +43,7 @@ function FilterByPrice({ onChange }) {
     return true;
   };
   const handleChange = (e) => {
-    e.persist();
+    // e.persist();
     const { name, value } = e.target;
     const newValue = value.replaceAll('.', '');
 
@@ -57,7 +57,7 @@ function FilterByPrice({ onChange }) {
         ...prevValues,
         // [name]: '0',
       }));
-    } else if (Number(newValue) <= 0) {
+    } else if (Number(newValue) < 0) {
       return setValues((prevValues) => ({
         ...prevValues,
       }));
@@ -137,8 +137,8 @@ function FilterByPrice({ onChange }) {
     }
     setValues((prevValues) => ({
       ...prevValues,
-      salePrice_gte: (prevValues.salePrice_gte = '0'),
-      salePrice_lte: (prevValues.salePrice_lte = '0'),
+      salePrice_gte: (prevValues.salePrice_gte = ''),
+      salePrice_lte: (prevValues.salePrice_lte = ''),
     }));
   };
   const formatCurrency = (price) => {

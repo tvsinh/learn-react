@@ -1,4 +1,12 @@
-import { Box, IconButton, makeStyles, Paper, TextField, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  IconButton,
+  makeStyles,
+  Paper,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { AddCircleOutline, DeleteForever, RemoveCircleOutline } from '@material-ui/icons';
 import { THUMBNAIL_PLACEHOLDER } from 'constants/index';
 import PropTypes from 'prop-types';
@@ -58,6 +66,73 @@ const useStyles = makeStyles((theme) => ({
   iconDel: {
     width: '50px',
   },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+    },
+  },
+  sectionMobile: {
+    display: 'block',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
+
+  rootMobile: {
+    margin: theme.spacing(0.5),
+    padding: theme.spacing(0.5),
+    borderBottom: '1px solid rgba(0,0,0,0.1)',
+    display: 'flex',
+  },
+  itemMobile: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100vw',
+    position: 'relative',
+  },
+  imgNameMobile: {
+    display: 'flex',
+  },
+  itemProductMobile: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  productNameMobile: {
+    marginLeft: '10px',
+    width: '150px',
+    display: '-webkit-box',
+    '-webkit-box-orient': 'vertical',
+    '-webkit-line-clamp': '2',
+    overflow: 'hidden',
+    '&:hover': {
+      color: 'rgb(0, 127, 240)',
+    },
+  },
+  boxQtyMobile: {
+    width: '150px',
+    display: 'flex',
+    flexFlow: 'row nowrap',
+    alignItems: 'center',
+  },
+  productPriceAndDel: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignContent: 'space-between',
+    justifyContent: 'space-between',
+    height: '100%',
+  },
+  productPriceMobile: {
+    // position: 'absolute',
+    // right: '2px',
+    // bottom: '0px',
+  },
+  delMobile: {
+    position: 'absolute',
+    right: '0',
+    bottom: '2px',
+  },
 }));
 
 function CartItem({ data }) {
@@ -99,46 +174,94 @@ function CartItem({ data }) {
     });
   };
   return (
-    <Box className={classes.root}>
-      {/* <Container container> */}
-      <Paper elevation={0} className={classes.item}>
-        <Box className={classes.itemProduct} onClick={handleOnClickProduct}>
-          <img
-            src={
-              data.product.thumbnail
-                ? `${STATIC_HOST}${data.product.thumbnail?.url}`
-                : THUMBNAIL_PLACEHOLDER
-            }
-            alt={data.product.name}
-            width="80px"
-          />
-          <Typography className={classes.productName}>{data.product.name}</Typography>
-        </Box>
+    <>
+      <Box className={classes.sectionDesktop}>
+        <Box className={classes.root}>
+          {/* <Container container> */}
+          <Paper elevation={0} className={classes.item}>
+            <Box className={classes.itemProduct} onClick={handleOnClickProduct}>
+              <img
+                src={
+                  data.product.thumbnail
+                    ? `${STATIC_HOST}${data.product.thumbnail?.url}`
+                    : THUMBNAIL_PLACEHOLDER
+                }
+                alt={data.product.name}
+                width="80px"
+              />
+              <Typography className={classes.productName}>{data.product.name}</Typography>
+            </Box>
 
-        <Typography className={classes.productPrice}>
-          {formatPrice(data.product.salePrice)}
-        </Typography>
+            <Typography className={classes.productPrice}>
+              {formatPrice(data.product.salePrice)}
+            </Typography>
 
-        <Box className={classes.boxQty}>
-          <IconButton onClick={handleDownQuantity}>
-            <RemoveCircleOutline />
-          </IconButton>
-          <TextField value={Number(data.quantity)} variant="outlined" size="small" />
-          <IconButton onClick={handleUpQuantity}>
-            <AddCircleOutline />
-          </IconButton>
+            <Box className={classes.boxQty}>
+              <IconButton onClick={handleDownQuantity}>
+                <RemoveCircleOutline />
+              </IconButton>
+              <TextField value={Number(data.quantity)} variant="outlined" size="small" />
+              <IconButton onClick={handleUpQuantity}>
+                <AddCircleOutline />
+              </IconButton>
+            </Box>
+            <Typography className={classes.productTotal}>
+              {formatPrice(data.product.salePrice * data.quantity)}
+            </Typography>
+            <Box size="small" className={classes.iconDel}>
+              <IconButton onClick={handleRemoveProduct}>
+                <DeleteForever />
+              </IconButton>
+            </Box>
+          </Paper>
+          {/* </Container> */}
         </Box>
-        <Typography className={classes.productTotal}>
-          {formatPrice(data.product.salePrice * data.quantity)}
-        </Typography>
-        <Box size="small" className={classes.iconDel}>
-          <IconButton onClick={handleRemoveProduct}>
-            <DeleteForever />
-          </IconButton>
+      </Box>
+
+      <Box className={classes.sectionMobile}>
+        <Box className={classes.rootMobile}>
+          <Box elevation={0} className={classes.itemMobile}>
+            <Box className={classes.imgNameMobile}>
+              <img
+                src={
+                  data.product.thumbnail
+                    ? `${STATIC_HOST}${data.product.thumbnail?.url}`
+                    : THUMBNAIL_PLACEHOLDER
+                }
+                alt={data.product.name}
+                width="80px"
+              />
+              <Box className={classes.itemProductMobile}>
+                <Typography className={classes.productNameMobile} onClick={handleOnClickProduct}>
+                  {data.product.name}
+                </Typography>
+                <Box className={classes.boxQtyMobile}>
+                  <IconButton onClick={handleDownQuantity}>
+                    <RemoveCircleOutline />
+                  </IconButton>
+                  <TextField value={Number(data.quantity)} variant="outlined" size="small" />
+                  <IconButton onClick={handleUpQuantity}>
+                    <AddCircleOutline />
+                  </IconButton>
+                </Box>
+              </Box>
+            </Box>
+
+            <Box className={classes.productPriceAndDel}>
+              <Box>
+                <Typography className={classes.productPriceMobile}>
+                  {formatPrice(data.product.salePrice)}
+                </Typography>
+              </Box>
+
+              <Box size="small" className={classes.delMobile}>
+                <Button onClick={handleRemoveProduct}>Xóa</Button>
+              </Box>
+            </Box>
+          </Box>
         </Box>
-      </Paper>
-      {/* </Container> */}
-    </Box>
+      </Box>
+    </>
   );
 }
 

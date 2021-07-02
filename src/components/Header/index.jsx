@@ -204,6 +204,9 @@ export default function Header() {
       pathname: '/',
     });
   };
+  const handleBack = () => {
+    history.goBack();
+  };
 
   // const handleProfileMenuOpen = (event) => {
   //   setAnchorEl(event.currentTarget);
@@ -303,7 +306,7 @@ export default function Header() {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar className={classes.toolbar}>
           {backIcon && (
-            <IconButton color="inherit" className={classes.sectionMobile} onClick={handleHome}>
+            <IconButton color="inherit" className={classes.sectionMobile} onClick={handleBack}>
               <ArrowBack />
             </IconButton>
           )}

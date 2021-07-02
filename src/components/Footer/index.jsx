@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#FFF',
   },
   footer: {
-    marginTop: '20px',
+    marginTop: '10px',
     padding: '0 0 20px 0',
     borderTop: 'solid 1px rgba(89, 89, 89, 0.2)',
   },

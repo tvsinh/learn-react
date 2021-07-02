@@ -24,29 +24,5 @@ const categoryApi = {
     const url = `/categories/${id}`;
     return axiosClient.delete(url);
   },
-  callApi(url, params, method) {
-    //params is an object contain all queryParams
-    return axiosClient({
-      method: method,
-      url: url,
-      data: params,
-    });
-  },
-
-  //còn nếu k muốn thì dùng async await:
-  async callApi(url, params, method) {
-    //params is an object contain all queryParams
-    try {
-      const { data } = axiosClient({
-        method: method,
-        url: url,
-        data: params,
-      });
-      return data
-    }
-    catch (err) {
-      return err.response.data
-    }
-  },
-}
+};
 export default categoryApi;

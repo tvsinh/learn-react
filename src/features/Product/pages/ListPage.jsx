@@ -1,5 +1,6 @@
 import { Box, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import { FilterList } from '@material-ui/icons';
+import { BiFilterAlt } from 'react-icons/bi';
+
 import { Pagination } from '@material-ui/lab';
 import productApi from 'api/productApi';
 import Header from 'components/Header';
@@ -56,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
   right: {
     flex: '1 1 0',
+    marginBottom: '10px',
   },
 
   pagination: {
@@ -73,6 +75,11 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '10px',
     marginTop: theme.spacing(7),
   },
+  iconSort: {
+    color: theme.palette.primary.main,
+    fontSize: '24px',
+    margin: theme.spacing(0, 0.1),
+  },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -80,12 +87,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   sectionMobile: {
+    zIndex: '2',
     display: 'block',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
   },
   overlay: {
+    zIndex: '1',
     position: 'fixed',
     top: '0',
     bottom: '0',
@@ -130,7 +139,7 @@ function ListPage() {
       } catch (error) {
         console.log('Failed to fetch product list: ', error);
       }
-      setLoading(false)
+      setLoading(false);
     })();
   }, [queryParams]);
   const handlePageChange = (e, page) => {
@@ -198,7 +207,7 @@ function ListPage() {
           <Typography>{queryParams['category.searchTerm']}</Typography>
         </Box>
       ) : null}
-      <Box pt={1} className={classes.sectionDesktop}>
+      <Box pt={1.1} className={classes.sectionDesktop}>
         <Container>
           <Grid container spacing={0}>
             <Grid item className={classes.left}>
@@ -238,7 +247,7 @@ function ListPage() {
         ) : null}
         <Box className={classes.sort}>
           <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
-          <FilterList color="primary" onClick={handleFilterBar} />
+          <BiFilterAlt color="primary" onClick={handleFilterBar} className={classes.iconSort} />
         </Box>
         <FilterViewer filters={queryParams} onChange={setNewFilters} />
 
