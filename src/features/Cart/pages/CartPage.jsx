@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionMobile: {
     display: 'block',
+    width: '100%',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -96,7 +97,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     padding: theme.spacing(8, 0, 20),
     marginBottom: theme.spacing(20),
-    width: '100%',
     minHeight: '500px',
   },
   rootCartMobile: {
@@ -105,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
   },
   userInfoMobile: {
-    width: '100%',
     backgroundColor: '#FFF',
     padding: theme.spacing(1),
   },

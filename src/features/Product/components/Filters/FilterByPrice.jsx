@@ -72,7 +72,7 @@ function FilterByPrice({ onChange }) {
     } else {
       setValues((prevValues) => ({
         ...prevValues,
-        [name]: formatCurrency(value),
+        [name]: formatCurrency(newValue),
         _page: 1, // Reset page to first
       }));
     }
@@ -143,7 +143,7 @@ function FilterByPrice({ onChange }) {
   };
   const formatCurrency = (price) => {
     if (!price) return '';
-    return new Intl.NumberFormat().format(price);
+    return new Intl.NumberFormat('de-DE').format(Number.parseInt(price));
   };
   return (
     <Box className={classes.root}>

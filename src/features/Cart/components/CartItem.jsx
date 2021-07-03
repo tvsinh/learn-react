@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
   productNameMobile: {
     marginLeft: '10px',
-    width: '150px',
+    width: 'auto',
     display: '-webkit-box',
     '-webkit-box-orient': 'vertical',
     '-webkit-line-clamp': '2',
@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxQtyMobile: {
-    width: '150px',
+    width: 'auto',
     display: 'flex',
     flexFlow: 'row nowrap',
     alignItems: 'center',
