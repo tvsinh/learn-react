@@ -49,6 +49,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: '10px',
   },
+  buttonBuy: {
+    color: '#fff',
+    backgroundColor: 'rgb(255, 66, 78)',
+    '&:hover': {
+      backgroundColor: 'rgb(255, 66, 78)',
+    },
+  },
   rootEmpty: {
     display: 'flex',
     padding: theme.spacing(0, 12, 10),
@@ -153,9 +160,13 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     padding: theme.spacing(1.2, 0),
     marginBottom: theme.spacing(0.1),
+    color: '#FFF',
     backgroundColor: 'rgb(255, 66, 78)',
     bottom: '0',
     width: '100%',
+    '&:hover': {
+      backgroundColor: 'rgb(255, 66, 78)',
+    },
   },
 }));
 
@@ -202,7 +213,9 @@ function CartPage(props) {
                 <Typography>Thành tiền: {formatPrice(cartTotal)}</Typography>
               </Paper>
               <Paper className={classes.button}>
-                <Button fullWidth>Mua hàng</Button>
+                <Button fullWidth className={classes.buttonBuy}>
+                  Mua hàng
+                </Button>
               </Paper>
             </Box>
           </Container>
@@ -236,7 +249,7 @@ function CartPage(props) {
                 <Typography className={classes.priceTotal}>{formatPrice(cartTotal)}</Typography>
               </Box>
               <Box className={classes.boxButtonMobile}>
-                <Button className={classes.buttonOrderMobile} variant="contained" color="primary">
+                <Button className={classes.buttonOrderMobile} variant="contained">
                   Mua hàng
                 </Button>
               </Box>

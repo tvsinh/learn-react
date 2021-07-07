@@ -29,12 +29,10 @@ function FilterByService({ filters = {}, onChange }) {
 
   const handleChange = (e) => {
     if (!onChange) return;
-
     const { name, checked } = e.target;
     onChange({
       [name]: checked,
       _page: 1, // Reset page to first
-      // 'category.searchTerm': null,
     });
   };
 
@@ -51,7 +49,8 @@ function FilterByService({ filters = {}, onChange }) {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={Boolean(filters[service.value])}
+                  // checked={Boolean(filters[service.value])}
+                  checked={filters[service.value] === 'true'}
                   onChange={handleChange}
                   name={service.value}
                   color="primary"

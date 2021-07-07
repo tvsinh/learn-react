@@ -4,8 +4,8 @@ const productApi = {
   async getAll(params) {
     // Transform _page to _start
     const newParams = { ...params };
-    newParams._start = !params._page || params._page <= 1
-     ? 0 : (params._page - 1) * (params._limit || 50);
+    newParams._start =
+      !params._page || params._page <= 1 ? 0 : (params._page - 1) * (params._limit || 50);
 
     // Remove un-needed key
     delete newParams._page;

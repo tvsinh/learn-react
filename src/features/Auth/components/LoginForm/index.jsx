@@ -54,6 +54,7 @@ function LoginForm(props) {
     defaultValues: {
       identifier: '',
       password: '',
+      username: '',
     },
     resolver: yupResolver(schema),
   });

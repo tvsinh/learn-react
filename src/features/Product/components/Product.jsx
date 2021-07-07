@@ -10,19 +10,42 @@ Product.propTypes = {
 };
 const useStyles = makeStyles((theme) => ({
   root: {},
+
   box_product: {
     cursor: 'pointer',
+    borderRight: 'solid 1px #f1f1f1',
+    // borderLeft: 'solid 1px #f1f1f1',
+    borderBottom: 'solid 1px #f1f1f1',
     // boxShadow: '0 1px 2px 0 rgba(0, 0, 0, .1)',
     '&:hover': {
       // opacity: 0.8,
       transform: 'translateY(-1.5px)',
-      boxShadow: '0 1px 20px 0 rgba(0, 0, 0, .1)',
+      boxShadow: '0 2px 12px 0 rgba(0, 0, 0, .12)',
     },
+  },
+  boxImg: {
+    position: 'relative',
+    width: '100%',
+    paddingTop: '100%',
+    marginBottom: '5px',
+  },
+  productImg: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    position: 'absolute',
+    // top: '0',
+    left: '0',
+    bottom: '0',
+    right: '0',
+    width: '100%',
+    height: '100%',
+    padding: '8px',
   },
   info: {
     height: '60px',
   },
   product_name: {
+    height: '40px',
     display: '-webkit-box',
     '-webkit-box-orient': 'vertical',
     '-webkit-line-clamp': '2',
@@ -33,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
 function Product({ product }) {
   const classes = useStyles();
   const history = useHistory();
-  const thumbnailUrl = product.thumbnail
-    ? `${STATIC_HOST}${product.thumbnail?.url}`
+  const thumbnailUrl = product.thumbnail[0]
+    ? `${STATIC_HOST}${product.thumbnail[0]?.url}`
     : THUMBNAIL_PLACEHOLDER;
 
   const handleClick = () => {
@@ -43,8 +66,8 @@ function Product({ product }) {
 
   return (
     <Box padding={1} onClick={handleClick} className={classes.box_product}>
-      <Box padding={1}>
-        <img src={thumbnailUrl} alt={product.name} width="100%" />
+      <Box padding={1} className={classes.boxImg}>
+        <img src={thumbnailUrl} alt={product.name} width="100%" className={classes.productImg} />
       </Box>
       <Box className={classes.info}>
         <Typography className={classes.product_name} variant="body2">

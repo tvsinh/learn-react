@@ -7,6 +7,7 @@ export const register = createAsyncThunk('user/register', async (payload) => {
 
   localStorage.setItem(StorageKeys.TOKEN, data.jwt);
   localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+  console.log('slice', data);
   return data.user;
 });
 

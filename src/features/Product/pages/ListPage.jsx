@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   left: {
     width: '250px',
     marginRight: '5px',
+    marginBottom: '10px',
   },
 
   right: {
@@ -110,15 +111,29 @@ function ListPage() {
   const location = useLocation();
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
+    if (params.isPromotion === 'false') {
+      delete params.isPromotion;
+      history.push({
+        pathname: history.location.pathname,
+        search: queryString.stringify(params),
+      });
+    }
+    if (params.isFreeShip === 'false') {
+      delete params.isFreeShip;
+      history.push({
+        pathname: history.location.pathname,
+        search: queryString.stringify(params),
+      });
+    }
     return {
       ...params,
       _page: Number.parseInt(params._page) || 1,
       _limit: Number.parseInt(params._limit) || 12,
-      _sort: params._sort || 'salePrice:ASC',
-      isPromotion: params.isPromotion === 'true',
-      isFreeShip: params.isFreeShip === 'true',
+      _sort: params._sort || 'salePrice:DESC',
+      isPromotion: params.isPromotion,
+      isFreeShip: params.isFreeShip,
     };
-  }, [location.search]);
+  }, [location.search, history]);
   const [filterBar, setFilterBar] = useState(false);
   const [overlay, setOverlay] = useState(false);
 
@@ -250,17 +265,18 @@ function ListPage() {
           <BiFilterAlt color="primary" onClick={handleFilterBar} className={classes.iconSort} />
         </Box>
         <FilterViewer filters={queryParams} onChange={setNewFilters} />
+        <Paper elevation={0}>
+          {loading ? <ProductSkeletonList length={12} /> : <ProductList data={productList} />}
 
-        {loading ? <ProductSkeletonList length={12} /> : <ProductList data={productList} />}
-
-        <Box className={classes.pagination}>
-          <Pagination
-            color="primary"
-            count={Math.ceil(pagination.total / pagination.limit)}
-            page={pagination.page}
-            onChange={handlePageChange}
-          ></Pagination>
-        </Box>
+          <Box className={classes.pagination}>
+            <Pagination
+              color="primary"
+              count={Math.ceil(pagination.total / pagination.limit)}
+              page={pagination.page}
+              onChange={handlePageChange}
+            ></Pagination>
+          </Box>
+        </Paper>
       </Box>
       <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
     </>

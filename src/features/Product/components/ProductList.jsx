@@ -13,8 +13,19 @@ ProductList.defaultProps = {
 
 function ProductList({ data }) {
   return (
-    <Box>
-      <Grid container>
+    <Box
+      style={{
+        borderLeft: 'solid 1px #FFF',
+        borderRight: 'solid 1px #FFF',
+      }}
+    >
+      <Grid
+        container
+        style={{
+          borderTop: 'solid 1px #f1f1f1',
+          borderLeft: 'solid 1px #f1f1f1',
+        }}
+      >
         {data.map((product) => (
           <Grid item key={product.id} xs={6} sm={6} md={4} lg={3}>
             <Product product={product} />

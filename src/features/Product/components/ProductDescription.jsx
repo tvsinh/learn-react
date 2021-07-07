@@ -9,6 +9,7 @@ ProductDescription.propTypes = {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: '10px',
+    marginBottom: '10px',
     padding: '10px',
     width: '100%',
     [theme.breakpoints.down('md')]: {

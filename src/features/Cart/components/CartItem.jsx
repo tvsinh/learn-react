@@ -95,6 +95,11 @@ const useStyles = makeStyles((theme) => ({
   imgNameMobile: {
     display: 'flex',
   },
+  imgMobile: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   itemProductMobile: {
     display: 'flex',
     flexDirection: 'column',
@@ -111,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxQtyMobile: {
-    width: 'auto',
+    width: '150px',
     display: 'flex',
     flexFlow: 'row nowrap',
     alignItems: 'center',
@@ -182,8 +187,8 @@ function CartItem({ data }) {
             <Box className={classes.itemProduct} onClick={handleOnClickProduct}>
               <img
                 src={
-                  data.product.thumbnail
-                    ? `${STATIC_HOST}${data.product.thumbnail?.url}`
+                  data.product.thumbnail[0]
+                    ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
                     : THUMBNAIL_PLACEHOLDER
                 }
                 alt={data.product.name}
@@ -222,15 +227,19 @@ function CartItem({ data }) {
         <Box className={classes.rootMobile}>
           <Box elevation={0} className={classes.itemMobile}>
             <Box className={classes.imgNameMobile}>
-              <img
-                src={
-                  data.product.thumbnail
-                    ? `${STATIC_HOST}${data.product.thumbnail?.url}`
-                    : THUMBNAIL_PLACEHOLDER
-                }
-                alt={data.product.name}
-                width="80px"
-              />
+              <Box className={classes.imgMobile}>
+                <img
+                  src={
+                    data.product.thumbnail[0]
+                      ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
+                      : THUMBNAIL_PLACEHOLDER
+                  }
+                  alt={data.product.name}
+                  width="80px"
+                  height="80px"
+                />
+              </Box>
+
               <Box className={classes.itemProductMobile}>
                 <Typography className={classes.productNameMobile} onClick={handleOnClickProduct}>
                   {data.product.name}

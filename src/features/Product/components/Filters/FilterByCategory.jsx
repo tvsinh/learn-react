@@ -35,13 +35,6 @@ function FilterByCategory({ onChange }) {
   const [categoryList, setCategoryList] = useState([]);
   const classes = useStyles();
 
-  // const queryParams = useMemo(() => {
-  //   const params = queryString.parse(location.search);
-  //   return {
-  //     ...params,
-  //   };
-  // }, [location.search]);
-
   useEffect(() => {
     (async () => {
       try {

@@ -17,7 +17,7 @@ function Login(props) {
   const handleSubmit = async (values) => {
     try {
       // auto set username = email
-      values.username = values.email;
+      values.username = values.identifier;
 
       const action = login(values);
       const resultAction = await dispatch(action);

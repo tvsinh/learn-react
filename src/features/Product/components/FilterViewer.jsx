@@ -30,7 +30,7 @@ const FILTER_LIST = [
   {
     id: 1,
     getLabel: () => 'Giao hàng miễn phí',
-    isActive: (filters) => filters.isFreeShip,
+    isActive: (filters) => filters.isFreeShip === 'true',
     isVisible: () => true,
     isRemovable: false,
     onRemove: () => {},
@@ -49,7 +49,7 @@ const FILTER_LIST = [
     id: 2,
     getLabel: () => 'Có khuyến mãi',
     isActive: () => true,
-    isVisible: (filters) => filters.isPromotion,
+    isVisible: (filters) => filters.isPromotion === 'true',
     isRemovable: true,
     onRemove: (filters) => {
       const newFilters = { ...filters };

@@ -67,7 +67,7 @@ function DetailPage() {
     url,
   } = useRouteMatch();
   // const matchs = useRouteMatch();
-  // console.log(matchs);
+  console.log(productId);
   const { product, loading } = useProductDetail(productId);
 
   if (loading) {

@@ -87,6 +87,8 @@ function FilterByPrice({ onChange }) {
 
     if (Number(gte) < 0 || Number(lte) < 0) {
       return null;
+    } else if ((Number(gte) === 0) & (Number(lte) === 0)) {
+      return null;
     } else if (values.salePrice_gte.includes('.') & !values.salePrice_lte.includes('.')) {
       const valueGte = values.salePrice_gte.replaceAll('.', '');
       const valueLte = values.salePrice_lte;
@@ -143,7 +145,7 @@ function FilterByPrice({ onChange }) {
   };
   const formatCurrency = (price) => {
     if (!price) return '';
-    return new Intl.NumberFormat('de-DE').format(Number.parseInt(price));
+    return new Intl.NumberFormat('de-DE').format(price);
   };
   return (
     <Box className={classes.root}>
