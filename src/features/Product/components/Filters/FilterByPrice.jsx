@@ -78,16 +78,10 @@ function FilterByPrice({ onChange }) {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.persist();
-
-    const gte = values.salePrice_gte;
-    const lte = values.salePrice_lte;
-    console.log('global', gte, lte);
-
-    if (Number(gte) < 0 || Number(lte) < 0) {
+  const handleSubmit = () => {
+    if (Number(values.salePrice_gte) < 0 || Number(values.salePrice_lte) < 0) {
       return null;
-    } else if ((Number(gte) === 0) & (Number(lte) === 0)) {
+    } else if ((Number(values.salePrice_gte) === 0) & (Number(values.salePrice_lte) === 0)) {
       return null;
     } else if (values.salePrice_gte.includes('.') & !values.salePrice_lte.includes('.')) {
       const valueGte = values.salePrice_gte.replaceAll('.', '');
@@ -129,7 +123,9 @@ function FilterByPrice({ onChange }) {
         if (onChange) onChange(values);
       }
     } else {
-      if (Number(gte) > Number(lte)) {
+      if (Number(values.salePrice_gte) > Number(values.salePrice_lte)) {
+        const gte = values.salePrice_gte;
+        const lte = values.salePrice_lte;
         values.salePrice_gte = lte;
         values.salePrice_lte = gte;
         if (onChange) onChange(values);

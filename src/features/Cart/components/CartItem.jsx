@@ -163,6 +163,12 @@ function CartItem({ data }) {
       });
       dispatch(action);
     }
+    if (newQuantity === 0) {
+      const action = removeFromCart({
+        idNeedToRemove: data.product.id,
+      });
+      dispatch(action);
+    }
   };
   const handleRemoveProduct = () => {
     const action = removeFromCart({

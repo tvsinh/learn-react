@@ -143,12 +143,17 @@ export default function Header() {
 
   useEffect(() => {
     const params = queryString.parse(location.search);
-    const pathname = queryString.parse(location.pathname);
-    if (params['category.searchTerm'] || Object.keys(pathname)[0] !== '/products') {
+    const origin = window.location.origin;
+    const href = window.location.href;
+    if (params['category.searchTerm'] || href !== `${origin}/products`) {
       setBackIcon(true);
     }
+    if (href === `${origin}/products?_limit=12&_page=1&_sort=salePrice%3AASC`) {
+      setBackIcon(false);
+    }
+
     return null;
-  }, [location.search, location.pathname]);
+  }, [location.search, location.href, location.origin]);
 
   // end backIcon
   const loggedInUser = useSelector((state) => state.user.current);

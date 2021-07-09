@@ -11,16 +11,19 @@ ProductSort.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down('md')]: {
-      minHeight: '6vh',
+      minHeight: '35px',
       padding: theme.spacing(0),
       margin: theme.spacing(0),
     },
   },
   sort: {
     [theme.breakpoints.down('md')]: {
-      minHeight: '6vh',
+      minHeight: '35px',
       padding: theme.spacing(0, 1),
       fontSize: '12.9px',
+    },
+    [theme.breakpoints.between('sm', 'md')]: {
+      marginTop: theme.spacing(1),
     },
   },
 }));

@@ -11,16 +11,24 @@ Product.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {},
 
-  box_product: {
+  boxProduct: {
     cursor: 'pointer',
     borderRight: 'solid 1px #f1f1f1',
-    // borderLeft: 'solid 1px #f1f1f1',
     borderBottom: 'solid 1px #f1f1f1',
-    // boxShadow: '0 1px 2px 0 rgba(0, 0, 0, .1)',
     '&:hover': {
-      // opacity: 0.8,
-      transform: 'translateY(-1.5px)',
+      // transform: 'translateY(-1.5px)',
       boxShadow: '0 2px 12px 0 rgba(0, 0, 0, .12)',
+    },
+    '&:hover $productName': {
+      color: '#288ad6',
+    },
+    '&:hover $productImg': {
+      transform: 'scale(1.05)',
+    },
+  },
+  hover: {
+    '&:hover': {
+      color: theme.palette.primary.main,
     },
   },
   boxImg: {
@@ -42,14 +50,19 @@ const useStyles = makeStyles((theme) => ({
     padding: '8px',
   },
   info: {
-    height: '60px',
+    height: '80px',
   },
-  product_name: {
+  productName: {
+    fontWeight: '500',
     height: '40px',
     display: '-webkit-box',
     '-webkit-box-orient': 'vertical',
     '-webkit-line-clamp': '2',
     overflow: 'hidden',
+  },
+  originalPrice: {
+    marginRight: theme.spacing(1),
+    textDecoration: 'line-through',
   },
 }));
 
@@ -65,21 +78,31 @@ function Product({ product }) {
   };
 
   return (
-    <Box padding={1} onClick={handleClick} className={classes.box_product}>
-      <Box padding={1} className={classes.boxImg}>
-        <img src={thumbnailUrl} alt={product.name} width="100%" className={classes.productImg} />
-      </Box>
-      <Box className={classes.info}>
-        <Typography className={classes.product_name} variant="body2">
-          {product.name}
-        </Typography>
-        <Typography variant="body2">
-          <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
-            {formatPrice(product.salePrice)}
-          </Box>
-
-          {product.promotionPercent > 0 ? ` -${product.promotionPercent}%` : ''}
-        </Typography>
+    <Box padding={1} onClick={handleClick} className={classes.boxProduct}>
+      <Box>
+        <Box padding={1} className={classes.boxImg}>
+          <img src={thumbnailUrl} alt={product.name} width="100%" className={classes.productImg} />
+        </Box>
+        <Box className={classes.info}>
+          <Typography className={classes.productName} variant="body2">
+            {product.name}
+          </Typography>
+          <Typography variant="body2">
+            <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
+              {formatPrice(product.salePrice)}
+            </Box>
+            <Box>
+              {product.promotionPercent > 0 ? (
+                <Box component="span" fontSize="12px" className={classes.originalPrice}>
+                  {formatPrice(product.originalPrice)}
+                </Box>
+              ) : (
+                ''
+              )}
+              {product.promotionPercent > 0 ? ` -${product.promotionPercent}%` : ''}
+            </Box>
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

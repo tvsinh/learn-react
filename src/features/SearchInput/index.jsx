@@ -75,6 +75,8 @@ function SearchInput({ onSubmit = {} }) {
     if (params['category.searchTerm']) {
       const valueSearch = params['category.searchTerm'];
       setSearchTerm(valueSearch);
+    } else {
+      setSearchTerm('');
     }
   }, [location.search]);
 
@@ -92,7 +94,7 @@ function SearchInput({ onSubmit = {} }) {
       } else {
         return null;
       }
-    }, 300);
+    }, 500);
   };
   const handleOnkeyUp = (e) => {
     // if (e.keyCode === 13) {

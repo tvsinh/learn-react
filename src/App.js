@@ -1,4 +1,3 @@
-import Footer from 'components/Footer';
 import ProductFeature from 'features/Product';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
@@ -23,7 +22,6 @@ function App() {
 
           <Route component={NotFound} />
         </Switch>
-        <Footer />
       </div>
       {/* <script>window.onbeforeunload(function(){window.scrollTo({ top: 0 })});</script> */}
       <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>

@@ -1,4 +1,5 @@
 import { Box, Container, Grid, LinearProgress, makeStyles, Paper, Button } from '@material-ui/core';
+import Footer from 'components/Footer';
 import Header from 'components/Header';
 import { addToCart, hideMiniCart, showMiniCart } from 'features/Cart/cartSlice';
 import React from 'react';
@@ -98,40 +99,43 @@ function DetailPage() {
   };
 
   return (
-    <Box onClick={handleHideMiniCart}>
-      <Header />
-      <Box pt={3}>
-        <Container className={classes.root}>
-          <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
-            Trở lại
-          </Button>
-          <Paper elevation={0}>
-            <Grid container>
-              <Grid item className={classes.left}>
-                <ProductThumbnail product={product} width="100%" />
+    <>
+      <Box onClick={handleHideMiniCart}>
+        <Header />
+        <Box pt={3}>
+          <Container className={classes.root}>
+            <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
+              Trở lại
+            </Button>
+            <Paper elevation={0}>
+              <Grid container>
+                <Grid item className={classes.left}>
+                  <ProductThumbnail product={product} width="100%" />
+                </Grid>
+
+                <Grid item className={classes.right}>
+                  <ProductInfo product={product} />
+                  <AddToCartForm onSubmit={handleAddToCartSubmit} />
+                </Grid>
               </Grid>
+            </Paper>
 
-              <Grid item className={classes.right}>
-                <ProductInfo product={product} />
-                <AddToCartForm onSubmit={handleAddToCartSubmit} />
-              </Grid>
-            </Grid>
-          </Paper>
+            <ProductMenu />
 
-          <ProductMenu />
+            <Switch>
+              <Route exact path={url}>
+                <ProductDescription product={product} />
+              </Route>
 
-          <Switch>
-            <Route exact path={url}>
-              <ProductDescription product={product} />
-            </Route>
-
-            <Route path={`${url}/additional`} component={ProductAdditional} />
-            <Route path={`${url}/reviews`} component={ProductReviews} />
-          </Switch>
-        </Container>
+              <Route path={`${url}/additional`} component={ProductAdditional} />
+              <Route path={`${url}/reviews`} component={ProductReviews} />
+            </Switch>
+          </Container>
+        </Box>
       </Box>
+      <Footer />
       <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
-    </Box>
+    </>
   );
 }
 

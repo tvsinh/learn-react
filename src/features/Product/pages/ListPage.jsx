@@ -12,6 +12,7 @@ import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
+import Footer from 'components/Footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -129,7 +130,7 @@ function ListPage() {
       ...params,
       _page: Number.parseInt(params._page) || 1,
       _limit: Number.parseInt(params._limit) || 12,
-      _sort: params._sort || 'salePrice:DESC',
+      _sort: params._sort || 'salePrice:ASC',
       isPromotion: params.isPromotion,
       isFreeShip: params.isFreeShip,
     };
@@ -278,6 +279,7 @@ function ListPage() {
           </Box>
         </Paper>
       </Box>
+      <Footer/>
       <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
     </>
   );

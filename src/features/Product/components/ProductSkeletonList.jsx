@@ -9,12 +9,13 @@ ProductSkeletonList.propTypes = {
 };
 const useStyles = makeStyles((theme) => ({
   box: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.5),
   },
   boxImg: {
     position: 'relative',
     width: '100%',
     paddingTop: '100%',
+    marginBottom: '5px',
   },
   productImg: {
     position: 'absolute',
@@ -25,6 +26,16 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     padding: '8px',
+  },
+  boxText: {
+    height: '80px',
+  },
+  boxName: {
+    height: '40px',
+  },
+  textName: {
+    height: '21px',
+    lineHeight: '1.43',
   },
   text: {
     height: '21px',
@@ -44,9 +55,13 @@ function ProductSkeletonList({ length = 6 }) {
                   <Skeleton variant="rect" className={classes.productImg} />
                 </Box>
               </Box>
-              <Box>
-                <Skeleton className={classes.text} />
-                <Skeleton width="60%" className={classes.text} />
+              <Box className={classes.boxText}>
+                <Box className={classes.boxName}>
+                  <Skeleton className={classes.textName} />
+                  <Skeleton width="95%" className={classes.textName} />
+                </Box>
+                <Skeleton width="50%" className={classes.text} />
+                <Skeleton width="45%" className={classes.text} />
               </Box>
             </Box>
           </Grid>

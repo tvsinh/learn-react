@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     maxWidth: '200px',
   },
+  input: {
+    width: '80px',
+  },
 }));
 
 function QuantityField(props) {
@@ -58,6 +61,7 @@ function QuantityField(props) {
               value={value}
               onChange={onChange}
               onBlur={onBlur}
+              className={classes.input}
             />
 
             <IconButton
