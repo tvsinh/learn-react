@@ -23,7 +23,7 @@ function CategorySkeletonList({ length = 6 }) {
     <Box>
       <Grid container className={classes.root}>
         {Array.from(new Array(length)).map((x, index) => (
-          <Skeleton key={index} variant="text" width="45%" className={classes.skeleton} />
+          <Skeleton key={index} variant="text" width={100} className={classes.skeleton} />
         ))}
       </Grid>
     </Box>

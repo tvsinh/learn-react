@@ -26,11 +26,6 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(1.05)',
     },
   },
-  hover: {
-    '&:hover': {
-      color: theme.palette.primary.main,
-    },
-  },
   boxImg: {
     position: 'relative',
     width: '100%',

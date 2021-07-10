@@ -66,6 +66,7 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
   };
 
   const handeChange = (values) => {
+    console.log(values);
     if (onChange) onChange(values);
   };
 

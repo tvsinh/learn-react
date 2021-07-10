@@ -50,12 +50,10 @@ function FilterByPrice({ onChange }) {
     if (isNaN(Number(newValue))) {
       return setValues((prevValues) => ({
         ...prevValues,
-        // [name]: '0',
       }));
     } else if (Number(newValue) === undefined) {
       return setValues((prevValues) => ({
         ...prevValues,
-        // [name]: '0',
       }));
     } else if (Number(newValue) < 0) {
       return setValues((prevValues) => ({

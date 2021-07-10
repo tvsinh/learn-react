@@ -19,10 +19,13 @@ const useStyles = makeStyles((theme) => ({
       transition: 'all .25s',
 
       '&:hover': {
-        color: theme.palette.primary.dark,
+        color: '#288ad6',
         cursor: 'pointer',
       },
     },
+  },
+  categoryName: {
+    fontWeight: '400',
   },
 }));
 
@@ -68,7 +71,9 @@ function FilterByCategory({ onChange }) {
         <ul className={classes.menu}>
           {categoryList.map((category) => (
             <li key={category.id} onClick={() => handleCategoryClick(category)}>
-              <Typography variant="body2">{category.name}</Typography>
+              <Typography variant="body2" className={classes.categoryName}>
+                {category.name}
+              </Typography>
             </li>
           ))}
         </ul>

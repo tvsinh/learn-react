@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'fixed',
     width: '100%',
-    zIndex: '1',
+    zIndex: '2',
     top: '0',
     [theme.breakpoints.up('md')]: {
       position: 'static',
