@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
   boxName: {
     height: '40px',
+    marginBottom: '5px',
   },
+  boxPrice: {},
   textName: {
-    height: '21px',
+    height: '22px',
     lineHeight: '1.43',
   },
   text: {
@@ -60,8 +62,9 @@ function ProductSkeletonList({ length = 6 }) {
                   <Skeleton className={classes.textName} />
                   <Skeleton width="95%" className={classes.textName} />
                 </Box>
-                <Skeleton width="50%" className={classes.text} />
-                <Skeleton width="45%" className={classes.text} />
+                <Box className={classes.boxPrice}>
+                  <Skeleton width="60%" className={classes.text} />
+                </Box>
               </Box>
             </Box>
           </Grid>

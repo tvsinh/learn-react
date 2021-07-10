@@ -83,11 +83,7 @@ function Footer() {
                 <a href="https://www.instagram.com/__t.v.s/" target="_blank" rel="noreferrer">
                   <img src="/instagram.png" alt="logo" width="32px" height="32px" />
                 </a>
-                <a
-                  href="https://www.youtube.com/channel/UCrZEm3wX6sIlklaSNme4niw"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="https://www.youtube.com/" target="_blank" rel="noreferrer">
                   <img src="/youtube.png" alt="logo" width="32px" height="32px" />
                 </a>
                 <a href="https://www.twitter.com/" target="_blank" rel="noreferrer">
