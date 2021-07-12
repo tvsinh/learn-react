@@ -5,79 +5,115 @@ import queryString from 'query-string';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
 import TodoForm from '../../components/TodoForm';
+import todosApi from './../../../../api/todoApi';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import TodoFormEdit from './../../components/TodoFormEdit/index';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
+    },
+  },
+  loading: {
+    display: 'flex',
+    marginTop: '50%',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+  },
+}));
 
 ListPage.propTypes = {};
 
 function ListPage(props) {
-  // const initTodoLists = [
-  //   {
-  //     id: 1,
-  //     title: 'Eat',
-  //     status: 'new',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Sleep',
-  //     status: 'completed',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'Code',
-  //     status: 'new',
-  //   },
-  // ];
-  // localStorage.setItem('initTodoLists', JSON.stringify(initTodoList));
-
-  const localTodoLists = JSON.parse(localStorage.getItem('localTodoLists'));
-  const location = useLocation();
+  const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const match = useRouteMatch();
-  const [todoList, setTodoList] = useState(localTodoLists || []);
-  const [filteredStatus, setFilteredStatus] = useState(() => {
-    const params = queryString.parse(history.location.search);
-    //location.search: ?status=all
-    //params: {status: "all"}
-    return params.status || 'all';
-  });
+  const [todoList, setTodoList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [reLoad, setReLoad] = useState(false);
+  const [titleEdit, setTitleEdit] = useState('');
+  const [idEdit, setIDEdit] = useState('');
+  const [disableEdit, setDisableEdit] = useState(false);
 
-  useEffect(() => {
+  // const [filteredStatus, setFilteredStatus] = useState(() => {
+  //   const params = queryString.parse(history.location.search);
+  //   return params.status || 'all';
+  // });
+  // const renderedTodoList = useMemo(() => {
+  //   return todoList.filter((todo) => filteredStatus === 'all' || filteredStatus === todo.status);
+  // }, [todoList, filteredStatus]);
+  const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
-    setFilteredStatus(params.status || 'all');
+    return {
+      ...params,
+      status: params.status,
+    };
   }, [location.search]);
 
-  const handleTodoClick = (todo, idx) => {
-    // clone current array to the new one
-    const newTodoList = [...todoList];
-    // toggle state
-    newTodoList[idx] = {
-      ...newTodoList[idx],
-      status: newTodoList[idx].status === 'new' ? 'completed' : 'new',
-    };
-    // update todo list
-    setTodoList(newTodoList);
-    localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
-  };
-  const handleTodoDel = (todo, idx) => {
-    const { id } = todo;
-    console.log(id);
-    const newTodoList = todoList.filter((todo) => todo.id !== id);
+  useEffect(() => {
+    (async () => {
+      try {
+        const todos = await todosApi.getAll(queryParams);
+        setTodoList(todos);
+        console.log(todos);
+      } catch (error) {
+        console.log('Failed to fetch todos: ', error);
+      }
+      setReLoad(false);
+      setLoading(false);
+    })();
+  }, [queryParams, reLoad]);
 
-    // update todo list
-    setTodoList(newTodoList);
-    localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
+  const handleTodoClick = (todo) => {
+    const newTodo = {
+      id: todo.id,
+      status: todo.status === 'new' ? 'completed' : 'new',
+    };
+    todosApi.update(newTodo);
+    setReLoad(true);
+  };
+
+  const handleTodoDel = (todo) => {
+    todosApi.remove(todo.id);
+    setReLoad(true);
+  };
+  const handleTodoEdit = (todo) => {
+    setTitleEdit(todo.title);
+    setIDEdit(todo.id);
+    setDisableEdit(true);
+    // setReLoad(true);
+  };
+  const handleEditSubmit = (values) => {
+    // console.log('listpage:', values, idEdit);
+    const newTodo = {
+      id: idEdit,
+      title: values.title,
+    };
+    todosApi.update(newTodo);
+    setTitleEdit('');
+    setIDEdit('');
+    setReLoad(true);
+    setDisableEdit(false);
+  };
+  const handleCancelClick = () => {
+    setTitleEdit('');
+    setIDEdit('');
+    setReLoad(true);
+    setDisableEdit(false);
   };
 
   const handleShowAllClick = () => {
-    // setFilteredStatus('all');
-    const queryParams = { status: 'all' };
     history.push({
       pathname: match.path,
-      search: queryString.stringify(queryParams),
     });
+    setReLoad(true);
   };
 
   const handleShowCompletedClick = () => {
-    // setFilteredStatus('completed');
     const queryParams = { status: 'completed' };
     history.push({
       pathname: match.path,
@@ -86,7 +122,6 @@ function ListPage(props) {
   };
 
   const handleShowNewClick = () => {
-    // setFilteredStatus('new');
     const queryParams = { status: 'new' };
     history.push({
       pathname: match.path,
@@ -94,40 +129,47 @@ function ListPage(props) {
     });
   };
 
-  const renderedTodoList = useMemo(() => {
-    return todoList.filter((todo) => filteredStatus === 'all' || filteredStatus === todo.status);
-  }, [todoList, filteredStatus]);
-
   const handleTodoFormSubmit = (values) => {
-    const newTodo = {
-      id: todoList.length + 1,
-      title: values.title,
-      status: 'new',
-    };
-
-    const newTodoList = [...todoList, newTodo];
-    setTodoList(newTodoList);
-    localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
+    // console.log(values);
+    todosApi.add(values);
+    setReLoad(true);
   };
+
   if (todoList.length) {
     return (
-      <div>
-        <h3>What to do</h3>
-        <TodoForm onSubmit={handleTodoFormSubmit} />
+      <>
+        {loading ? (
+          <CircularProgress className={classes.loading} />
+        ) : (
+          <div>
+            <h3>What to do</h3>
+            {titleEdit ? (
+              <TodoFormEdit
+                onSubmit={handleEditSubmit}
+                onClick={handleCancelClick}
+                titleEdit={titleEdit}
+              />
+            ) : (
+              <TodoForm onSubmit={handleTodoFormSubmit} />
+            )}
 
-        <h3>Todo List</h3>
-        <TodoList
-          todoList={renderedTodoList}
-          onTodoClick={handleTodoClick}
-          onTodoDel={handleTodoDel}
-        />
+            <h3>Todo List</h3>
+            <TodoList
+              todoList={todoList}
+              onTodoClick={handleTodoClick}
+              onTodoDel={handleTodoDel}
+              onTodoEdit={handleTodoEdit}
+              disableEdit={disableEdit}
+            />
 
-        <div>
-          <button onClick={handleShowAllClick}>Show All</button>
-          <button onClick={handleShowCompletedClick}>Show Completed</button>
-          <button onClick={handleShowNewClick}>Show New</button>
-        </div>
-      </div>
+            <div>
+              <button onClick={handleShowAllClick}>Show All</button>
+              <button onClick={handleShowCompletedClick}>Show Completed</button>
+              <button onClick={handleShowNewClick}>Show New</button>
+            </div>
+          </div>
+        )}
+      </>
     );
   } else {
     return (

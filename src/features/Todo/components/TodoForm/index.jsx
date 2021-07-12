@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { Button } from '@material-ui/core';
 
 TodoForm.propTypes = {
   onSubmit: PropTypes.func,
 };
 
-function TodoForm(props) {
+function TodoForm({ onSubmit }) {
   const schema = yup.object().shape({
     title: yup
       .string()
@@ -24,7 +25,6 @@ function TodoForm(props) {
   });
 
   const handleSubmit = (values) => {
-    const { onSubmit } = props;
     if (onSubmit) {
       onSubmit(values);
     }
@@ -36,6 +36,9 @@ function TodoForm(props) {
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
       <InputField name="title" label="Todo" form={form} />
+      <Button variant="outlined" type="submit">
+        Add Todo
+      </Button>
     </form>
   );
 }

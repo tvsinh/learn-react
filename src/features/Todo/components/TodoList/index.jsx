@@ -7,40 +7,41 @@ TodoList.propTypes = {
   todoList: PropTypes.array,
   onTodoClick: PropTypes.func,
   onTodoDel: PropTypes.func,
+  onTodoEdit: PropTypes.func,
+  disableEdit: PropTypes.bool,
 };
 
-TodoList.defaultProps = {
-  todoList: [],
-  onTodoClick: null,
-  onTodoDel: null,
-};
-
-function TodoList({ todoList, onTodoClick, onTodoDel }) {
-  const handleTodoClick = (todo, idx) => {
+function TodoList({ todoList = [], onTodoClick, onTodoDel, onTodoEdit, disableEdit }) {
+  const handleTodoClick = (todo) => {
     if (!onTodoClick) return;
-
-    onTodoClick(todo, idx);
+    onTodoClick(todo);
   };
-  const handleTodoDel = (todo, idx) => {
+  const handleTodoDel = (todo) => {
     if (!onTodoDel) return;
-
-    onTodoDel(todo, idx);
+    onTodoDel(todo);
+  };
+  const handleTodoEdit = (todo) => {
+    if (!onTodoEdit) return;
+    onTodoEdit(todo);
   };
 
   return (
     <ul className="todo-list">
-      {todoList.map((todo, idx) => (
+      {todoList.map((todo) => (
         <div key={todo.id}>
           <li
             className={classnames({
               'todo-item': true,
               completed: todo.status === 'completed',
             })}
-            onClick={() => handleTodoClick(todo, idx)}
+            onClick={() => handleTodoClick(todo)}
           >
             {todo.title}
           </li>
-          <button onClick={() => handleTodoDel(todo, idx)}>&#10006;</button>
+          <button onClick={() => handleTodoEdit(todo)} disabled={disableEdit}>
+            &#9998;
+          </button>
+          <button onClick={() => handleTodoDel(todo)}>&#10006;</button>
         </div>
       ))}
     </ul>

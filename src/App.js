@@ -12,11 +12,11 @@ function App() {
     <>
       <div className="app">
         <Switch>
-          <Redirect from="/" to="/products" exact />
+          <Redirect from="/" to="/todos" exact />
           <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
 
-          <Route path="/products" component={ProductFeature} />
           <Route path="/todos" component={TodoFeature} />
+          <Route path="/products" component={ProductFeature} />
           <Route path="/cart" component={CartFeature} />
           <Route path="/account" component={AccountFeature} />
 
