@@ -35,7 +35,7 @@ function TodoForm({ onSubmit }) {
 
   return (
     <form onSubmit={form.handleSubmit(handleSubmit)}>
-      <InputField name="title" label="Todo" form={form} />
+      <InputField name="title" label="Enter New Todo" form={form} />
       <Button variant="outlined" type="submit">
         Add Todo
       </Button>

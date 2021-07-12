@@ -41,7 +41,9 @@ function TodoList({ todoList = [], onTodoClick, onTodoDel, onTodoEdit, disableEd
           <button onClick={() => handleTodoEdit(todo)} disabled={disableEdit}>
             &#9998;
           </button>
-          <button onClick={() => handleTodoDel(todo)}>&#10006;</button>
+          <button onClick={() => handleTodoDel(todo)} disabled={disableEdit}>
+            &#10006;
+          </button>
         </div>
       ))}
     </ul>

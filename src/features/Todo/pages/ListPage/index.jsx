@@ -9,15 +9,10 @@ import todosApi from './../../../../api/todoApi';
 import TodoFormEdit from './../../components/TodoFormEdit/index';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& > * + *': {
-      marginLeft: theme.spacing(2),
-    },
-  },
+  root: {},
   loading: {
     display: 'flex',
-    marginTop: '50%',
+    marginTop: '45vh',
     marginRight: 'auto',
     marginLeft: 'auto',
   },
@@ -101,8 +96,8 @@ function ListPage(props) {
     setDisableEdit(false);
   };
   const handleCancelClick = () => {
-    setTitleEdit('');
     setIDEdit('');
+    setTitleEdit('');
     setReLoad(true);
     setDisableEdit(false);
   };
@@ -136,25 +131,26 @@ function ListPage(props) {
     setReLoad(true);
   };
 
-  if (todoList.length) {
-    return (
-      <>
-        {loading ? (
-          <CircularProgress className={classes.loading} />
-        ) : (
-          <div>
-            <h3>What to do</h3>
-            {titleEdit ? (
-              <TodoFormEdit
-                onSubmit={handleEditSubmit}
-                onClick={handleCancelClick}
-                titleEdit={titleEdit}
-              />
-            ) : (
-              <TodoForm onSubmit={handleTodoFormSubmit} />
-            )}
+  // if (todoList.length) {
+  return (
+    <>
+      {loading ? (
+        <CircularProgress className={classes.loading} />
+      ) : (
+        <div>
+          <h3>What Todo</h3>
+          {titleEdit ? (
+            <TodoFormEdit
+              onSubmit={handleEditSubmit}
+              onClick={handleCancelClick}
+              titleEdit={titleEdit}
+            />
+          ) : (
+            <TodoForm onSubmit={handleTodoFormSubmit} />
+          )}
 
-            <h3>Todo List</h3>
+          <h3>Todo List</h3>
+          {todoList.length ? (
             <TodoList
               todoList={todoList}
               onTodoClick={handleTodoClick}
@@ -162,25 +158,34 @@ function ListPage(props) {
               onTodoEdit={handleTodoEdit}
               disableEdit={disableEdit}
             />
+          ) : (
+            <p>Todo empty. Select Show Opiton or Add new todo on form.</p>
+          )}
 
-            <div>
-              <button onClick={handleShowAllClick}>Show All</button>
-              <button onClick={handleShowCompletedClick}>Show Completed</button>
-              <button onClick={handleShowNewClick}>Show New</button>
-            </div>
+          <div>
+            <button onClick={handleShowAllClick} style={{ marginRight: '5px' }}>
+              Show All
+            </button>
+            <button onClick={handleShowCompletedClick} style={{ marginRight: '5px' }}>
+              Show Completed
+            </button>
+            <button onClick={handleShowNewClick}>Show New</button>
           </div>
-        )}
-      </>
-    );
-  } else {
-    return (
-      <div>
-        <h3>What to do</h3>
-        <TodoForm onSubmit={handleTodoFormSubmit} />
-        <p>To do empty. Add new to do on form.</p>
-      </div>
-    );
-  }
+        </div>
+      )}
+    </>
+  );
+  // } else {
+  //   return (
+  //     <div>
+  //       <h3>What to do</h3>
+  //       <TodoForm onSubmit={handleTodoFormSubmit} />
+  //       <h3>Todo List</h3>
+  //       <p>Todo empty. Select Show All or Add new todo on form.</p>
+  //       <button onClick={handleShowAllClick}>Show All</button>
+  //     </div>
+  //   );
+  // }
 }
 
 export default ListPage;
