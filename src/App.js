@@ -12,7 +12,7 @@ function App() {
     <>
       <div className="app">
         <Switch>
-          <Redirect from="/" to="/todos" exact />
+          <Redirect from="/" to="/products" exact />
           <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
 
           <Route path="/todos" component={TodoFeature} />

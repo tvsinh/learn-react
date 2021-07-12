@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import TodoList from '../../components/TodoList';
-import queryString from 'query-string';
-import { useEffect } from 'react';
-import { useMemo } from 'react';
-import TodoForm from '../../components/TodoForm';
-import todosApi from './../../../../api/todoApi';
-import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import queryString from 'query-string';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import TodoForm from '../../components/TodoForm';
+import TodoList from '../../components/TodoList';
+import todosApi from './../../../../api/todoApi';
 import TodoFormEdit from './../../components/TodoFormEdit/index';
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +58,9 @@ function ListPage(props) {
         const todos = await todosApi.getAll(queryParams);
         setTodoList(todos);
         console.log(todos);
+        // if (todos.length === 0) {
+        //   window.location.reload();
+        // }
       } catch (error) {
         console.log('Failed to fetch todos: ', error);
       }
