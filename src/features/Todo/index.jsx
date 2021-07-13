@@ -10,7 +10,6 @@ function TodoFeature(props) {
 
   return (
     <div style={{ margin: '10vh 20vw', height: 'auto' }}>
-      {/* TODO SHARED UI */}
       <Switch>
         <Route path={match.path} component={ListPage} exact />
         <Route component={NotFound} />

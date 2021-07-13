@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Product from './Product';
 
+
 ProductList.propTypes = {
   data: PropTypes.array,
 };

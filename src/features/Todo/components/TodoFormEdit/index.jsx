@@ -21,10 +21,10 @@ function TodoFormEdit({ onSubmit, onClick, titleEdit = '' }) {
   });
 
   const form = useForm({
-    // do not set defaultValues, because form did not change.
-    // defaultValues: {
-    //   title: titleEdit,
-    // },
+    // set defaultValues, because form did not change (onClick edit).
+    defaultValues: {
+      title: titleEdit,
+    },
     resolver: yupResolver(schema),
   });
 
@@ -46,10 +46,15 @@ function TodoFormEdit({ onSubmit, onClick, titleEdit = '' }) {
     <>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <InputField name="title" label="Edit Title For Todo" form={form} titleEdit={titleEdit} />
-        <Button variant="outlined" type="submit">
+        <Button variant="contained" color="primary" type="submit" style={{ lineHeight: '1.4' }}>
           Edit
         </Button>
-        <Button style={{ marginLeft: '9px' }} variant="outlined" onClick={handleCancelClick}>
+        <Button
+          style={{ marginLeft: '9px', lineHeight: '1.4' }}
+          variant="contained"
+          color="primary"
+          onClick={handleCancelClick}
+        >
           Cancel
         </Button>
       </form>

@@ -1,12 +1,18 @@
 .todo-list {
+  margin-left: -35px;
+  
   & > div {
     display: flex;
+    padding-left: 10px;
     margin-bottom: 4px;
     align-items: center;
+    border: 1px solid #b1b1b1;
+    border-radius: 3px;
   }
   & > div > li {
     cursor: pointer;
     width: 100%;
+    list-style-type: none;
   }
 
   & > div > li.completed {

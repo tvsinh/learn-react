@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import queryString from 'query-string';
@@ -52,7 +53,7 @@ function ListPage(props) {
       try {
         const todos = await todosApi.getAll(queryParams);
         setTodoList(todos);
-        console.log(todos);
+        // console.log(todos);
         // if (todos.length === 0) {
         //   window.location.reload();
         // }
@@ -163,13 +164,30 @@ function ListPage(props) {
           )}
 
           <div>
-            <button onClick={handleShowAllClick} style={{ marginRight: '5px' }}>
+            <Button
+              onClick={handleShowAllClick}
+              style={{ marginRight: '5px', lineHeight: '1.4' }}
+              variant="outlined"
+              color="primary"
+            >
               Show All
-            </button>
-            <button onClick={handleShowCompletedClick} style={{ marginRight: '5px' }}>
+            </Button>
+            <Button
+              onClick={handleShowCompletedClick}
+              style={{ marginRight: '5px', lineHeight: '1.4' }}
+              variant="outlined"
+              color="primary"
+            >
               Show Completed
-            </button>
-            <button onClick={handleShowNewClick}>Show New</button>
+            </Button>
+            <Button
+              onClick={handleShowNewClick}
+              variant="outlined"
+              color="primary"
+              style={{ lineHeight: '1.4' }}
+            >
+              Show New
+            </Button>
           </div>
         </div>
       )}

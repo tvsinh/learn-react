@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import './styles.scss';
+import checkEmptyImg from '../../Img/check.svg';
+import successImg from '../../Img/success.svg';
+import { Button } from '@material-ui/core';
 
 TodoList.propTypes = {
   todoList: PropTypes.array,
@@ -35,15 +38,49 @@ function TodoList({ todoList = [], onTodoClick, onTodoDel, onTodoEdit, disableEd
               completed: todo.status === 'completed',
             })}
             onClick={() => handleTodoClick(todo)}
+            style={{ display: 'flex', alignItems: 'center' }}
           >
-            {todo.title}
+            {todo.status === 'new' && (
+              <img
+                src={checkEmptyImg}
+                alt="checkimg"
+                style={{ width: '30px', height: '30px', marginRight: '5px' }}
+              />
+            )}
+            {todo.status === 'completed' && (
+              <img
+                src={successImg}
+                alt="checkimg"
+                style={{ width: '30px', height: '30px', marginRight: '5px' }}
+              />
+            )}
+
+            <p style={{ fontSize: '18px', fontWeight: '400', margin: '8px 0' }}>{todo.title}</p>
           </li>
-          <button onClick={() => handleTodoEdit(todo)} disabled={disableEdit}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => handleTodoEdit(todo)}
+            disabled={disableEdit}
+            style={{ minWidth: '35px', maxHeight: '30px', padding: '0', lineHeight: '1.4' }}
+          >
             &#9998;
-          </button>
-          <button onClick={() => handleTodoDel(todo)} disabled={disableEdit}>
+          </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => handleTodoDel(todo)}
+            disabled={disableEdit}
+            style={{
+              minWidth: '35px',
+              maxHeight: '30px',
+              padding: '0',
+              lineHeight: '1.4',
+              marginRight: '10px',
+            }}
+          >
             &#10006;
-          </button>
+          </Button>
         </div>
       ))}
     </ul>
