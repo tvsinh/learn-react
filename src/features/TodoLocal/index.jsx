@@ -3,9 +3,9 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import NotFound from '../../components/NotFound';
 import ListPage from './pages/ListPage';
 
-TodoFeature.propTypes = {};
+TodoLocalFeature.propTypes = {};
 
-function TodoFeature(props) {
+function TodoLocalFeature(props) {
   const match = useRouteMatch();
 
   return (
@@ -18,4 +18,4 @@ function TodoFeature(props) {
   );
 }
 
-export default TodoFeature;
+export default TodoLocalFeature;

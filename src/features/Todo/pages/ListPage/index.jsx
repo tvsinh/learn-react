@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import queryString from 'query-string';
@@ -33,13 +33,6 @@ function ListPage(props) {
   const [idEdit, setIDEdit] = useState('');
   const [disableEdit, setDisableEdit] = useState(false);
 
-  // const [filteredStatus, setFilteredStatus] = useState(() => {
-  //   const params = queryString.parse(history.location.search);
-  //   return params.status || 'all';
-  // });
-  // const renderedTodoList = useMemo(() => {
-  //   return todoList.filter((todo) => filteredStatus === 'all' || filteredStatus === todo.status);
-  // }, [todoList, filteredStatus]);
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
     return {
@@ -91,16 +84,16 @@ function ListPage(props) {
       title: values.title,
     };
     todosApi.update(newTodo);
+    setReLoad(true);
     setTitleEdit('');
     setIDEdit('');
-    setReLoad(true);
     setDisableEdit(false);
   };
   const handleCancelClick = () => {
     setIDEdit('');
     setTitleEdit('');
-    setReLoad(true);
     setDisableEdit(false);
+    setReLoad(true);
   };
 
   const handleShowAllClick = () => {
@@ -131,15 +124,23 @@ function ListPage(props) {
     todosApi.add(values);
     setReLoad(true);
   };
+  const handleTodoLocal = () => {
+    history.push('/todo');
+  };
 
-  // if (todoList.length) {
   return (
     <>
       {loading ? (
         <CircularProgress className={classes.loading} />
       ) : (
         <div>
-          <h3>What Todo</h3>
+          <Typography style={{ textAlign: 'center' }}>
+            You using todo app saved to my database(MongoDB Atlas). Visit Todo APP Local here
+            <Button color="primary" onClick={handleTodoLocal}>
+              Todo Local
+            </Button>
+          </Typography>
+          <h3 style={{ marginBottom: '10px' }}>What Todo</h3>
           {titleEdit ? (
             <TodoFormEdit
               onSubmit={handleEditSubmit}
@@ -193,17 +194,6 @@ function ListPage(props) {
       )}
     </>
   );
-  // } else {
-  //   return (
-  //     <div>
-  //       <h3>What to do</h3>
-  //       <TodoForm onSubmit={handleTodoFormSubmit} />
-  //       <h3>Todo List</h3>
-  //       <p>Todo empty. Select Show All or Add new todo on form.</p>
-  //       <button onClick={handleShowAllClick}>Show All</button>
-  //     </div>
-  //   );
-  // }
 }
 
 export default ListPage;

@@ -73,7 +73,7 @@ function SearchInput({ onSubmit = {} }) {
   useEffect(() => {
     const params = queryString.parse(location.search);
     if (params['category.searchTerm']) {
-      const valueSearch = params['category.searchTerm'];
+      const valueSearch = params['category.searchTerm'].toLowerCase();
       setSearchTerm(valueSearch);
     } else {
       setSearchTerm('');
@@ -81,7 +81,7 @@ function SearchInput({ onSubmit = {} }) {
   }, [location.search]);
 
   const handleSearchTermChange = (e) => {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     setSearchTerm(value);
 
     if (!onSubmit) return;
@@ -90,7 +90,7 @@ function SearchInput({ onSubmit = {} }) {
     }
     typingTimeoutRef.current = setTimeout(() => {
       if (value.length > 0) {
-        onSubmit(value);
+        onSubmit(value.toLowerCase());
       } else {
         return null;
       }

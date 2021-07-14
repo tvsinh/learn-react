@@ -6,6 +6,7 @@ import NotFound from './components/NotFound';
 import CartFeature from './features/Cart';
 import TodoFeature from './features/Todo';
 import AccountFeature from './features/Account';
+import TodoLocalFeature from './features/TodoLocal/index';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Redirect from="/post-list/:postId" to="/posts/:postId" exact />
 
           <Route path="/todos" component={TodoFeature} />
+          <Route path="/todo" component={TodoLocalFeature} />
           <Route path="/products" component={ProductFeature} />
           <Route path="/cart" component={CartFeature} />
           <Route path="/account" component={AccountFeature} />

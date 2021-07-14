@@ -220,7 +220,7 @@ function ListPage() {
           <Box className={classes.searchNavHome}>
             <Typography onClick={handleHome}>Trang chủ</Typography>
           </Box>
-          <Typography>{queryParams['category.searchTerm']}</Typography>
+          <Typography>{queryParams['category.searchTerm'].toLowerCase()}</Typography>
         </Box>
       ) : null}
       <Box pt={1.1} className={classes.sectionDesktop}>
