@@ -31,7 +31,7 @@ function TodoList({ todoList = [], onTodoClick, onTodoDel, onTodoEdit, disableEd
   return (
     <ul className="todo-list">
       {todoList.map((todo, idx) => (
-        <div key={todo.id}>
+        <div key={idx}>
           <li
             className={classnames({
               'todo-item': true,

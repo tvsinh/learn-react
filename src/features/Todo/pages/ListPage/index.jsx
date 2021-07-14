@@ -135,7 +135,7 @@ function ListPage(props) {
       ) : (
         <div>
           <Typography style={{ textAlign: 'center' }}>
-            You using todo app saved to my database(MongoDB Atlas). Visit Todo APP Local here
+            You are using Todo APP saved to my database(MongoDB Atlas). Visit Todo APP Local here
             <Button color="primary" onClick={handleTodoLocal}>
               Todo Local
             </Button>

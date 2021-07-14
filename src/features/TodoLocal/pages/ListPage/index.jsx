@@ -13,17 +13,14 @@ ListPage.propTypes = {};
 function ListPage(props) {
   // const initTodoLists = [
   //   {
-  //     id: 1,
   //     title: 'Eat',
   //     status: 'new',
   //   },
   //   {
-  //     id: 2,
   //     title: 'Sleep',
   //     status: 'completed',
   //   },
   //   {
-  //     id: 3,
   //     title: 'Code',
   //     status: 'new',
   //   },
@@ -63,10 +60,10 @@ function ListPage(props) {
     localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
   };
   const handleTodoDel = (todo, idx) => {
-    const { id } = todo;
-    console.log(id);
-    const newTodoList = todoList.filter((todo) => todo.id !== id);
-
+    // const { id } = todo;
+    // const newTodoList = todoList.filter((todo) => todo.id !== id);
+    let newTodoList = [...todoList];
+    newTodoList.splice(idx, 1);
     // update todo list
     setTodoList(newTodoList);
     localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
@@ -128,7 +125,7 @@ function ListPage(props) {
 
   const handleTodoFormSubmit = (values) => {
     const newTodo = {
-      id: todoList.length + 1,
+      // id: todoList.length + 1,
       title: values.title,
       status: 'new',
     };
@@ -144,7 +141,7 @@ function ListPage(props) {
   return (
     <div>
       <Typography style={{ textAlign: 'center' }}>
-        You using todo app saved to local storages in your PC. Visit Todo APP Online here
+        You are using Todo APP saved to local storage in your PC. Visit Todo APP Online here.
         <Button color="primary" onClick={handleTodoLocal}>
           Todo Online
         </Button>
