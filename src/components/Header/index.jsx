@@ -17,7 +17,6 @@ import {
   PermIdentityOutlined,
   ShoppingCart,
 } from '@material-ui/icons';
-import StorefrontIcon from '@material-ui/icons/Storefront';
 import BackToTop from 'components/BackToTop';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';

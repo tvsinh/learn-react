@@ -188,7 +188,7 @@ function CartPage(props) {
 
   const handleCheckOut = () => {
     if (isLoggedIn) {
-      history.push('/orders');
+      history.push('/checkout');
     } else {
       dispatch(showDialog());
     }

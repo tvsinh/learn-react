@@ -7,6 +7,7 @@ import CartFeature from './features/Cart';
 import TodoFeature from './features/Todo';
 import AccountFeature from './features/Account';
 import TodoLocalFeature from './features/TodoLocal/index';
+import CheckOutFeature from './features/CheckOut/index';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/products" component={ProductFeature} />
           <Route path="/cart" component={CartFeature} />
           <Route path="/account" component={AccountFeature} />
+          <Route path="/checkout" component={CheckOutFeature} />
 
           <Route component={NotFound} />
         </Switch>
