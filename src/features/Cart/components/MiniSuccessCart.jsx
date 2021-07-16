@@ -5,7 +5,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-SuccessCart.propTypes = {};
+MiniSuccessCart.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: '1',
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SuccessCart(props) {
+function MiniSuccessCart(props) {
   const classes = useStyles();
   const history = useHistory();
   const miniCart = useSelector((state) => state.cart.showMiniCart);
@@ -90,4 +90,4 @@ function SuccessCart(props) {
   }
 }
 
-export default SuccessCart;
+export default MiniSuccessCart;

@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
   salePrice: {
     marginRight: theme.spacing(3),
-    fontSize: theme.typography.h4.fontSize,
+    fontSize: theme.typography.h5.fontSize,
     fontWeight: 'bold',
   },
 

@@ -21,7 +21,7 @@ import StorefrontIcon from '@material-ui/icons/Storefront';
 import BackToTop from 'components/BackToTop';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
-import { logout } from 'features/Auth/userSlice';
+import { hideDialog, logout, showDialog } from 'features/Auth/userSlice';
 import { cartItemsLenghtSelector } from 'features/Cart/selectors';
 import SearchInput from 'features/SearchInput';
 import queryString from 'query-string';
@@ -29,7 +29,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import SuccessCart from 'features/Cart/components/SuccessCart';
+import SuccessCart from 'features/Cart/components/MiniSuccessCart';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,9 +78,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(0, 4),
     },
-  },
-  menuButton: {
-    marginRight: theme.spacing(1),
   },
 
   title: {
@@ -161,15 +158,18 @@ export default function Header() {
   const isLoggedIn = !!loggedInUser.id;
   const history = useHistory();
 
-  const [open, setOpen] = useState(false);
+  const setDialogLogin = useSelector((state) => state.user.showDialogLogin);
+  // const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
   const handleClickOpen = () => {
-    setOpen(true);
+    // setOpen(true);
+    dispatch(showDialog());
     handleMobileMenuClose();
   };
 
   const handleClose = () => {
-    setOpen(false);
+    // setOpen(false);
+    dispatch(hideDialog());
   };
 
   const handleUserClick = (event) => {
@@ -196,7 +196,7 @@ export default function Header() {
 
   const handleFilterChange = (value) => {
     const formValue = {
-      'category.searchTerm': value,
+      _q: value,
     };
     history.push({
       pathname: '/products',
@@ -326,9 +326,8 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" onClick={handleHome} className={classes.title}>
-            <StorefrontIcon className={`${classes.menuButton} + ${classes.sectionDesktop}`} />
             <Link to="/" className={`${classes.link} + ${classes.sectionDesktop}`}>
-              REACT SHOP
+              <img alt="reactShopLogo" src="/ReactShop.png" width="140px" height="38px" />
             </Link>
           </Typography>
 
@@ -374,7 +373,7 @@ export default function Header() {
       <Dialog
         disableBackdropClick
         disableEscapeKeyDown
-        open={open}
+        open={setDialogLogin}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >

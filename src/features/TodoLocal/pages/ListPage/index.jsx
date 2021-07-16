@@ -60,8 +60,14 @@ function ListPage(props) {
     localStorage.setItem('localTodoLists', JSON.stringify(newTodoList));
   };
   const handleTodoDel = (todo, idx) => {
-    // const { id } = todo;
-    // const newTodoList = todoList.filter((todo) => todo.id !== id);
+    // const { title } = todo;
+    // const newTodoList = todoList.filter((todos) => todos.title !== title);
+    // const newTodoList = todoList.filter((todos) => !todos.title.includes(title));
+    // const a1 = todoList.slice(0, idx);
+    // const a2 = todoList.slice(idx + 1, todoList.length);
+    // const newTodoList = a1.concat(a2);
+    // or
+    // const newTodoList = [...a1, ...a2];
     let newTodoList = [...todoList];
     newTodoList.splice(idx, 1);
     // update todo list

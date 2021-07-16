@@ -1,10 +1,11 @@
 import { Box, Container, makeStyles, Paper, Typography, Button, Grid } from '@material-ui/core';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CartList from './../components/CartList';
 import { formatPrice } from './../../../utils/common';
 import { cartTotalSelector } from '../selectors';
 import { useHistory } from 'react-router';
+import { showDialog } from 'features/Auth/userSlice';
 
 CartPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
@@ -177,11 +178,20 @@ function CartPage(props) {
   const isLoggedIn = !!loggedInUser.id;
   const cartTotal = useSelector(cartTotalSelector);
   const history = useHistory();
+  const dispatch = useDispatch();
   const handleCartClick = () => {
     history.push('/products');
   };
   const handleBack = () => {
     history.goBack();
+  };
+
+  const handleCheckOut = () => {
+    if (isLoggedIn) {
+      history.push('/orders');
+    } else {
+      dispatch(showDialog());
+    }
   };
 
   if (cartList.length) {
@@ -213,7 +223,7 @@ function CartPage(props) {
                 <Typography>Thành tiền: {formatPrice(cartTotal)}</Typography>
               </Paper>
               <Paper className={classes.button}>
-                <Button fullWidth className={classes.buttonBuy}>
+                <Button fullWidth className={classes.buttonBuy} onClick={handleCheckOut}>
                   Mua hàng
                 </Button>
               </Paper>
@@ -249,7 +259,11 @@ function CartPage(props) {
                 <Typography className={classes.priceTotal}>{formatPrice(cartTotal)}</Typography>
               </Box>
               <Box className={classes.boxButtonMobile}>
-                <Button className={classes.buttonOrderMobile} variant="contained">
+                <Button
+                  className={classes.buttonOrderMobile}
+                  variant="contained"
+                  onClick={handleCheckOut}
+                >
                   Mua hàng
                 </Button>
               </Box>

@@ -23,9 +23,16 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
-    setting: {},
+    showDialogLogin: false,
   },
   reducers: {
+    showDialog(state) {
+      state.showDialogLogin = true;
+    },
+
+    hideDialog(state) {
+      state.showDialogLogin = false;
+    },
     logout(state) {
       // clear local storage
       localStorage.removeItem(StorageKeys.USER);
@@ -45,5 +52,5 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { logout } = actions;
+export const { logout, showDialog, hideDialog } = actions;
 export default reducer;

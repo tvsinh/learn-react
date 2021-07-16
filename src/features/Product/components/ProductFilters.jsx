@@ -13,7 +13,7 @@ ProductFilters.propTypes = {
   onClick: PropTypes.func,
 };
 const useStyles = makeStyles((theme) => ({
-  root: {
+  rootMobile: {
     position: 'relative',
   },
   iconRight: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     backgroundColor: 'white',
     right: '0',
-    zIndex: '1',
+    zIndex: '100',
     transition: '500ms',
     paddingBottom: '110px',
     width: '80%',
@@ -82,7 +82,7 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
         <FilterByService filters={filters} onChange={handeChange} />
       </Box>
 
-      <Box className={classes.root}>
+      <Box className={classes.rootMobile}>
         <Box className={classes.sectionMobile}>
           <Close onClick={handleClose} className={classes.iconRight} />
           <FilterByCategory onChange={handleCategoryChange} />

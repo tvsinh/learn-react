@@ -215,12 +215,12 @@ function ListPage() {
   return (
     <>
       <Header className={classes.header} />
-      {queryParams['category.searchTerm'] ? (
+      {queryParams['_q'] ? (
         <Box className={`${classes.searchNav} + ${classes.sectionDesktop}`}>
           <Box className={classes.searchNavHome}>
             <Typography onClick={handleHome}>Trang chủ</Typography>
           </Box>
-          <Typography>{queryParams['category.searchTerm'].toLowerCase()}</Typography>
+          <Typography>{queryParams['_q'].toLowerCase()}</Typography>
         </Box>
       ) : null}
       <Box pt={1.1} className={classes.sectionDesktop}>
