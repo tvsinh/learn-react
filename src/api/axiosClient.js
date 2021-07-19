@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  // baseURL: 'https://strapi-atlas-shop.herokuapp.com/',
-  baseURL: 'http://localhost:1337/',
+  baseURL: 'https://strapi-atlas-shop.herokuapp.com/',
+  // baseURL: 'http://localhost:1337/',
   headers: {
     'Content-Type': 'application/json',
   },
