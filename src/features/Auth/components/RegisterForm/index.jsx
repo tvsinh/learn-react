@@ -40,6 +40,9 @@ RegisterForm.propTypes = {
 
 function RegisterForm(props) {
   const classes = useStyles();
+  // const phoneRegExp =
+  // /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  // /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
   const schema = yup.object().shape({
     fullName: yup
       .string()
@@ -47,6 +50,11 @@ function RegisterForm(props) {
       .test('should has at least two words', 'Please enter at least two words.', (value) => {
         return value.split(' ').length >= 2;
       }),
+    // phoneNumber: yup
+    //   .string()
+    //   .required('Please enter your phone number.')
+    //   .matches(phoneRegExp, 'Phone number is not valid')
+    //   .min(10, 'Please check your phone number.'),
     email: yup
       .string()
       .required('Please enter your email.')
@@ -63,6 +71,7 @@ function RegisterForm(props) {
   const form = useForm({
     defaultValues: {
       fullName: '',
+      // phoneNumber: '',
       email: '',
       password: '',
       retypePassword: '',
@@ -82,7 +91,6 @@ function RegisterForm(props) {
     if (isSubmitSuccessful) {
       form.reset();
     }
-    console.log('Data', values);
   };
 
   return (
@@ -97,6 +105,7 @@ function RegisterForm(props) {
       </Typography>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.root}>
         <InputField name="fullName" label="Full Name" form={form} />
+        {/* <InputField name="phoneNumber" label="Phone Number" form={form} /> */}
         <InputField name="email" label="Email" form={form} />
         <PasswordField name="password" label="Password" form={form} />
         <PasswordField name="retypePassword" label="Retype Password" form={form} />

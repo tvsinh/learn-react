@@ -9,12 +9,15 @@ InputField.propTypes = {
 
   label: PropTypes.string,
   disabled: PropTypes.bool,
+
   titleEdit: PropTypes.string,
+  fullName: PropTypes.string,
+  email: PropTypes.string,
+  address: PropTypes.string,
 };
 
 function InputField(props) {
-  const { form, name, label, disabled, titleEdit } = props;
-
+  const { form, name, label, disabled, titleEdit, fullName, email, address } = props;
   const {
     formState: { errors },
   } = form;
@@ -24,7 +27,9 @@ function InputField(props) {
     <Controller
       name={name}
       control={form.control}
-      render={({ field: { onChange, onBlur, value = titleEdit, name } }) => (
+      render={({
+        field: { onChange, onBlur, value = titleEdit || fullName || email || address, name },
+      }) => (
         <TextField
           margin="normal"
           variant="outlined"

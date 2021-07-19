@@ -8,14 +8,16 @@ import * as yup from 'yup';
 
 AddToCartForm.propTypes = {
   onSubmit: PropTypes.func,
+  productQuantity: PropTypes.number,
 };
 
-function AddToCartForm({ onSubmit = null }) {
+function AddToCartForm({ onSubmit = null, productQuantity }) {
   const schema = yup.object().shape({
     quantity: yup
       .number()
       .required('Please enter quantity')
       .min(1, 'Minimum value is 1')
+      .max(productQuantity, `The number of products in stock is ${productQuantity}`)
       .typeError('Please enter a number'),
   });
   const form = useForm({

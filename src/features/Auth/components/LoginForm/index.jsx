@@ -40,10 +40,11 @@ LoginForm.propTypes = {
 
 function LoginForm(props) {
   const classes = useStyles();
+
   const schema = yup.object().shape({
     identifier: yup
       .string()
-      .required('Please enter your email.')
+      .required('Please enter your email address.')
       .email('Please enter a valid email address.'),
     password: yup
       .string()

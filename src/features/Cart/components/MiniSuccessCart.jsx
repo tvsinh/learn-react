@@ -62,7 +62,6 @@ function MiniSuccessCart(props) {
           <svg
             stroke="rgb(76, 175, 80)"
             fill="rgb(76, 175, 80)"
-            stroke-width="0"
             viewBox="0 0 512 512"
             height="1.3em"
             width="1.3em"

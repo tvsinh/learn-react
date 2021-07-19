@@ -53,8 +53,7 @@ function FilterByCategory({ onChange }) {
       }
       setLoading(false);
     })();
-    return null;
-  }, []);
+  }, [categoryList, loading]);
 
   const handleCategoryClick = (category) => {
     if (onChange) {

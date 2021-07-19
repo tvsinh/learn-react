@@ -1,37 +1,86 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button } from '@material-ui/core';
-import { setStep } from 'features/Cart/cartSlice';
-import { useDispatch } from 'react-redux';
+import { Button, Box, Container, Paper } from '@material-ui/core';
+import { setStep } from 'features/CheckOut/orderSlice';
 
-PlaceOrder.propTypes = {
-  onSubmit: PropTypes.func,
-};
+import { useDispatch, useSelector } from 'react-redux';
+import ordersApi from 'api/orderApi';
+import { useHistory } from 'react-router';
+import { makeStyles } from '@material-ui/core/styles';
+import ShippingCard from '../Card/ShippingCard';
+import OrderCard from '../Card/OrderCard';
+import DeliveryCard from '../Card/DeliveryCard';
+import { removeCartItems } from 'features/Cart/cartSlice';
 
-function PlaceOrder({ onSubmit }) {
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: '15px 30px',
+  },
+  info: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  payment: {},
+  infoOrder: {},
+  infoShipp: {},
+  button: {
+    marginTop: '10px',
+    width: '225px',
+  },
+}));
+function PlaceOrder() {
+  const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const order = useSelector((state) => state.order);
+  const cartList = useSelector((state) => state.cart.cartItems);
+  const user = useSelector((state) => state.user.current);
+  const { id } = user;
+  const handleSubmit = () => {
+    const orderValues = {
+      ...order,
+      user: id,
+      products: [...cartList],
+    };
+    ordersApi.add(orderValues);
 
-  const handleSubmit = (values) => {
     dispatch(setStep(0));
-
-    if (!onSubmit) return;
-    onSubmit(values);
+    dispatch(removeCartItems());
+    history.push('/checkout/successfully');
   };
   return (
-    <div>
-      <Button
-        // className={classes.submit}
-        // disabled={isSubmitting}
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        size="large"
-        onClick={handleSubmit}
-      >
-        Next
-      </Button>
-    </div>
+    <Box>
+      <Container>
+        <Paper className={classes.root}>
+          <Box className={classes.info}>
+            <Box className={classes.infoOrder}>
+              <Paper>
+                <OrderCard />
+              </Paper>
+            </Box>
+            <Box>
+              <Paper className={classes.payment}>
+                <DeliveryCard />
+              </Paper>
+            </Box>
+            <Box>
+              <Paper className={classes.infoShipp}>
+                <ShippingCard />
+              </Paper>
+            </Box>
+          </Box>
+          <Button
+            className={classes.button}
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleSubmit}
+          >
+            Đặt hàng
+          </Button>
+        </Paper>
+      </Container>
+    </Box>
   );
 }
 

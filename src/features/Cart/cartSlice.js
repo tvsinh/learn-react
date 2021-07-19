@@ -1,19 +1,14 @@
+import StorageKeys from 'constants/storage-keys';
+
 const { createSlice } = require('@reduxjs/toolkit');
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     showMiniCart: false,
-    cartItems: JSON.parse(localStorage.getItem('cartItems')) || [],
-    step: 0,
+    cartItems: JSON.parse(localStorage.getItem(StorageKeys.CARTITEMS)) || [],
   },
   reducers: {
-    setStep(state, action) {
-      if (action.payload < 1) {
-        state.step = 0;
-      }
-      state.step = action.payload;
-    },
     showMiniCart(state) {
       state.showMiniCart = true;
     },
@@ -52,10 +47,20 @@ const cartSlice = createSlice({
       state.cartItems = state.cartItems.filter((x) => x.id !== idNeedToRemove);
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },
+    removeCartItems(state) {
+      localStorage.removeItem(StorageKeys.CARTITEMS);
+      state.cartItems = [];
+    },
   },
 });
 
 const { actions, reducer } = cartSlice;
-export const { showMiniCart, hideMiniCart, addToCart, setQuantity, removeFromCart, setStep } =
-  actions; // named export
+export const {
+  showMiniCart,
+  hideMiniCart,
+  addToCart,
+  setQuantity,
+  removeFromCart,
+  removeCartItems,
+} = actions; // named export
 export default reducer; // default export

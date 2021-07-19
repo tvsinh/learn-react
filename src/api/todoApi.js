@@ -10,9 +10,10 @@ const todosApi = {
     const url = `/todos/${id}`;
     return axiosClient.get(url);
   },
-  add(data) {
+  async add(data) {
     const url = '/todos';
-    return axiosClient.post(url, data);
+    const response = await axiosClient.post(url, data);
+    return response;
   },
 
   update(data) {

@@ -17,18 +17,20 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     marginLeft: 'auto',
   },
+  button: {
+    marginRight: '5px',
+    lineHeight: '1.4',
+  },
 }));
 
-ListPage.propTypes = {};
-
-function ListPage(props) {
+function ListPage() {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const match = useRouteMatch();
   const [todoList, setTodoList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [reLoad, setReLoad] = useState(false);
+  const [reLoad, setReLoad] = useState(true);
   const [titleEdit, setTitleEdit] = useState('');
   const [idEdit, setIDEdit] = useState('');
   const [disableEdit, setDisableEdit] = useState(false);
@@ -42,33 +44,31 @@ function ListPage(props) {
   }, [location.search]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const todos = await todosApi.getAll(queryParams);
-        setTodoList(todos);
-        // console.log(todos);
-        // if (todos.length === 0) {
-        //   window.location.reload();
-        // }
-      } catch (error) {
-        console.log('Failed to fetch todos: ', error);
-      }
-      setReLoad(false);
-      setLoading(false);
-    })();
+    if (reLoad) {
+      (async () => {
+        try {
+          const todos = await todosApi.getAll(queryParams);
+          setTodoList(todos);
+        } catch (error) {
+          console.log('Failed to fetch todos: ', error);
+        }
+        setReLoad(false);
+        setLoading(false);
+      })();
+    }
   }, [queryParams, reLoad]);
 
-  const handleTodoClick = (todo) => {
+  const handleTodoClick = async (todo) => {
     const newTodo = {
       id: todo.id,
       status: todo.status === 'new' ? 'completed' : 'new',
     };
-    todosApi.update(newTodo);
+    await todosApi.update(newTodo);
     setReLoad(true);
   };
 
-  const handleTodoDel = (todo) => {
-    todosApi.remove(todo.id);
+  const handleTodoDel = async (todo) => {
+    await todosApi.remove(todo.id);
     setReLoad(true);
   };
   const handleTodoEdit = (todo) => {
@@ -77,17 +77,16 @@ function ListPage(props) {
     setDisableEdit(true);
     // setReLoad(true);
   };
-  const handleEditSubmit = (values) => {
-    // console.log('listpage:', values, idEdit);
+  const handleEditSubmit = async (values) => {
     const newTodo = {
       id: idEdit,
       title: values.title,
     };
-    todosApi.update(newTodo);
-    setReLoad(true);
+    await todosApi.update(newTodo);
     setTitleEdit('');
     setIDEdit('');
     setDisableEdit(false);
+    setReLoad(true);
   };
   const handleCancelClick = () => {
     setIDEdit('');
@@ -109,6 +108,7 @@ function ListPage(props) {
       pathname: match.path,
       search: queryString.stringify(queryParams),
     });
+    setReLoad(true);
   };
 
   const handleShowNewClick = () => {
@@ -117,11 +117,12 @@ function ListPage(props) {
       pathname: match.path,
       search: queryString.stringify(queryParams),
     });
+    setReLoad(true);
   };
 
-  const handleTodoFormSubmit = (values) => {
-    // console.log(values);
-    todosApi.add(values);
+  const handleTodoFormSubmit = async (values) => {
+    // const response = await todosApi.add(values);
+    await todosApi.add(values);
     setReLoad(true);
   };
   const handleTodoLocal = () => {
@@ -167,7 +168,7 @@ function ListPage(props) {
           <div>
             <Button
               onClick={handleShowAllClick}
-              style={{ marginRight: '5px', lineHeight: '1.4' }}
+              className={classes.button}
               variant="outlined"
               color="primary"
             >
@@ -175,7 +176,7 @@ function ListPage(props) {
             </Button>
             <Button
               onClick={handleShowCompletedClick}
-              style={{ marginRight: '5px', lineHeight: '1.4' }}
+              className={classes.button}
               variant="outlined"
               color="primary"
             >

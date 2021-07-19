@@ -68,7 +68,6 @@ function DetailPage() {
     url,
   } = useRouteMatch();
   // const matchs = useRouteMatch();
-  console.log(productId);
   const { product, loading } = useProductDetail(productId);
 
   if (loading) {
@@ -115,7 +114,10 @@ function DetailPage() {
 
                 <Grid item className={classes.right}>
                   <ProductInfo product={product} />
-                  <AddToCartForm onSubmit={handleAddToCartSubmit} />
+                  <AddToCartForm
+                    onSubmit={handleAddToCartSubmit}
+                    productQuantity={Number(product.quantity)}
+                  />
                 </Grid>
               </Grid>
             </Paper>

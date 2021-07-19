@@ -199,6 +199,7 @@ function CartItem({ data }) {
                 }
                 alt={data.product.name}
                 width="80px"
+                height="80px"
               />
               <Typography className={classes.productName}>{data.product.name}</Typography>
             </Box>

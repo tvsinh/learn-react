@@ -24,7 +24,8 @@ function TodoForm({ onSubmit }) {
     resolver: yupResolver(schema),
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, e) => {
+    e.preventDefault();
     if (onSubmit) {
       onSubmit(values);
     }

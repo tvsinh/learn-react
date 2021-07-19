@@ -1,21 +1,20 @@
-import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepConnector from '@material-ui/core/StepConnector';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Check from '@material-ui/icons/Check';
 
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Payment from '../components/Payment';
 import PlaceOrder from '../components/PlaceOrder';
 import Shipping from '../components/Shipping';
-import { useSelector, useDispatch } from 'react-redux';
-import { setStep } from 'features/Cart/cartSlice';
+import { useSelector } from 'react-redux';
+
 import { Room, DoneOutline, PaymentOutlined } from '@material-ui/icons';
+import { Box } from '@material-ui/core';
 
 const useQontoStepIconStyles = makeStyles({
   root: {
@@ -94,8 +93,8 @@ const useColorlibStepIconStyles = makeStyles({
     backgroundColor: '#ccc',
     zIndex: 1,
     color: '#fff',
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     display: 'flex',
     borderRadius: '50%',
     justifyContent: 'center',
@@ -151,6 +150,11 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    minHeight: '100vh',
+  },
+  stepper: {
+    padding: '15px 0 5px 0',
+    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2) ',
   },
   button: {
     marginRight: theme.spacing(1),
@@ -166,17 +170,11 @@ function getSteps() {
 }
 
 function getStepContent(step) {
-  const handleOnSubmit = (values) => {
-    console.log('steps :', values);
-  };
-  const handleChange = (values) => {
-    console.log('steps Change :', values);
-  };
   switch (step) {
     case 0:
-      return <Shipping onSubmit={handleOnSubmit} />;
+      return <Shipping />;
     case 1:
-      return <Payment onChange={handleChange} />;
+      return <Payment />;
     case 2:
       return <PlaceOrder />;
     default:
@@ -185,33 +183,24 @@ function getStepContent(step) {
 }
 
 export default function CustomizedSteppers() {
-  const step = useSelector((state) => state.cart.step);
+  const step = useSelector((state) => state.order.step);
 
   const classes = useStyles();
-  const dispatch = useDispatch();
 
   const [activeStep, setActiveStep] = React.useState();
   const steps = getSteps();
   useEffect(() => {
     setActiveStep(step);
   }, [step]);
-  // const handleNext = () => {
-  //   // setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  //   dispatch(setStep(step + 1));
-  // };
-
-  // const handleBack = () => {
-  //   // setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  //   dispatch(setStep(step - 1));
-  // };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
 
   return (
     <div className={classes.root}>
-      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+      <Stepper
+        alternativeLabel
+        activeStep={activeStep}
+        connector={<ColorlibConnector />}
+        className={classes.stepper}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
@@ -219,9 +208,7 @@ export default function CustomizedSteppers() {
         ))}
       </Stepper>
 
-      <div>
-        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-      </div>
+      <Box className={classes.instructions}>{getStepContent(activeStep)}</Box>
     </div>
   );
 }

@@ -22,8 +22,22 @@
   }
   & > div >button {
     z-index: 1;
-    
-    height: 30px;
-    margin-left: 10px;
+    min-width: 35px;
+    padding: 0;
+    line-height: 1.4;
+    min-height: 30px;
+    margin-right: 10px;
+  }
+
+   & > div > li> img {
+    width: 30px;
+     height: 30px;
+     margin-right: 5px;
+  }
+  & > div > li> p {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 8px 0;
   }
 }
+

@@ -27,11 +27,11 @@ function ListPage(props) {
   // ];
   // localStorage.setItem('initTodoLists', JSON.stringify(initTodoList));
 
-  const localTodoLists = JSON.parse(localStorage.getItem('localTodoLists'));
+  const localTodoLists = JSON.parse(localStorage.getItem('localTodoLists')) || [];
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
-  const [todoList, setTodoList] = useState(localTodoLists || []);
+  const [todoList, setTodoList] = useState(localTodoLists);
   const [titleEdit, setTitleEdit] = useState('');
   const [idxEdit, setIdxEdit] = useState('');
   const [disableEdit, setDisableEdit] = useState(false);

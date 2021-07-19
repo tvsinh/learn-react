@@ -6,7 +6,7 @@ import { formatPrice } from './../../../utils/common';
 import { cartTotalSelector } from '../selectors';
 import { useHistory } from 'react-router';
 import { showDialog } from 'features/Auth/userSlice';
-
+import { setStep, setTotalCart } from 'features/CheckOut/orderSlice';
 CartPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,12 +40,27 @@ const useStyles = makeStyles((theme) => ({
 
   userInfo: {
     padding: '0 10px',
-    height: '47px',
+  },
+  userName: {
+    textTransform: 'capitalize',
+  },
+  userEmail: {
+    width: '260px',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden !important',
   },
 
   cartTotal: {
+    display: 'flex',
+    alignItems: 'center',
     marginTop: '10px',
     padding: '5px 10px',
+  },
+  total: {
+    marginLeft: '5px',
+    color: 'rgb(238, 35, 71)',
+    fontSize: '22px',
   },
   button: {
     marginTop: '10px',
@@ -93,6 +108,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'block',
     },
   },
+
   sectionMobile: {
     display: 'block',
     width: '100%',
@@ -188,6 +204,8 @@ function CartPage(props) {
 
   const handleCheckOut = () => {
     if (isLoggedIn) {
+      dispatch(setStep(0));
+      dispatch(setTotalCart(cartTotal));
       history.push('/checkout');
     } else {
       dispatch(showDialog());
@@ -208,20 +226,31 @@ function CartPage(props) {
             </Grid>
             <Box className={classes.right}>
               {isLoggedIn ? (
-                <Paper className={classes.userInfo}>
-                  <Typography>Tên: {loggedInUser.fullName}</Typography>
-                  <Typography>Email: {loggedInUser.email}</Typography>
-                </Paper>
+                <Box>
+                  <Paper className={classes.userInfo}>
+                    <Typography className={classes.userName}>
+                      Tên: {loggedInUser.fullName}
+                    </Typography>
+                    <Typography className={classes.userEmail}>
+                      Email: {loggedInUser.email}
+                    </Typography>
+                  </Paper>
+                </Box>
               ) : (
-                <Paper className={classes.userInfo}>
-                  <Typography>Chưa đăng nhập</Typography>
-                  <Typography>Vui lòng đăng nhập để mua hàng</Typography>
-                </Paper>
+                <Box>
+                  <Paper className={classes.userInfo}>
+                    <Typography>Chưa đăng nhập</Typography>
+                    <Typography>Vui lòng đăng nhập để mua hàng</Typography>
+                  </Paper>
+                </Box>
               )}
 
-              <Paper className={classes.cartTotal}>
-                <Typography>Thành tiền: {formatPrice(cartTotal)}</Typography>
-              </Paper>
+              <Box>
+                <Paper className={classes.cartTotal}>
+                  <Typography>Thành tiền:</Typography>
+                  <Typography className={classes.total}>{formatPrice(cartTotal)}</Typography>
+                </Paper>
+              </Box>
               <Paper className={classes.button}>
                 <Button fullWidth className={classes.buttonBuy} onClick={handleCheckOut}>
                   Mua hàng

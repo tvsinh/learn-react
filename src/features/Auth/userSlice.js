@@ -7,7 +7,7 @@ export const register = createAsyncThunk('user/register', async (payload) => {
 
   localStorage.setItem(StorageKeys.TOKEN, data.jwt);
   localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
-  console.log('slice', data);
+  console.log('register', data.user);
   return data.user;
 });
 
@@ -16,6 +16,7 @@ export const login = createAsyncThunk('user/login', async (payload) => {
 
   localStorage.setItem(StorageKeys.TOKEN, data.jwt);
   localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+  console.log('login', data);
   return data.user;
 });
 
@@ -40,6 +41,9 @@ const userSlice = createSlice({
 
       state.current = {};
     },
+    setUser(state) {
+      state.current = JSON.parse(localStorage.getItem(StorageKeys.USER));
+    },
   },
   extraReducers: {
     [register.fulfilled]: (state, action) => {
@@ -52,5 +56,5 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { logout, showDialog, hideDialog } = actions;
+export const { logout, showDialog, hideDialog, setUser } = actions;
 export default reducer;

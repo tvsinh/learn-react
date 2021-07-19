@@ -40,29 +40,16 @@ function TodoList({ todoList = [], onTodoClick, onTodoDel, onTodoEdit, disableEd
             onClick={() => handleTodoClick(todo, idx)}
             style={{ display: 'flex', alignItems: 'center' }}
           >
-            {todo.status === 'new' && (
-              <img
-                src={checkEmptyImg}
-                alt="checkimg"
-                style={{ width: '30px', height: '30px', marginRight: '5px' }}
-              />
-            )}
-            {todo.status === 'completed' && (
-              <img
-                src={successImg}
-                alt="checkimg"
-                style={{ width: '30px', height: '30px', marginRight: '5px' }}
-              />
-            )}
+            {todo.status === 'new' && <img src={checkEmptyImg} alt="checkimg" />}
+            {todo.status === 'completed' && <img src={successImg} alt="checkimg" />}
 
-            <p style={{ fontSize: '18px', fontWeight: '400', margin: '8px 0' }}>{todo.title}</p>
+            <p>{todo.title}</p>
           </li>
           <Button
             variant="outlined"
             color="primary"
             onClick={() => handleTodoEdit(todo, idx)}
             disabled={disableEdit}
-            style={{ minWidth: '35px', maxHeight: '30px', padding: '0', lineHeight: '1.4' }}
           >
             &#9998;
           </Button>
@@ -71,13 +58,6 @@ function TodoList({ todoList = [], onTodoClick, onTodoDel, onTodoEdit, disableEd
             color="primary"
             onClick={() => handleTodoDel(todo, idx)}
             disabled={disableEdit}
-            style={{
-              minWidth: '35px',
-              maxHeight: '30px',
-              padding: '0',
-              lineHeight: '1.4',
-              marginRight: '10px',
-            }}
           >
             &#10006;
           </Button>
