@@ -1,6 +1,6 @@
-import { Button, Typography } from '@material-ui/core';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { Button, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import LoadingProgress from 'components/Loading';
 import queryString from 'query-string';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
@@ -12,10 +12,8 @@ import TodoFormEdit from './../../components/TodoFormEdit/index';
 const useStyles = makeStyles((theme) => ({
   root: {},
   loading: {
-    display: 'flex',
     marginTop: '45vh',
-    marginRight: 'auto',
-    marginLeft: 'auto',
+    marginLeft: '27vw',
   },
   button: {
     marginRight: '5px',
@@ -132,7 +130,9 @@ function ListPage() {
   return (
     <>
       {loading ? (
-        <CircularProgress className={classes.loading} />
+        <Box className={classes.loading}>
+          <LoadingProgress />
+        </Box>
       ) : (
         <div>
           <Typography style={{ textAlign: 'center' }}>

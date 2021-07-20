@@ -1,5 +1,6 @@
 import { Box, Container, makeStyles, Paper, Typography, Button } from '@material-ui/core';
 import ordersApi from 'api/orderApi';
+import { STATIC_HOST } from 'constants/index';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -43,7 +44,18 @@ const useStyles = makeStyles((theme) => ({
   },
   orderItem: {
     marginTop: '5px',
-    padding: '10px',
+    padding: theme.spacing(1, 1),
+  },
+  orderBox: {
+    paddingBottom: '10px',
+  },
+  paperProduct: {
+    display: 'flex',
+  },
+  boxinfoProduct: {
+    marginLeft: '5px',
+    display: 'flex',
+    flexDirection: 'column',
   },
 }));
 
@@ -96,20 +108,36 @@ function AccountPage(props) {
               <Box className={classes.order}>
                 <Typography>Đơn hàng của bạn</Typography>
                 {orderMe.map((orderItem) => (
-                  <Box>
+                  <Box className={classes.orderBox}>
                     <Paper className={classes.orderItem}>
-                      <Typography>{orderItem.inforShipping.fullName}</Typography>
-                      <Typography>{orderItem.inforShipping.email}</Typography>
-                      <Typography>address: {orderItem.inforShipping.address}</Typography>
-                      <Typography>{orderItem.delivery}</Typography>
-                      <Typography>{orderItem.payment}</Typography>
+                      <Typography>Name: {orderItem.inforShipping.fullName}</Typography>
+                      <Typography>Email: {orderItem.inforShipping.email}</Typography>
+                      <Typography>Address: {orderItem.inforShipping.address}</Typography>
+                      <Typography>Delivery: {orderItem.delivery}</Typography>
+                      <Typography>Payment: {orderItem.payment}</Typography>
                       {orderItem.products.map((productItem) => (
                         <Box>
-                          <Typography>product id: {productItem.id}</Typography>
-                          <Typography>{productItem.quantity}</Typography>
+                          <Paper className={classes.paperProduct}>
+                            <img
+                              alt="product_img"
+                              width="80px"
+                              height="80px"
+                              src={`${STATIC_HOST}${productItem.product['thumbnail'][0]?.url}`}
+                            />
+                            <Box className={classes.boxinfoProduct}>
+                              <Typography>{productItem.product['name']}</Typography>
+                              <Typography>Product Quantity: {productItem.quantity}</Typography>
+                              <Typography>
+                                Product Price: {productItem.product['salePrice']}
+                              </Typography>
+                              <Typography>
+                                Total: {productItem.product['salePrice'] * productItem.quantity}
+                              </Typography>
+                            </Box>
+                          </Paper>
                         </Box>
                       ))}
-                      <Typography>{orderItem.totalCart}</Typography>
+                      <Typography>Total Order: {orderItem.totalCart}</Typography>
                     </Paper>
                   </Box>
                 ))}

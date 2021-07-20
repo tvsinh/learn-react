@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 MiniSuccessCart.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
-    zIndex: '1',
+    zIndex: '10',
     display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
@@ -41,7 +41,6 @@ function MiniSuccessCart(props) {
   };
   const hanldeLinkCart = () => {
     history.push('/cart');
-    // dispatch(hideMiniCart());
   };
 
   if (miniCart) {
@@ -76,7 +75,6 @@ function MiniSuccessCart(props) {
         <Button
           variant="contained"
           color="primary"
-          // fullWidth
           style={{ textTransform: 'none' }}
           onClick={hanldeLinkCart}
         >

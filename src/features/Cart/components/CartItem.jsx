@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { AddCircleOutline, DeleteForever, RemoveCircleOutline } from '@material-ui/icons';
 import { THUMBNAIL_PLACEHOLDER } from 'constants/index';
+import useProductDetail from 'hook/useProductDetail';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -16,13 +17,21 @@ import { useHistory } from 'react-router-dom';
 import { removeFromCart, setQuantity } from '../cartSlice';
 import { STATIC_HOST } from './../../../constants/common';
 import { formatPrice } from './../../../utils/common';
+import LoadingProgress from 'components/Loading';
 
 CartItem.propTypes = {
   data: PropTypes.object,
 };
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  loading: {
+    height: '80px',
+    margin: theme.spacing(1, 0, 1, 3.5),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  rootDesktop: {
     margin: theme.spacing(1),
   },
   item: {
@@ -52,8 +61,18 @@ const useStyles = makeStyles((theme) => ({
   boxQty: {
     width: '155px',
     display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  boxHandleQty: {
+    display: 'flex',
     flexFlow: 'row nowrap',
     alignItems: 'center',
+    marginTop: '5px',
+  },
+  boxQtyStock: {
+    fontSize: '11px',
+    lineHeight: '11px',
   },
   productTotal: {
     width: '145px',
@@ -144,9 +163,18 @@ function CartItem({ data }) {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { product, loading } = useProductDetail(data.product.id);
+  if (data.quantity > product.quantity) {
+    dispatch(
+      setQuantity({
+        id: data.product.id,
+        quantity: product.quantity,
+      })
+    );
+  }
   const handleUpQuantity = () => {
     const newQuantity = Number.parseInt(data.quantity) + 1;
-    if (newQuantity >= 1) {
+    if (newQuantity >= 1 && newQuantity <= product.quantity) {
       const action = setQuantity({
         id: data.product.id,
         quantity: newQuantity,
@@ -156,7 +184,7 @@ function CartItem({ data }) {
   };
   const handleDownQuantity = () => {
     const newQuantity = Number.parseInt(data.quantity) - 1;
-    if (newQuantity >= 1) {
+    if (newQuantity >= 1 && newQuantity <= product.quantity) {
       const action = setQuantity({
         id: data.product.id,
         quantity: newQuantity,
@@ -186,97 +214,111 @@ function CartItem({ data }) {
   };
   return (
     <>
-      <Box className={classes.sectionDesktop}>
-        <Box className={classes.root}>
-          {/* <Container container> */}
-          <Paper elevation={0} className={classes.item}>
-            <Box className={classes.itemProduct} onClick={handleOnClickProduct}>
-              <img
-                src={
-                  data.product.thumbnail[0]
-                    ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
-                    : THUMBNAIL_PLACEHOLDER
-                }
-                alt={data.product.name}
-                width="80px"
-                height="80px"
-              />
-              <Typography className={classes.productName}>{data.product.name}</Typography>
-            </Box>
-
-            <Typography className={classes.productPrice}>
-              {formatPrice(data.product.salePrice)}
-            </Typography>
-
-            <Box className={classes.boxQty}>
-              <IconButton onClick={handleDownQuantity}>
-                <RemoveCircleOutline />
-              </IconButton>
-              <TextField value={Number(data.quantity)} variant="outlined" size="small" />
-              <IconButton onClick={handleUpQuantity}>
-                <AddCircleOutline />
-              </IconButton>
-            </Box>
-            <Typography className={classes.productTotal}>
-              {formatPrice(data.product.salePrice * data.quantity)}
-            </Typography>
-            <Box size="small" className={classes.iconDel}>
-              <IconButton onClick={handleRemoveProduct}>
-                <DeleteForever />
-              </IconButton>
-            </Box>
-          </Paper>
-          {/* </Container> */}
+      {loading ? (
+        <Box className={classes.loading}>
+          <LoadingProgress />
         </Box>
-      </Box>
-
-      <Box className={classes.sectionMobile}>
-        <Box className={classes.rootMobile}>
-          <Box elevation={0} className={classes.itemMobile}>
-            <Box className={classes.imgNameMobile}>
-              <Box className={classes.imgMobile}>
-                <img
-                  src={
-                    data.product.thumbnail[0]
-                      ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
-                      : THUMBNAIL_PLACEHOLDER
-                  }
-                  alt={data.product.name}
-                  width="80px"
-                  height="80px"
-                />
-              </Box>
-
-              <Box className={classes.itemProductMobile}>
-                <Typography className={classes.productNameMobile} onClick={handleOnClickProduct}>
-                  {data.product.name}
-                </Typography>
-                <Box className={classes.boxQtyMobile}>
-                  <IconButton onClick={handleDownQuantity}>
-                    <RemoveCircleOutline />
-                  </IconButton>
-                  <TextField value={Number(data.quantity)} variant="outlined" size="small" />
-                  <IconButton onClick={handleUpQuantity}>
-                    <AddCircleOutline />
-                  </IconButton>
+      ) : (
+        <Box>
+          <Box className={classes.sectionDesktop}>
+            <Box className={classes.rootDesktop}>
+              <Paper elevation={0} className={classes.item}>
+                <Box className={classes.itemProduct} onClick={handleOnClickProduct}>
+                  <img
+                    src={
+                      data.product.thumbnail[0]
+                        ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
+                        : THUMBNAIL_PLACEHOLDER
+                    }
+                    alt={data.product.name}
+                    width="80px"
+                    height="80px"
+                  />
+                  <Typography className={classes.productName}>{data.product.name}</Typography>
                 </Box>
-              </Box>
-            </Box>
 
-            <Box className={classes.productPriceAndDel}>
-              <Box>
-                <Typography className={classes.productPriceMobile}>
+                <Typography className={classes.productPrice}>
                   {formatPrice(data.product.salePrice)}
                 </Typography>
-              </Box>
 
-              <Box size="small" className={classes.delMobile}>
-                <Button onClick={handleRemoveProduct}>Xóa</Button>
+                <Box className={classes.boxQty}>
+                  <Box className={classes.boxHandleQty}>
+                    <IconButton onClick={handleDownQuantity}>
+                      <RemoveCircleOutline />
+                    </IconButton>
+                    <TextField value={Number(data.quantity)} variant="outlined" size="small" />
+                    <IconButton onClick={handleUpQuantity}>
+                      <AddCircleOutline />
+                    </IconButton>
+                  </Box>
+                  <Typography className={classes.boxQtyStock}>
+                    Còn trong kho: {product.quantity}
+                  </Typography>
+                </Box>
+                <Typography className={classes.productTotal}>
+                  {formatPrice(data.product.salePrice * data.quantity)}
+                </Typography>
+                <Box size="small" className={classes.iconDel}>
+                  <IconButton onClick={handleRemoveProduct}>
+                    <DeleteForever />
+                  </IconButton>
+                </Box>
+              </Paper>
+            </Box>
+          </Box>
+
+          <Box className={classes.sectionMobile}>
+            <Box className={classes.rootMobile}>
+              <Box elevation={0} className={classes.itemMobile}>
+                <Box className={classes.imgNameMobile}>
+                  <Box className={classes.imgMobile}>
+                    <img
+                      src={
+                        data.product.thumbnail[0]
+                          ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
+                          : THUMBNAIL_PLACEHOLDER
+                      }
+                      alt={data.product.name}
+                      width="80px"
+                      height="80px"
+                    />
+                  </Box>
+
+                  <Box className={classes.itemProductMobile}>
+                    <Typography
+                      className={classes.productNameMobile}
+                      onClick={handleOnClickProduct}
+                    >
+                      {data.product.name}
+                    </Typography>
+                    <Box className={classes.boxQtyMobile}>
+                      <IconButton onClick={handleDownQuantity}>
+                        <RemoveCircleOutline />
+                      </IconButton>
+                      <TextField value={Number(data.quantity)} variant="outlined" size="small" />
+                      <IconButton onClick={handleUpQuantity}>
+                        <AddCircleOutline />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                </Box>
+
+                <Box className={classes.productPriceAndDel}>
+                  <Box>
+                    <Typography className={classes.productPriceMobile}>
+                      {formatPrice(data.product.salePrice)}
+                    </Typography>
+                  </Box>
+
+                  <Box size="small" className={classes.delMobile}>
+                    <Button onClick={handleRemoveProduct}>Xóa</Button>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </>
   );
 }

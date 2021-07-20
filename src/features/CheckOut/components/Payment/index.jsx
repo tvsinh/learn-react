@@ -127,7 +127,7 @@ function Payment() {
             <ShippingCard />
           </Paper>
           <Paper>
-            <OrderCard />
+            <OrderCard valueDelivery={valueDelivery} />
           </Paper>
         </Box>
       </Container>

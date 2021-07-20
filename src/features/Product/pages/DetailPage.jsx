@@ -2,6 +2,7 @@ import { Box, Container, Grid, LinearProgress, makeStyles, Paper, Button } from 
 import Footer from 'components/Footer';
 import Header from 'components/Header';
 import { addToCart, hideMiniCart, showMiniCart } from 'features/Cart/cartSlice';
+import useProductDetail from 'hook/useProductDetail';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch, useHistory } from 'react-router';
@@ -12,7 +13,6 @@ import ProductInfo from '../components/ProductInfo';
 import ProductMenu from '../components/ProductMenu';
 import ProductReviews from '../components/ProductReviews';
 import ProductThumbnail from '../components/ProductThumbnail';
-import useProductDetail from '../hooks/useProductDetail';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,10 +114,7 @@ function DetailPage() {
 
                 <Grid item className={classes.right}>
                   <ProductInfo product={product} />
-                  <AddToCartForm
-                    onSubmit={handleAddToCartSubmit}
-                    productQuantity={Number(product.quantity)}
-                  />
+                  <AddToCartForm onSubmit={handleAddToCartSubmit} productId={productId} />
                 </Grid>
               </Grid>
             </Paper>

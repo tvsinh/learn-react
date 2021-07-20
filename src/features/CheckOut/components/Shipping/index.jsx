@@ -53,16 +53,18 @@ function Shipping() {
   const schema = yup.object().shape({
     fullName: yup
       .string()
-      .required('Please enter title.')
-      .min(5, 'Title is too short, at least 5 characters.'),
+      .required('Please enter full name.')
+      .test('should has at least two words', 'Please enter at least two words.', (value) => {
+        return value.split(' ').length >= 2;
+      }),
     email: yup
       .string()
-      .required('Please enter title.')
-      .min(5, 'Title is too short, at least 5 characters.'),
+      .required('Please enter your email.')
+      .email('Please enter a valid email address.'),
     address: yup
       .string()
       .required('Please enter title.')
-      .min(5, 'Title is too short, at least 5 characters.'),
+      .min(4, 'Address is too short, at least 4 characters.'),
   });
   const form = useForm({
     defaultValues: {

@@ -10,6 +10,7 @@ import ShippingCard from '../Card/ShippingCard';
 import OrderCard from '../Card/OrderCard';
 import DeliveryCard from '../Card/DeliveryCard';
 import { removeCartItems } from 'features/Cart/cartSlice';
+import productApi from 'api/productApi';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,15 +35,24 @@ function PlaceOrder() {
   const order = useSelector((state) => state.order);
   const cartList = useSelector((state) => state.cart.cartItems);
   const user = useSelector((state) => state.user.current);
-  const { id } = user;
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
     const orderValues = {
       ...order,
-      user: id,
+      user: user.id,
       products: [...cartList],
     };
-    ordersApi.add(orderValues);
-
+    await ordersApi.add(orderValues);
+    cartList.forEach(async (product) => {
+      const dataQty = await productApi.get(product.id);
+      const data = {
+        id: product.id,
+        quantity: dataQty.quantity - product.quantity,
+      };
+      // console.log(data);
+      // console.log(dataQty.quantity);
+      await productApi.update(data);
+    });
     dispatch(setStep(0));
     dispatch(removeCartItems());
     history.push('/checkout/successfully');

@@ -7,6 +7,8 @@ import { formatPrice } from 'utils';
 import { cartTotalSelector } from 'features/Cart/selectors';
 import { useHistory } from 'react-router';
 import { ArrowDropDown, ArrowDropUp } from '@material-ui/icons';
+import PropTypes from 'prop-types';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
@@ -73,6 +75,16 @@ const useStyles = makeStyles((theme) => ({
   productPrice: {
     display: 'block',
   },
+  cartTotalTemp: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  deliveryPrice: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   cartTotal: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -83,13 +95,22 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '22px',
   },
 }));
-function OrderCard(props) {
+OrderCard.propTypes = {
+  valueDelivery: PropTypes.string,
+};
+function OrderCard({ valueDelivery }) {
   const classes = useStyles();
   const history = useHistory();
   const cartTotal = useSelector(cartTotalSelector);
   const [hide, setHide] = useState(false);
 
   const cartList = useSelector((state) => state.cart.cartItems);
+  const deliveryPrice =
+    valueDelivery === 'Giao hàng nhanh'
+      ? 50000
+      : valueDelivery === 'Giao hàng tiết kiệm'
+      ? 30000
+      : 0;
   const handleEdit = () => {
     history.push('/cart');
   };
@@ -152,8 +173,16 @@ function OrderCard(props) {
           ))}
         </Box>
       )}
+      <Box className={classes.cartTotalTemp}>
+        Tạm tính:<Typography>{formatPrice(cartTotal)}</Typography>
+      </Box>
+      <Box className={classes.deliveryPrice}>
+        Phí vận chuyển:
+        <Typography>{formatPrice(deliveryPrice)}</Typography>
+      </Box>
       <Box className={classes.cartTotal}>
-        Thành tiền:<Typography className={classes.total}>{formatPrice(cartTotal)}</Typography>
+        Thành tiền:
+        <Typography className={classes.total}>{formatPrice(cartTotal + deliveryPrice)}</Typography>
       </Box>
     </Box>
   );
