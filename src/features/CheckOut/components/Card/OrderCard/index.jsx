@@ -97,8 +97,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 OrderCard.propTypes = {
   valueDelivery: PropTypes.string,
+  deliveryPriceFinal: PropTypes.number,
 };
-function OrderCard({ valueDelivery }) {
+function OrderCard({ valueDelivery, deliveryPriceFinal }) {
   const classes = useStyles();
   const history = useHistory();
   const cartTotal = useSelector(cartTotalSelector);
@@ -178,11 +179,15 @@ function OrderCard({ valueDelivery }) {
       </Box>
       <Box className={classes.deliveryPrice}>
         Phí vận chuyển:
-        <Typography>{formatPrice(deliveryPrice)}</Typography>
+        <Typography>
+          {formatPrice(deliveryPriceFinal ? deliveryPriceFinal : deliveryPrice)}
+        </Typography>
       </Box>
       <Box className={classes.cartTotal}>
         Thành tiền:
-        <Typography className={classes.total}>{formatPrice(cartTotal + deliveryPrice)}</Typography>
+        <Typography className={classes.total}>
+          {formatPrice(cartTotal + (deliveryPriceFinal ? deliveryPriceFinal : deliveryPrice))}
+        </Typography>
       </Box>
     </Box>
   );

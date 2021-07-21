@@ -1,14 +1,15 @@
 import React from 'react';
+import { Box, Container, Typography } from '@material-ui/core';
 
-NotFound.propTypes = {
-
-};
+NotFound.propTypes = {};
 
 function NotFound(props) {
   return (
-    <div>
-      NOT FOUND
-    </div>
+    <Box>
+      <Container>
+        <Typography>NOT FOUND</Typography>
+      </Container>
+    </Box>
   );
 }
 

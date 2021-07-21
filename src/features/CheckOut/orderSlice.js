@@ -9,8 +9,9 @@ const orderSlice = createSlice({
       address: '',
     },
     delivery: '',
+    deliveryPrice: 0,
     payment: '',
-    totalCart: 0,
+    totalOrder: 0,
   },
   reducers: {
     setStep(state, action) {
@@ -28,12 +29,13 @@ const orderSlice = createSlice({
     setDeliveryPayment(state, action) {
       state.delivery = action.payload.valueDelivery;
       state.payment = action.payload.valuePayment;
+      state.deliveryPrice = action.payload.deliveryPrice;
     },
-    setTotalCart(state, action) {
-      state.totalCart = action.payload;
+    setTotalOrder(state, action) {
+      state.totalOrder = action.payload;
     },
   },
 });
 const { actions, reducer } = orderSlice;
-export const { location, setStep, setShipping, setDeliveryPayment, setTotalCart } = actions;
+export const { location, setStep, setShipping, setDeliveryPayment, setTotalOrder } = actions;
 export default reducer;

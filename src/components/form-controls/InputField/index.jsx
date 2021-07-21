@@ -17,7 +17,7 @@ InputField.propTypes = {
 };
 
 function InputField(props) {
-  const { form, name, label, disabled, titleEdit, fullName, email, address } = props;
+  const { form, name, label, disabled, titleEdit, fullName = '', email = '', address = '' } = props;
   const {
     formState: { errors },
   } = form;

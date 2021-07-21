@@ -5,11 +5,12 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { Button, Box, Container, Paper } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { setDeliveryPayment, setStep } from 'features/CheckOut/orderSlice';
+import { setDeliveryPayment, setStep, setTotalOrder } from 'features/CheckOut/orderSlice';
 import ShippingCard from '../Card/ShippingCard';
 import OrderCard from '../Card/OrderCard';
+import { cartTotalSelector } from 'features/Cart/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,7 +43,7 @@ function Payment() {
   const classes = useStyles();
   const [valueDelivery, setValueDelivery] = React.useState('Giao hàng tiết kiệm');
   const [valuePayment, setValuePayment] = React.useState('Thanh toán khi nhận hàng');
-
+  const cartTotal = useSelector(cartTotalSelector);
   const handleChangeDelivery = (event) => {
     setValueDelivery(event.target.value);
   };
@@ -51,11 +52,19 @@ function Payment() {
   };
   const handleSubmit = () => {
     dispatch(setStep(2));
+    const deliveryPrice =
+      valueDelivery === 'Giao hàng nhanh'
+        ? 50000
+        : valueDelivery === 'Giao hàng tiết kiệm'
+        ? 30000
+        : 0;
     const values = {
       valueDelivery,
       valuePayment,
+      deliveryPrice,
     };
     dispatch(setDeliveryPayment(values));
+    dispatch(setTotalOrder(deliveryPrice + cartTotal));
   };
 
   return (

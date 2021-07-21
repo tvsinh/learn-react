@@ -29,6 +29,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import SuccessCart from 'features/Cart/components/MiniSuccessCart';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,12 +120,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+Header.propTypes = {
+  showMiniCart: PropTypes.bool,
+};
+
 const MODE = {
   LOGIN: 'login',
   REGISTER: 'register',
 };
 
-export default function Header() {
+export default function Header({ showMiniCart }) {
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -219,11 +224,6 @@ export default function Header() {
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -365,7 +365,7 @@ export default function Header() {
               <ShoppingCart />
             </Badge>
           </IconButton>
-          <SuccessCart />
+          {showMiniCart ? <SuccessCart /> : null}
         </Toolbar>
       </AppBar>
 

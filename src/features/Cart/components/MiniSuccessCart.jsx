@@ -1,8 +1,6 @@
 import { Box, Button, makeStyles, Paper, Typography } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
-import { hideMiniCart } from 'features/Cart/cartSlice';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 MiniSuccessCart.propTypes = {};
@@ -10,11 +8,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     zIndex: '10',
     display: 'flex',
+    position: 'relative',
+  },
+  paper: {
+    display: 'flex',
     flexDirection: 'column',
     position: 'absolute',
     width: '300px',
     height: 'auto',
-    top: '55px',
+    top: '25px',
     right: '0',
     backgroundColor: '#FFF',
     borderRadius: '2px',
@@ -24,28 +26,36 @@ const useStyles = makeStyles((theme) => ({
   },
 
   close: {
+    zIndex: '11',
     position: 'absolute',
-    top: '5px',
+    top: '30px',
     right: '5px',
-    fontSize: 'medium',
+    fontSize: 'large',
+    color: 'rgba(0, 0, 0, .8)',
+    '&:hover': {
+      color: 'rgba(0, 0, 0, .4)',
+    },
   },
 }));
 
 function MiniSuccessCart(props) {
   const classes = useStyles();
   const history = useHistory();
-  const miniCart = useSelector((state) => state.cart.showMiniCart);
-  const dispatch = useDispatch();
-  const hanldeCloseMiniCart = () => {
-    dispatch(hideMiniCart());
-  };
+  const hanldeCloseMiniCart = () => {};
   const hanldeLinkCart = () => {
     history.push('/cart');
   };
-
-  if (miniCart) {
-    return (
-      <Paper className={classes.root}>
+  const HandleStopPropagation = (event) => {
+    event.stopPropagation();
+  };
+  return (
+    <Box className={classes.root}>
+      <Close
+        className={classes.close}
+        onClick={hanldeCloseMiniCart}
+        style={{ cursor: 'pointer' }}
+      />
+      <Paper className={classes.paper} onClick={HandleStopPropagation}>
         <Box
           display="flex"
           flexDirection="row"
@@ -53,11 +63,6 @@ function MiniSuccessCart(props) {
           alignItems="center"
           margin={(0, 1)}
         >
-          <Close
-            className={classes.close}
-            onClick={hanldeCloseMiniCart}
-            style={{ cursor: 'pointer' }}
-          />
           <svg
             stroke="rgb(76, 175, 80)"
             fill="rgb(76, 175, 80)"
@@ -81,10 +86,8 @@ function MiniSuccessCart(props) {
           Xem giỏ hàng và thanh toán
         </Button>
       </Paper>
-    );
-  } else {
-    return null;
-  }
+    </Box>
+  );
 }
 
 export default MiniSuccessCart;

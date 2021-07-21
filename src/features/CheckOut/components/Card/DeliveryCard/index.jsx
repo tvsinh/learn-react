@@ -30,7 +30,7 @@ function DeliveryCard(props) {
 
   const dispatch = useDispatch();
   const handleEdit = () => {
-    dispatch(setStep(0));
+    dispatch(setStep(1));
   };
   return (
     <Box className={classes.root}>

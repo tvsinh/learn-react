@@ -35,6 +35,7 @@ function PlaceOrder() {
   const order = useSelector((state) => state.order);
   const cartList = useSelector((state) => state.cart.cartItems);
   const user = useSelector((state) => state.user.current);
+  const deliveryPrice = useSelector((state) => state.order.deliveryPrice);
 
   const handleSubmit = async () => {
     const orderValues = {
@@ -62,9 +63,9 @@ function PlaceOrder() {
       <Container>
         <Paper className={classes.root}>
           <Box className={classes.info}>
-            <Box className={classes.infoOrder}>
-              <Paper>
-                <OrderCard />
+            <Box>
+              <Paper className={classes.infoShipp}>
+                <ShippingCard />
               </Paper>
             </Box>
             <Box>
@@ -72,9 +73,9 @@ function PlaceOrder() {
                 <DeliveryCard />
               </Paper>
             </Box>
-            <Box>
-              <Paper className={classes.infoShipp}>
-                <ShippingCard />
+            <Box className={classes.infoOrder}>
+              <Paper>
+                <OrderCard deliveryPriceFinal={deliveryPrice} />
               </Paper>
             </Box>
           </Box>

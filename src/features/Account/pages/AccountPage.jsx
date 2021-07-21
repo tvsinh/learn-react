@@ -1,9 +1,19 @@
-import { Box, Container, makeStyles, Paper, Typography, Button } from '@material-ui/core';
+import {
+  Box,
+  Container,
+  makeStyles,
+  Paper,
+  Typography,
+  Button,
+  LinearProgress,
+} from '@material-ui/core';
 import ordersApi from 'api/orderApi';
 import { STATIC_HOST } from 'constants/index';
+import ShippingCard from 'features/CheckOut/components/Card/ShippingCard';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { formatPrice } from 'utils';
 
 AccountPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
@@ -18,44 +28,74 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonBack: {
     textTransform: 'none',
-    margin: theme.spacing(3, 0, 0.5, 15),
+    margin: theme.spacing(1, 0, 0, 15),
     [theme.breakpoints.down('md')]: {
       display: 'none',
     },
   },
   account: {
+    display: 'flex',
     width: '100%',
     [theme.breakpoints.down('md')]: {
       width: '100%',
     },
   },
+
+  title: {
+    fontSize: '16px',
+  },
   userInfo: {
-    padding: theme.spacing(1, 1),
-    width: '100%',
+    // padding: theme.spacing(1, 1),
+    width: '350px',
     [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(1, 1),
+      // padding: theme.spacing(1, 1),
     },
   },
   userName: {
     textTransform: 'capitalize',
   },
   order: {
-    marginTop: '5px',
+    width: '800px',
+    marginLeft: '10px',
   },
   orderItem: {
-    marginTop: '5px',
-    padding: theme.spacing(1, 1),
+    padding: theme.spacing(0.5, 1, 1, 1),
+    minHeight: '150px',
   },
   orderBox: {
     paddingBottom: '10px',
   },
-  paperProduct: {
+  orderBoxItem: {
+    // paddingBottom: '10px',
+  },
+  orderNumber: {
+    fontSize: '18px',
+    fontWeight: '500',
+  },
+  boxProduct: {
+    borderTop: '1px solid rgba(0, 0, 0, .5)',
+  },
+  productBox: {
     display: 'flex',
+    alignItems: 'center',
+    padding: '5px',
+    borderBottom: '1px solid rgba(0, 0, 0, .5)',
   },
   boxinfoProduct: {
     marginLeft: '5px',
+    marginTop: '2px',
     display: 'flex',
     flexDirection: 'column',
+  },
+  boxTotalOrder: {
+    marginTop: '5px',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  totalOrder: {
+    marginLeft: '5px',
+    fontSize: '18px',
+    color: 'rgb(238, 35, 71)',
   },
 }));
 
@@ -87,73 +127,104 @@ function AccountPage(props) {
   };
 
   return (
-    <Box>
-      <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
-        Trở lại
-      </Button>
-      <Container className={classes.root}>
-        <Typography>Thông tin tài khoản</Typography>
-        <Box className={classes.account}>
-          {user.id ? (
+    <>
+      {loading ? (
+        <LinearProgress />
+      ) : (
+        <Box>
+          <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
+            Trở lại
+          </Button>
+          <Container className={classes.root}>
             <Box>
-              <Box>
-                <Paper className={classes.userInfo}>
-                  <Typography className={classes.userName}>Tên: {user.fullName}</Typography>
+              {user.id ? (
+                <Box className={classes.account}>
+                  <Box className={classes.userInfo}>
+                    <Typography className={classes.title}>Thông tin tài khoản</Typography>
+                    <Paper>
+                      {/* <Typography className={classes.userName}>Tên: {user.fullName}</Typography>
                   <Typography>Email: {user.email}</Typography>
                   <Typography>
                     Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ'}
-                  </Typography>
-                </Paper>
-              </Box>
-              <Box className={classes.order}>
-                <Typography>Đơn hàng của bạn</Typography>
-                {orderMe.map((orderItem) => (
-                  <Box className={classes.orderBox}>
-                    <Paper className={classes.orderItem}>
-                      <Typography>Name: {orderItem.inforShipping.fullName}</Typography>
-                      <Typography>Email: {orderItem.inforShipping.email}</Typography>
-                      <Typography>Address: {orderItem.inforShipping.address}</Typography>
-                      <Typography>Delivery: {orderItem.delivery}</Typography>
-                      <Typography>Payment: {orderItem.payment}</Typography>
-                      {orderItem.products.map((productItem) => (
-                        <Box>
-                          <Paper className={classes.paperProduct}>
-                            <img
-                              alt="product_img"
-                              width="80px"
-                              height="80px"
-                              src={`${STATIC_HOST}${productItem.product['thumbnail'][0]?.url}`}
-                            />
-                            <Box className={classes.boxinfoProduct}>
-                              <Typography>{productItem.product['name']}</Typography>
-                              <Typography>Product Quantity: {productItem.quantity}</Typography>
-                              <Typography>
-                                Product Price: {productItem.product['salePrice']}
-                              </Typography>
-                              <Typography>
-                                Total: {productItem.product['salePrice'] * productItem.quantity}
-                              </Typography>
-                            </Box>
-                          </Paper>
-                        </Box>
-                      ))}
-                      <Typography>Total Order: {orderItem.totalCart}</Typography>
+                  </Typography> */}
+                      <ShippingCard />
                     </Paper>
                   </Box>
-                ))}
-              </Box>
+                  <Box className={classes.order}>
+                    <Typography className={classes.title}>Đơn hàng của bạn</Typography>
+                    <Box className={classes.orderBox}>
+                      <Paper className={classes.orderItem}>
+                        {orderMe.length ? (
+                          <>
+                            {orderMe.map((orderItem, index) => (
+                              <Box className={classes.orderBoxItem}>
+                                <Typography className={classes.orderNumber}>
+                                  Đơn hàng: {index + 1}
+                                </Typography>
+                                <Typography>Name: {orderItem.inforShipping.fullName}</Typography>
+                                <Typography>Email: {orderItem.inforShipping.email}</Typography>
+                                <Typography>Address: {orderItem.inforShipping.address}</Typography>
+                                <Typography>
+                                  Delivery Price: {formatPrice(orderItem.deliveryPrice)}
+                                </Typography>
+                                <Typography>Payment: {orderItem.payment}</Typography>
+                                <Box className={classes.boxProduct}>
+                                  {orderItem.products.map((productItem) => (
+                                    <Box className={classes.productBox}>
+                                      <img
+                                        alt="product_img"
+                                        width="80px"
+                                        height="80px"
+                                        src={`${STATIC_HOST}${productItem.product['thumbnail'][0]?.url}`}
+                                      />
+                                      <Box className={classes.boxinfoProduct}>
+                                        <Typography>{productItem.product['name']}</Typography>
+                                        <Typography>
+                                          Product Quantity: {productItem.quantity}
+                                        </Typography>
+                                        <Typography>
+                                          Product Price:{' '}
+                                          {formatPrice(productItem.product['salePrice'])}
+                                        </Typography>
+                                        <Typography>
+                                          Total:{' '}
+                                          {formatPrice(
+                                            productItem.product['salePrice'] * productItem.quantity
+                                          )}
+                                        </Typography>
+                                      </Box>
+                                    </Box>
+                                  ))}
+                                </Box>
+                                <Box className={classes.boxTotalOrder}>
+                                  <Typography>Total Order:</Typography>
+                                  <Typography className={classes.totalOrder}>
+                                    {formatPrice(orderItem.totalOrder)}
+                                  </Typography>
+                                </Box>
+                              </Box>
+                            ))}
+                          </>
+                        ) : (
+                          <Box>Không có đơn hàng nào</Box>
+                        )}
+                      </Paper>
+                    </Box>
+                  </Box>
+                </Box>
+              ) : (
+                <Box>
+                  <Paper className={classes.userInfo}>
+                    <Typography>Chưa đăng nhập</Typography>
+                    <Typography>Vui lòng đăng nhập để mua hàng</Typography>
+                  </Paper>
+                </Box>
+              )}
             </Box>
-          ) : (
-            <Box>
-              <Paper className={classes.userInfo}>
-                <Typography>Chưa đăng nhập</Typography>
-                <Typography>Vui lòng đăng nhập để mua hàng</Typography>
-              </Paper>
-            </Box>
-          )}
+          </Container>
         </Box>
-      </Container>
-    </Box>
+      )}
+    </>
   );
 }
 

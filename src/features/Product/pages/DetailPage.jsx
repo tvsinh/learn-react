@@ -1,11 +1,11 @@
-import { Box, Container, Grid, LinearProgress, makeStyles, Paper, Button } from '@material-ui/core';
+import { Box, Button, Container, Grid, LinearProgress, makeStyles, Paper } from '@material-ui/core';
 import Footer from 'components/Footer';
 import Header from 'components/Header';
-import { addToCart, hideMiniCart, showMiniCart } from 'features/Cart/cartSlice';
+import { addToCart } from 'features/Cart/cartSlice';
 import useProductDetail from 'hook/useProductDetail';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Route, Switch, useRouteMatch, useHistory } from 'react-router';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router';
 import AddToCartForm from '../components/AddToCartForm';
 import ProductAdditional from '../components/ProductAdditional';
 import ProductDescription from '../components/ProductDescription';
@@ -62,6 +62,7 @@ function DetailPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const [showMiniCart, setShowMiniCart] = useState(false);
 
   const {
     params: { productId },
@@ -85,13 +86,13 @@ function DetailPage() {
       quantity,
     });
     dispatch(action);
-    dispatch(hideMiniCart());
+    setShowMiniCart(false);
     setTimeout(() => {
-      dispatch(showMiniCart());
+      setShowMiniCart(true);
     }, 100);
   };
   const handleHideMiniCart = () => {
-    dispatch(hideMiniCart());
+    setShowMiniCart(false);
   };
   const handleBack = () => {
     history.goBack();
@@ -100,7 +101,7 @@ function DetailPage() {
   return (
     <>
       <Box onClick={handleHideMiniCart}>
-        <Header />
+        <Header showMiniCart={showMiniCart} />
         <Box pt={3}>
           <Container className={classes.root}>
             <Button className={classes.buttonBack} color="primary" onClick={handleBack}>

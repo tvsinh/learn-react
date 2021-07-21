@@ -10,13 +10,14 @@ const userApi = {
     const url = '/auth/local';
     return axiosClient.post(url, data);
   },
-  getInfor() {
+  async getInfor() {
     const url = '/users/me';
-    return axiosClient.get(url, {
+    const userMe = await axiosClient.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+    return userMe;
   },
 
   updateUser(data) {

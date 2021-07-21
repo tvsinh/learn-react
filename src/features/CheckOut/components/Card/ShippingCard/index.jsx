@@ -3,6 +3,7 @@ import StorageKeys from 'constants/storage-keys';
 import { setStep } from 'features/CheckOut/orderSlice';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     right: '10px',
   },
   userInfo: {
-    padding: '5px 10px 10px 10px',
+    padding: '5px 10px 5px 10px',
   },
   user: {
     display: 'flex',
@@ -32,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 function ShippingCard(props) {
   const classes = useStyles();
+  const history = useHistory();
   const user = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
 
   const dispatch = useDispatch();
   const handleEdit = () => {
+    history.push('/checkout');
     dispatch(setStep(0));
   };
   return (

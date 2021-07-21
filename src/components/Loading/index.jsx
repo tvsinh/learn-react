@@ -21,7 +21,7 @@ const useStylesFacebook = makeStyles((theme) => ({
   },
 }));
 
-function LoadingProgress(props) {
+function FacebookCircularProgress(props) {
   const classes = useStylesFacebook();
 
   return (
@@ -55,12 +55,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CustomizedProgressBars() {
+export default function LoadingProgress() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <LoadingProgress />
+      <FacebookCircularProgress />
     </div>
   );
 }

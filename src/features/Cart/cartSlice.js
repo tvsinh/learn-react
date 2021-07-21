@@ -5,18 +5,9 @@ const { createSlice } = require('@reduxjs/toolkit');
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    showMiniCart: false,
     cartItems: JSON.parse(localStorage.getItem(StorageKeys.CARTITEMS)) || [],
   },
   reducers: {
-    showMiniCart(state) {
-      state.showMiniCart = true;
-    },
-
-    hideMiniCart(state) {
-      state.showMiniCart = false;
-    },
-
     addToCart(state, action) {
       // newItem = { id, product, quantity }
       const newItem = action.payload;
@@ -55,12 +46,5 @@ const cartSlice = createSlice({
 });
 
 const { actions, reducer } = cartSlice;
-export const {
-  showMiniCart,
-  hideMiniCart,
-  addToCart,
-  setQuantity,
-  removeFromCart,
-  removeCartItems,
-} = actions; // named export
+export const { addToCart, setQuantity, removeFromCart, removeCartItems } = actions; // named export
 export default reducer; // default export

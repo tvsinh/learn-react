@@ -6,18 +6,21 @@ import { formatPrice } from './../../../utils/common';
 import { cartTotalSelector } from '../selectors';
 import { useHistory } from 'react-router';
 import { showDialog } from 'features/Auth/userSlice';
-import { setStep, setTotalCart } from 'features/CheckOut/orderSlice';
+import { setStep } from 'features/CheckOut/orderSlice';
+import ShippingCard from 'features/CheckOut/components/Card/ShippingCard';
 CartPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    padding: theme.spacing(0, 12, 4),
+    justifyContent: 'center',
+    padding: theme.spacing(0, 3, 4),
+    width: '100%',
     height: 'auto',
     minHeight: '500px',
   },
   buttonBack: {
     textTransform: 'none',
-    margin: theme.spacing(3, 0, 0.5, 15),
+    margin: theme.spacing(3, 0, 0.5, 11.5),
     [theme.breakpoints.down('md')]: {
       display: 'none',
     },
@@ -31,11 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   right: {
-    flex: '1 1 0',
+    // flex: '1 1 0',
     marginTop: '25px',
     [theme.breakpoints.down('md')]: {
       width: '100%',
     },
+  },
+  shippingCard: {
+    width: '350px',
   },
 
   userInfo: {
@@ -56,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     marginTop: '10px',
     padding: '5px 10px',
+    width: '350px',
   },
   total: {
     marginLeft: '5px',
@@ -64,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginTop: '10px',
+    width: '350px',
   },
   buttonBuy: {
     color: '#fff',
@@ -205,7 +213,6 @@ function CartPage(props) {
   const handleCheckOut = () => {
     if (isLoggedIn) {
       dispatch(setStep(0));
-      dispatch(setTotalCart(cartTotal));
       history.push('/checkout');
     } else {
       dispatch(showDialog());
@@ -219,23 +226,26 @@ function CartPage(props) {
           <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
             Trở lại
           </Button>
-          <Container className={classes.root}>
-            <Grid className={classes.left}>
+          <Box className={classes.root}>
+            <Box className={classes.left}>
               <Typography>Giỏ hàng</Typography>
               <CartList cartList={cartList} />
-            </Grid>
+            </Box>
             <Box className={classes.right}>
               {isLoggedIn ? (
-                <Box>
-                  <Paper className={classes.userInfo}>
-                    <Typography className={classes.userName}>
-                      Tên: {loggedInUser.fullName}
-                    </Typography>
-                    <Typography className={classes.userEmail}>
-                      Email: {loggedInUser.email}
-                    </Typography>
-                  </Paper>
-                </Box>
+                // <Box>
+                //   <Paper className={classes.userInfo}>
+                //     <Typography className={classes.userName}>
+                //       Tên: {loggedInUser.fullName}
+                //     </Typography>
+                //     <Typography className={classes.userEmail}>
+                //       Email: {loggedInUser.email}
+                //     </Typography>
+                //   </Paper>
+                // </Box>
+                <Paper className={classes.shippingCard}>
+                  <ShippingCard />
+                </Paper>
               ) : (
                 <Box>
                   <Paper className={classes.userInfo}>
@@ -257,7 +267,7 @@ function CartPage(props) {
                 </Button>
               </Paper>
             </Box>
-          </Container>
+          </Box>
         </Box>
 
         <Box className={classes.sectionMobile}>
