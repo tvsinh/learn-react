@@ -97,6 +97,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '18px',
     color: 'rgb(238, 35, 71)',
   },
+  userNotLogin: {
+    padding: '10px',
+  },
 }));
 
 function AccountPage(props) {
@@ -214,7 +217,7 @@ function AccountPage(props) {
                 </Box>
               ) : (
                 <Box>
-                  <Paper className={classes.userInfo}>
+                  <Paper className={classes.userNotLogin}>
                     <Typography>Chưa đăng nhập</Typography>
                     <Typography>Vui lòng đăng nhập để mua hàng</Typography>
                   </Paper>

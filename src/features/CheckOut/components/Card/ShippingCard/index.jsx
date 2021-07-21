@@ -2,7 +2,7 @@ import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import StorageKeys from 'constants/storage-keys';
 import { setStep } from 'features/CheckOut/orderSlice';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
 function ShippingCard(props) {
   const classes = useStyles();
   const history = useHistory();
-  const user = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
+  const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
+  const userCurrent = useSelector((state) => state.user.current);
+  const user = userShipping ? userShipping : userCurrent;
 
   const dispatch = useDispatch();
   const handleEdit = () => {
