@@ -18,6 +18,7 @@ import { removeFromCart, setQuantity } from '../cartSlice';
 import { STATIC_HOST } from './../../../constants/common';
 import { formatPrice } from './../../../utils/common';
 import LoadingProgress from 'components/Loading';
+import { useEffect } from 'react';
 
 CartItem.propTypes = {
   data: PropTypes.object,
@@ -164,14 +165,16 @@ function CartItem({ data }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { product, loading } = useProductDetail(data.product.id);
-  if (data.quantity > product.quantity) {
-    dispatch(
-      setQuantity({
-        id: data.product.id,
-        quantity: product.quantity,
-      })
-    );
-  }
+  useEffect(() => {
+    if (data.quantity > product.quantity) {
+      dispatch(
+        setQuantity({
+          id: data.product.id,
+          quantity: product.quantity,
+        })
+      );
+    }
+  }, [dispatch, data, product]);
   const handleUpQuantity = () => {
     const newQuantity = Number.parseInt(data.quantity) + 1;
     if (newQuantity >= 1 && newQuantity <= product.quantity) {

@@ -1,13 +1,14 @@
-import { Box, Container, makeStyles, Paper, Typography, Button, Grid } from '@material-ui/core';
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import CartList from './../components/CartList';
-import { formatPrice } from './../../../utils/common';
-import { cartTotalSelector } from '../selectors';
-import { useHistory } from 'react-router';
+import { Box, Button, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import { showDialog } from 'features/Auth/userSlice';
-import { setStep } from 'features/CheckOut/orderSlice';
 import ShippingCard from 'features/CheckOut/components/Card/ShippingCard';
+import ShippingCardMobile from 'features/CheckOut/components/Card/ShippingCard/mobile';
+import { setBackTo, setStep } from 'features/CheckOut/orderSlice';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { cartTotalSelector } from '../selectors';
+import { formatPrice } from './../../../utils/common';
+import CartList from './../components/CartList';
 CartPage.propTypes = {};
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -140,6 +141,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#FFF',
     padding: theme.spacing(1),
   },
+  userNotMobile: {
+    backgroundColor: '#FFF',
+    padding: theme.spacing(1),
+  },
   userNameMobile: {
     fontWeight: '500',
   },
@@ -213,6 +218,7 @@ function CartPage(props) {
   const handleCheckOut = () => {
     if (isLoggedIn) {
       dispatch(setStep(0));
+      dispatch(setBackTo(false));
       history.push('/checkout');
     } else {
       dispatch(showDialog());
@@ -244,7 +250,7 @@ function CartPage(props) {
                 //   </Paper>
                 // </Box>
                 <Paper className={classes.shippingCard}>
-                  <ShippingCard />
+                  <ShippingCard backTo={true} />
                 </Paper>
               ) : (
                 <Box>
@@ -275,16 +281,20 @@ function CartPage(props) {
             <Typography className={classes.rootCartMobile}>Giỏ hàng</Typography>
             {isLoggedIn ? (
               <Box className={classes.userInfoMobile}>
-                <Typography>Thông tin nhận hàng</Typography>
+                {/* <Typography>Thông tin nhận hàng</Typography>
                 <Typography className={classes.userNameMobile}>
                   Tên: {loggedInUser.fullName}
                 </Typography>
                 <Typography className={classes.userMailMobile}>
                   Email: {loggedInUser.email}
                 </Typography>
+                <Typography className={classes.userMailMobile}>
+                  Địa chỉ: {loggedInUser.address}
+                </Typography> */}
+                <ShippingCardMobile backTo={true} />
               </Box>
             ) : (
-              <Box className={classes.userInfoMobile}>
+              <Box className={classes.userNotMobile}>
                 <Typography>Chưa đăng nhập</Typography>
                 <Typography>Vui lòng đăng nhập để mua hàng</Typography>
               </Box>

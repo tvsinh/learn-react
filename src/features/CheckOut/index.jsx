@@ -1,21 +1,19 @@
-import React, { useEffect } from 'react';
-import { Route, Switch, useRouteMatch, useHistory } from 'react-router-dom';
-
-import CustomizedSteppers from './steps';
-import Header from './../../components/Header';
-import { Box, Typography, Button, Paper, makeStyles } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import { showDialog } from 'features/Auth/userSlice';
-import Successfully from './components/Successfully';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import Header from './../../components/Header';
+import CustomizedSteppers from './steps';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: 'rgb(245, 245, 245)',
-  },
+  root: {},
   checkout: {
-    minHeight: '100vh',
+    backgroundColor: 'rgb(245, 245, 245)',
+    minHeight: '90vh',
   },
   emptyBox: {
+    minHeight: '100vh',
     paddingTop: '25vh',
   },
   empty: {
@@ -45,9 +43,7 @@ function CheckOutFeature() {
 
   const dispatch = useDispatch();
   const match = useRouteMatch();
-  const history = useHistory();
 
-  const cartList = useSelector((state) => state.cart.cartItems);
   const loggedInUser = useSelector((state) => state.user.current);
   const isLoggedIn = !!loggedInUser.id;
 
@@ -56,44 +52,21 @@ function CheckOutFeature() {
       dispatch(showDialog());
     }
   }, [isLoggedIn, dispatch]);
-  const handleCartClick = () => {
-    history.push('/products');
-  };
+  // const handleCartClick = () => {
+  //   history.push('/products');
+  // };
   const handleLogin = () => {
     dispatch(showDialog());
   };
+
   return (
     <Box>
       <Header />
       {isLoggedIn ? (
-        <Box className={classes.root}>
-          <Box className={classes.checkout}>
-            <Switch>
-              <Route path={match.url} exact component={CustomizedSteppers} />
-              <Route path={`${match.url}/successfully`} exact component={Successfully} />
-            </Switch>
-          </Box>
-          {/* {cartList.length ? (
-            <Box className={classes.checkout}>
-              <Switch>
-                <Route path={match.url} exact component={CustomizedSteppers} />
-                <Route path={`${match.url}/successfully`} exact component={Successfully} />
-              </Switch>
-            </Box>
-          ) : (
-            <Box className={classes.emptyBox}>
-              <Paper className={classes.empty}>
-                <Typography className={classes.emptyText}>
-                  Không có sản phẩm trong giỏ hàng.
-                </Typography>
-                <Box className={classes.emptyButton}>
-                  <Button variant="outlined" color="primary" onClick={handleCartClick}>
-                    Tiếp tục mua sắm
-                  </Button>
-                </Box>
-              </Paper>
-            </Box>
-          )} */}
+        <Box className={classes.checkout}>
+          <Switch>
+            <Route path={match.url} exact component={CustomizedSteppers} />
+          </Switch>
         </Box>
       ) : (
         <Box className={classes.notLogin}>

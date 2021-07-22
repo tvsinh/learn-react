@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 
 import { Room, DoneOutline, PaymentOutlined } from '@material-ui/icons';
 import { Box } from '@material-ui/core';
+import Successfully from '../components/Successfully';
 
 const useQontoStepIconStyles = makeStyles({
   root: {
@@ -150,7 +151,7 @@ ColorlibStepIcon.propTypes = {
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    minHeight: '100vh',
+    minHeight: '90vh',
   },
   stepper: {
     padding: '15px 0 5px 0',
@@ -177,6 +178,8 @@ function getStepContent(step) {
       return <Payment />;
     case 2:
       return <PlaceOrder />;
+    case 3:
+      return <Successfully />;
     default:
       return 'Unknown step';
   }

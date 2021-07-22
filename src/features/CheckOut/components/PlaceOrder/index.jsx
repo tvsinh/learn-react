@@ -1,16 +1,14 @@
-import React from 'react';
-import { Button, Box, Container, Paper } from '@material-ui/core';
-import { setStep } from 'features/CheckOut/orderSlice';
-
-import { useDispatch, useSelector } from 'react-redux';
-import ordersApi from 'api/orderApi';
-import { useHistory } from 'react-router';
+import { Box, Button, Container, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import ShippingCard from '../Card/ShippingCard';
-import OrderCard from '../Card/OrderCard';
-import DeliveryCard from '../Card/DeliveryCard';
-import { removeCartItems } from 'features/Cart/cartSlice';
+import ordersApi from 'api/orderApi';
 import productApi from 'api/productApi';
+import { removeCartItems } from 'features/Cart/cartSlice';
+import { setStep } from 'features/CheckOut/orderSlice';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import DeliveryCard from '../Card/DeliveryCard';
+import OrderCard from '../Card/OrderCard';
+import ShippingCard from '../Card/ShippingCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 function PlaceOrder() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
   const order = useSelector((state) => state.order);
   const cartList = useSelector((state) => state.cart.cartItems);
   const user = useSelector((state) => state.user.current);
@@ -50,13 +47,10 @@ function PlaceOrder() {
         id: product.id,
         quantity: dataQty.quantity - product.quantity,
       };
-      // console.log(data);
-      // console.log(dataQty.quantity);
       await productApi.update(data);
     });
-    dispatch(setStep(0));
     dispatch(removeCartItems());
-    history.push('/checkout/successfully');
+    dispatch(setStep(3));
   };
   return (
     <Box>

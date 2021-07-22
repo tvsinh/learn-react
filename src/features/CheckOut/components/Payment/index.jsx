@@ -41,8 +41,9 @@ const useStyles = makeStyles((theme) => ({
 function Payment() {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [valueDelivery, setValueDelivery] = React.useState('Giao hàng tiết kiệm');
-  const [valuePayment, setValuePayment] = React.useState('Thanh toán khi nhận hàng');
+  const { delivery, payment } = useSelector((state) => state.order);
+  const [valueDelivery, setValueDelivery] = React.useState(delivery);
+  const [valuePayment, setValuePayment] = React.useState(payment);
   const cartTotal = useSelector(cartTotalSelector);
   const handleChangeDelivery = (event) => {
     setValueDelivery(event.target.value);
@@ -80,7 +81,7 @@ function Payment() {
                   name="delivery"
                   value={valueDelivery}
                   onChange={handleChangeDelivery}
-                  defaultValue="Giao hàng tiết kiệm"
+                  defaultValue={delivery}
                 >
                   <FormControlLabel
                     value="Giao hàng tiết kiệm"
@@ -105,7 +106,7 @@ function Payment() {
                   name="payment"
                   value={valuePayment}
                   onChange={handleChangePay}
-                  defaultValue="Thanh toán khi nhận hàng"
+                  defaultValue={payment}
                 >
                   <FormControlLabel
                     value="Thanh toán khi nhận hàng"
@@ -128,7 +129,7 @@ function Payment() {
             onClick={handleSubmit}
             style={{ width: '225px' }}
           >
-            Tiếp theo
+            Tiếp tục
           </Button>
         </Box>
         <Box className={classes.infoOrder}>

@@ -3,11 +3,9 @@ import { Container, Box, makeStyles, Typography, Paper, Button } from '@material
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    // minHeight: '100vh',
-  },
+  root: {},
   box: {
-    paddingTop: '30vh',
+    paddingTop: '21vh',
   },
   success: {
     width: '400px',
@@ -29,7 +27,7 @@ function Successfully() {
   const classes = useStyles();
   const history = useHistory();
   const handleCartClick = () => {
-    history.push('/products');
+    history.push('/account');
   };
   return (
     <>
@@ -40,7 +38,7 @@ function Successfully() {
               <Typography className={classes.successText}>Đặt hàng thành công!</Typography>
               <Box className={classes.successButton}>
                 <Button variant="outlined" color="primary" onClick={handleCartClick}>
-                  Tiếp tục mua sắm
+                  Xem giỏ hàng
                 </Button>
               </Box>
             </Paper>

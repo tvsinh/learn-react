@@ -51,9 +51,7 @@ const useStyles = makeStyles((theme) => ({
       // padding: theme.spacing(1, 1),
     },
   },
-  userName: {
-    textTransform: 'capitalize',
-  },
+
   order: {
     width: '800px',
     marginLeft: '10px',
@@ -145,12 +143,7 @@ function AccountPage(props) {
                   <Box className={classes.userInfo}>
                     <Typography className={classes.title}>Thông tin tài khoản</Typography>
                     <Paper>
-                      {/* <Typography className={classes.userName}>Tên: {user.fullName}</Typography>
-                  <Typography>Email: {user.email}</Typography>
-                  <Typography>
-                    Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ'}
-                  </Typography> */}
-                      <ShippingCard />
+                      <ShippingCard backTo={true} />
                     </Paper>
                   </Box>
                   <Box className={classes.order}>
@@ -164,13 +157,17 @@ function AccountPage(props) {
                                 <Typography className={classes.orderNumber}>
                                   Đơn hàng: {index + 1}
                                 </Typography>
-                                <Typography>Name: {orderItem.inforShipping.fullName}</Typography>
-                                <Typography>Email: {orderItem.inforShipping.email}</Typography>
-                                <Typography>Address: {orderItem.inforShipping.address}</Typography>
                                 <Typography>
-                                  Delivery Price: {formatPrice(orderItem.deliveryPrice)}
+                                  Tên người nhận: {orderItem.inforShipping.fullName}
                                 </Typography>
-                                <Typography>Payment: {orderItem.payment}</Typography>
+                                <Typography>Email: {orderItem.inforShipping.email}</Typography>
+                                <Typography>
+                                  Địa chỉ nhận hàng: {orderItem.inforShipping.address}
+                                </Typography>
+                                <Typography>
+                                  Phí giao hàng: {formatPrice(orderItem.deliveryPrice)}
+                                </Typography>
+                                <Typography>Hình thức thanh toán: {orderItem.payment}</Typography>
                                 <Box className={classes.boxProduct}>
                                   {orderItem.products.map((productItem) => (
                                     <Box className={classes.productBox}>
@@ -182,15 +179,12 @@ function AccountPage(props) {
                                       />
                                       <Box className={classes.boxinfoProduct}>
                                         <Typography>{productItem.product['name']}</Typography>
+                                        <Typography>Số lượng: {productItem.quantity}</Typography>
                                         <Typography>
-                                          Product Quantity: {productItem.quantity}
+                                          Giá: {formatPrice(productItem.product['salePrice'])}
                                         </Typography>
                                         <Typography>
-                                          Product Price:{' '}
-                                          {formatPrice(productItem.product['salePrice'])}
-                                        </Typography>
-                                        <Typography>
-                                          Total:{' '}
+                                          Tổng:{' '}
                                           {formatPrice(
                                             productItem.product['salePrice'] * productItem.quantity
                                           )}
@@ -200,7 +194,7 @@ function AccountPage(props) {
                                   ))}
                                 </Box>
                                 <Box className={classes.boxTotalOrder}>
-                                  <Typography>Total Order:</Typography>
+                                  <Typography>Thành tiền:</Typography>
                                   <Typography className={classes.totalOrder}>
                                     {formatPrice(orderItem.totalOrder)}
                                   </Typography>

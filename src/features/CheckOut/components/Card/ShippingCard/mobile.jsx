@@ -5,11 +5,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { PropTypes } from 'prop-types';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
-    width: '350px',
+    width: '100%',
   },
   title: {
     marginLeft: '10px',
@@ -33,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
   userEmail: {},
   userAddress: {},
 }));
-ShippingCard.propTypes = {
+ShippingCardMobile.propTypes = {
   backTo: PropTypes.bool,
 };
-function ShippingCard({ backTo = false }) {
+function ShippingCardMobile({ backTo = false }) {
   const classes = useStyles();
   const history = useHistory();
   const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
@@ -51,7 +50,6 @@ function ShippingCard({ backTo = false }) {
       dispatch(setBackTo(true));
     }
     if (!backTo) {
-      dispatch(setBackTo(false));
       history.push('/checkout');
       dispatch(setStep(0));
     }
@@ -74,12 +72,10 @@ function ShippingCard({ backTo = false }) {
           <Typography className={classes.userName}>{user.fullName}</Typography>
         </Box>
         <Typography className={classes.userEmail}>Email: {user.email}</Typography>
-        <Typography className={classes.userAddress}>
-          Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ.'}
-        </Typography>
+        <Typography className={classes.userAddress}>Địa chỉ: {user.address}</Typography>
       </Box>
     </Box>
   );
 }
 
-export default ShippingCard;
+export default ShippingCardMobile;

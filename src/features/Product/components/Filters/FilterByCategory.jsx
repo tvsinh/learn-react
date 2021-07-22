@@ -42,18 +42,17 @@ function FilterByCategory({ onChange }) {
     (async () => {
       try {
         const list = await categoryApi.getAll();
-        setCategoryList(
-          list.map((x) => ({
-            id: x.id,
-            name: x.name,
-          }))
-        );
+        const cateList = await list.map((x) => ({
+          id: x.id,
+          name: x.name,
+        }));
+        setCategoryList(cateList);
       } catch (error) {
         console.log('Failed to fetch category list', error);
       }
       setLoading(false);
     })();
-  }, [categoryList, loading]);
+  }, []);
 
   const handleCategoryClick = (category) => {
     if (onChange) {
