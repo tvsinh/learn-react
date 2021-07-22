@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import ordersApi from 'api/orderApi';
 import productApi from 'api/productApi';
 import { removeCartItems } from 'features/Cart/cartSlice';
-import { setStep } from 'features/CheckOut/orderSlice';
+import { setDeliveryPayment, setStep } from 'features/CheckOut/orderSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeliveryCard from '../Card/DeliveryCard';
@@ -50,6 +50,13 @@ function PlaceOrder() {
       await productApi.update(data);
     });
     dispatch(removeCartItems());
+    dispatch(
+      setDeliveryPayment({
+        valueDelivery: '',
+        valuePayment: '',
+        deliveryPrice: 0,
+      })
+    );
     dispatch(setStep(3));
   };
   return (

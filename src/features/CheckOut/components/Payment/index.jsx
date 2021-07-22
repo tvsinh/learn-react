@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { Button, Box, Container, Paper } from '@material-ui/core';
+import { Button, Box, Container, Paper, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { setDeliveryPayment, setStep, setTotalOrder } from 'features/CheckOut/orderSlice';
@@ -15,9 +15,11 @@ import { cartTotalSelector } from 'features/Cart/selectors';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    justifyContent: 'space-between',
   },
   form: {
-    flex: '1 1 0',
+    // flex: '1 1 0',
+    width: '450px',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -29,9 +31,13 @@ const useStyles = makeStyles((theme) => ({
     padding: '10px',
     marginBottom: '10px',
   },
+  error: {
+    marginBottom: '2px',
+    color: 'rgb(238, 35, 71)',
+  },
   button: {},
   infoOrder: {
-    marginLeft: '10px',
+    // marginLeft: '10px',
   },
   infoShip: {
     marginBottom: '10px',
@@ -42,8 +48,9 @@ function Payment() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { delivery, payment } = useSelector((state) => state.order);
-  const [valueDelivery, setValueDelivery] = React.useState(delivery);
-  const [valuePayment, setValuePayment] = React.useState(payment);
+  const [valueDelivery, setValueDelivery] = useState(delivery);
+  const [valuePayment, setValuePayment] = useState(payment);
+  const [error, setError] = useState(false);
   const cartTotal = useSelector(cartTotalSelector);
   const handleChangeDelivery = (event) => {
     setValueDelivery(event.target.value);
@@ -51,7 +58,16 @@ function Payment() {
   const handleChangePay = (event) => {
     setValuePayment(event.target.value);
   };
+  useEffect(() => {
+    if ((valueDelivery !== '') & (valuePayment !== '')) {
+      setError(false);
+    }
+  }, [valueDelivery, valuePayment]);
   const handleSubmit = () => {
+    if (valueDelivery === '' || valuePayment === '') {
+      setError(true);
+      return;
+    }
     dispatch(setStep(2));
     const deliveryPrice =
       valueDelivery === 'Giao hàng nhanh'
@@ -71,6 +87,11 @@ function Payment() {
   return (
     <Box>
       <Container className={classes.root}>
+        <Box className={classes.infoShip}>
+          <Paper className={classes.infoShip}>
+            <ShippingCard />
+          </Paper>
+        </Box>
         <Box className={classes.form}>
           <Box>
             <Paper className={classes.formDelivery}>
@@ -122,6 +143,11 @@ function Payment() {
               </FormControl>
             </Paper>
           </Box>
+          {error && (
+            <Typography className={classes.error}>
+              Vui lòng chọn đầy đủ hình thức giao hàng & thanh toán.
+            </Typography>
+          )}
           <Button
             size="large"
             color="primary"
@@ -132,10 +158,8 @@ function Payment() {
             Tiếp tục
           </Button>
         </Box>
+
         <Box className={classes.infoOrder}>
-          <Paper className={classes.infoShip}>
-            <ShippingCard />
-          </Paper>
           <Paper>
             <OrderCard valueDelivery={valueDelivery} />
           </Paper>
