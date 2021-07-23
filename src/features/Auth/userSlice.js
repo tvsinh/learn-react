@@ -36,7 +36,7 @@ const userSlice = createSlice({
     },
     logout(state) {
       // clear local storage
-      localStorage.removeItem(StorageKeys.USER);
+      // localStorage.removeItem(StorageKeys.USER);
       localStorage.removeItem(StorageKeys.TOKEN);
       localStorage.removeItem(StorageKeys.SHIPPING);
 

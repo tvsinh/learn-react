@@ -72,7 +72,7 @@ function LoginForm(props) {
     if (isSubmitSuccessful) {
       form.reset();
     }
-    console.log('Data', values);
+    // console.log('Data', values);
   };
 
   return (

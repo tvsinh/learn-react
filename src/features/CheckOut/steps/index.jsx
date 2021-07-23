@@ -156,6 +156,21 @@ const useStyles = makeStyles((theme) => ({
   stepper: {
     padding: '15px 0 5px 0',
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2) ',
+    [theme.breakpoints.down('md')]: {
+      position: 'fixed',
+      width: '100%',
+      marginTop: theme.spacing(7),
+    },
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+      width: '100%',
+      marginTop: theme.spacing(6.5),
+    },
+    [theme.breakpoints.down('xs')]: {
+      position: 'fixed',
+      width: '100%',
+      marginTop: theme.spacing(5.5),
+    },
   },
   button: {
     marginRight: theme.spacing(1),
@@ -163,6 +178,21 @@ const useStyles = makeStyles((theme) => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+    [theme.breakpoints.down('md')]: {
+      position: 'absoflute',
+      width: '100%',
+      paddingTop: theme.spacing(20),
+    },
+    [theme.breakpoints.down('sm')]: {
+      position: 'absoflute',
+      width: '100%',
+      paddingTop: theme.spacing(18.5),
+    },
+    [theme.breakpoints.down('xs')]: {
+      position: 'absoflute',
+      width: '100%',
+      paddingTop: theme.spacing(21),
+    },
   },
 }));
 
@@ -197,7 +227,7 @@ export default function CustomizedSteppers() {
   }, [step]);
 
   return (
-    <div className={classes.root}>
+    <Box className={classes.root}>
       <Stepper
         alternativeLabel
         activeStep={activeStep}
@@ -212,6 +242,6 @@ export default function CustomizedSteppers() {
       </Stepper>
 
       <Box className={classes.instructions}>{getStepContent(activeStep)}</Box>
-    </div>
+    </Box>
   );
 }

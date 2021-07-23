@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   itemMobileHeader: {
+    fontWeight: '500',
     padding: theme.spacing(1, 0, 0, 1),
   },
 }));

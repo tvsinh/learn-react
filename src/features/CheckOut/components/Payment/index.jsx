@@ -16,6 +16,20 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    // [theme.breakpoints.down('sm')]: {
+    //   position: 'absoflute',
+    //   width: '100%',
+    //   paddingTop: theme.spacing(18.5),
+    // },
+    // [theme.breakpoints.down('xs')]: {
+    //   position: 'absoflute',
+    //   width: '100%',
+    //   paddingTop: theme.spacing(21),
+    // },
   },
   form: {
     // flex: '1 1 0',
@@ -89,7 +103,7 @@ function Payment() {
       <Container className={classes.root}>
         <Box className={classes.infoShip}>
           <Paper className={classes.infoShip}>
-            <ShippingCard />
+            <ShippingCard edit={true} />
           </Paper>
         </Box>
         <Box className={classes.form}>

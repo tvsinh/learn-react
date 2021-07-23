@@ -3,7 +3,8 @@ const orderSlice = createSlice({
   name: 'order',
   initialState: {
     step: 0,
-    backTo: true,
+    backTo: false,
+    edit: false,
     inforShipping: {
       fullName: '',
       email: '',
@@ -24,6 +25,9 @@ const orderSlice = createSlice({
     setBackTo(state, action) {
       state.backTo = action.payload;
     },
+    setEdit(state, action) {
+      state.edit = action.payload;
+    },
     setShipping(state, action) {
       state.inforShipping.fullName = action.payload.fullName;
       state.inforShipping.email = action.payload.email;
@@ -41,6 +45,13 @@ const orderSlice = createSlice({
   },
 });
 const { actions, reducer } = orderSlice;
-export const { location, setStep, setBackTo, setShipping, setDeliveryPayment, setTotalOrder } =
-  actions;
+export const {
+  location,
+  setStep,
+  setBackTo,
+  setEdit,
+  setShipping,
+  setDeliveryPayment,
+  setTotalOrder,
+} = actions;
 export default reducer;

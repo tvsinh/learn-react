@@ -7,11 +7,12 @@ import {
   Typography,
   FormControlLabel,
   Checkbox,
+  LinearProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import InputField from 'components/form-controls/InputField';
-import { setShipping, setStep } from 'features/CheckOut/orderSlice';
-import React, { useState } from 'react';
+import { setBackTo, setShipping, setStep } from 'features/CheckOut/orderSlice';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup';
@@ -24,9 +25,17 @@ import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   },
   cartInfo: {
     marginLeft: '10px',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '0',
+      marginTop: '10px',
+    },
   },
 
   form: {
@@ -42,17 +51,41 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  checkBox: {
+    width: '18vw',
+    [theme.breakpoints.down('md')]: {
+      width: '50vw',
+    },
+  },
 }));
 
 function Shipping() {
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
-  const user = useSelector((state) => state.user.current);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const userMe = await userApi.getInfor();
+        localStorage.setItem(StorageKeys.USER, JSON.stringify(userMe));
+        dispatch(setUser());
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    })();
+  }, [dispatch]);
+
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const backTo = useSelector((state) => state.order.backTo);
+  const { backTo, edit } = useSelector((state) => state.order);
   const [addressDefault, setAddressDefault] = useState(false);
-  const { address, fullName, email, id } = user;
+
+  const user = useSelector((state) => state.user.current);
+  const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING)) || {};
+  const { fullName: fullNameUser, email: emailUser, address: addressUser, id } = user;
+  const { fullName, address } = userShipping;
 
   const schema = yup.object().shape({
     fullName: yup
@@ -72,9 +105,9 @@ function Shipping() {
   });
   const form = useForm({
     defaultValues: {
-      fullName: fullName,
-      email: email,
-      address: address,
+      fullName: backTo ? fullNameUser : edit ? (fullName ? fullName : fullNameUser) : fullNameUser,
+      email: emailUser,
+      address: backTo ? addressUser : edit ? (address ? address : addressUser) : addressUser,
     },
     resolver: yupResolver(schema),
   });
@@ -89,12 +122,12 @@ function Shipping() {
       };
       if (addressDefault) {
         await userApi.updateUser(data);
-        const userNew = await userApi.getInfor();
-        localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
-        dispatch(setUser());
+        // const userNew = await userApi.getInfor();
+        // localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
+        // dispatch(setUser());
       }
     }
-    if (backTo) {
+    if (backTo || cartItems.length < 1) {
       dispatch(setShipping(values));
       const data = {
         id: id,
@@ -106,7 +139,7 @@ function Shipping() {
       const userNew = await userApi.getInfor();
       localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
       dispatch(setUser());
-      // dispatch(setBackTo(false));
+      dispatch(setBackTo(false));
       history.goBack();
     }
   };
@@ -115,60 +148,93 @@ function Shipping() {
     setAddressDefault(!addressDefault);
   };
   return (
-    <Box>
-      <Container className={classes.root}>
-        <Box className={classes.form}>
-          <Paper className={classes.formControl}>
-            <Typography style={{ textAlign: 'center', fontWeight: '500' }}>
-              Thông tin nhận hàng
-            </Typography>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.formItem}>
-              <InputField name="fullName" label="Tên người nhận" form={form} fullName={fullName} />
-              <InputField name="email" label="Email" form={form} email={email} disabled={true} />
-              <InputField name="address" label="Địa chỉ" form={form} address={address} />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={backTo ? backTo : addressDefault}
-                    onChange={handleChange}
-                    name="addressDefault"
-                    color="primary"
-                    disabled={backTo}
+    <>
+      {loading ? (
+        <LinearProgress style={{ top: '-6px' }} />
+      ) : (
+        <Box>
+          <Container className={classes.root}>
+            <Box className={classes.form}>
+              <Paper className={classes.formControl}>
+                <Typography style={{ textAlign: 'center', fontWeight: '500' }}>
+                  Thông tin nhận hàng
+                </Typography>
+                <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.formItem}>
+                  <InputField
+                    name="fullName"
+                    label="Tên người nhận"
+                    form={form}
+                    // fullName={
+                    //   backTo
+                    //     ? fullNameUser
+                    //     : edit
+                    //     ? fullName
+                    //       ? fullName
+                    //       : fullNameUser
+                    //     : fullNameUser
+                    // }
                   />
-                }
-                label="Đặt làm thông tin mặc định"
-              />
-              {backTo ? (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  style={{ width: '225px' }}
-                >
-                  Lưu thông tin
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  style={{ width: '225px' }}
-                >
-                  Tiếp tục
-                </Button>
-              )}
-            </form>
-          </Paper>
+                  <InputField
+                    name="email"
+                    label="Email"
+                    form={form}
+                    // email={emailUser}
+                    disabled={true}
+                  />
+                  <InputField
+                    name="address"
+                    label="Địa chỉ"
+                    form={form}
+                    // address={
+                    //   backTo ? addressUser : edit ? (address ? address : addressUser) : addressUser
+                    // }
+                  />
+                  <FormControlLabel
+                    className={classes.checkBox}
+                    control={
+                      <Checkbox
+                        checked={backTo || cartItems.length < 1 ? true : addressDefault}
+                        onChange={handleChange}
+                        name="addressDefault"
+                        color="primary"
+                        disabled={backTo || cartItems.length < 1}
+                      />
+                    }
+                    label="Đặt làm thông tin mặc định"
+                  />
+                  {(backTo && !edit) || cartItems.length < 1 ? (
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      style={{ width: '225px' }}
+                    >
+                      Lưu thông tin
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      style={{ width: '225px' }}
+                    >
+                      Tiếp tục
+                    </Button>
+                  )}
+                </form>
+              </Paper>
+            </Box>
+            <Box className={classes.cartInfo}>
+              <Paper>
+                <OrderCard />
+              </Paper>
+            </Box>
+          </Container>
         </Box>
-        <Box className={classes.cartInfo}>
-          <Paper>
-            <OrderCard />
-          </Paper>
-        </Box>
-      </Container>
-    </Box>
+      )}
+    </>
   );
 }
 

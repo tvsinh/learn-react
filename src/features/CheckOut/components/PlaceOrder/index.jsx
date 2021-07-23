@@ -17,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
   info: {
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
   },
   payment: {},
   infoOrder: {},
@@ -66,7 +70,7 @@ function PlaceOrder() {
           <Box className={classes.info}>
             <Box>
               <Paper className={classes.infoShipp}>
-                <ShippingCard />
+                <ShippingCard edit={true} backTo={false} />
               </Paper>
             </Box>
             <Box>

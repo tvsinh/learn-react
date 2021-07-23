@@ -1,6 +1,6 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import StorageKeys from 'constants/storage-keys';
-import { setBackTo, setStep } from 'features/CheckOut/orderSlice';
+import { setBackTo, setEdit, setStep } from 'features/CheckOut/orderSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -34,24 +34,38 @@ const useStyles = makeStyles((theme) => ({
 }));
 ShippingCardMobile.propTypes = {
   backTo: PropTypes.bool,
+  edit: PropTypes.bool,
 };
-function ShippingCardMobile({ backTo = false }) {
+function ShippingCardMobile({ backTo = false, edit = false }) {
   const classes = useStyles();
   const history = useHistory();
   const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
   const userCurrent = useSelector((state) => state.user.current);
-  const user = userShipping ? userShipping : userCurrent;
+  const user = backTo
+    ? userCurrent
+    : edit
+    ? userShipping
+      ? userShipping
+      : userCurrent
+    : userCurrent;
 
   const dispatch = useDispatch();
   const handleEdit = () => {
-    if (backTo) {
+    if (backTo && !edit) {
       history.push('/checkout');
       dispatch(setStep(0));
       dispatch(setBackTo(true));
     }
-    if (!backTo) {
+    if (edit && !backTo) {
+      dispatch(setStep(0));
+      dispatch(setBackTo(false));
+      dispatch(setEdit(true));
+    }
+    if (!edit && !backTo) {
       history.push('/checkout');
       dispatch(setStep(0));
+      dispatch(setEdit(false));
+      dispatch(setBackTo(false));
     }
   };
   return (

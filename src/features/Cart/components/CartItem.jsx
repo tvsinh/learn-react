@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: '8px',
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(1, 0, 1, 3),
+      paddingTop: '0',
+    },
   },
   rootDesktop: {
     margin: theme.spacing(1),
@@ -136,10 +141,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   boxQtyMobile: {
-    width: '150px',
+    width: 'auto',
     display: 'flex',
     flexFlow: 'row nowrap',
     alignItems: 'center',
+  },
+  iconButton: {
+    width: '30px',
   },
   productPriceAndDel: {
     display: 'flex',
@@ -295,11 +303,11 @@ function CartItem({ data }) {
                       {data.product.name}
                     </Typography>
                     <Box className={classes.boxQtyMobile}>
-                      <IconButton onClick={handleDownQuantity}>
+                      <IconButton className={classes.iconButton} onClick={handleDownQuantity}>
                         <RemoveCircleOutline />
                       </IconButton>
                       <TextField value={Number(data.quantity)} variant="outlined" size="small" />
-                      <IconButton onClick={handleUpQuantity}>
+                      <IconButton className={classes.iconButton} onClick={handleUpQuantity}>
                         <AddCircleOutline />
                       </IconButton>
                     </Box>

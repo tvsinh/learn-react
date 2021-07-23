@@ -2,7 +2,7 @@ import { Box, Button, Container, Grid, makeStyles, Paper, Typography } from '@ma
 import { showDialog } from 'features/Auth/userSlice';
 import ShippingCard from 'features/CheckOut/components/Card/ShippingCard';
 import ShippingCardMobile from 'features/CheckOut/components/Card/ShippingCard/mobile';
-import { setBackTo, setStep } from 'features/CheckOut/orderSlice';
+import { setBackTo, setEdit, setStep } from 'features/CheckOut/orderSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -138,11 +138,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
   },
   userInfoMobile: {
-    backgroundColor: '#FFF',
-    padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.default,
+    // padding: theme.spacing(1),
   },
   userNotMobile: {
-    backgroundColor: '#FFF',
+    backgroundColor: theme.palette.background.default,
     padding: theme.spacing(1),
   },
   userNameMobile: {
@@ -219,6 +219,7 @@ function CartPage(props) {
     if (isLoggedIn) {
       dispatch(setStep(0));
       dispatch(setBackTo(false));
+      dispatch(setEdit(false));
       history.push('/checkout');
     } else {
       dispatch(showDialog());
