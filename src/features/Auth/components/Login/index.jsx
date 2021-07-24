@@ -29,6 +29,7 @@ function Login(props) {
         closeDialog();
       }
       enqueueSnackbar('Đăng nhập thành công.', { variant: 'success' });
+      window.location.reload();
     } catch (error) {
       console.log('Failed to register:', error);
       enqueueSnackbar(error.message, { variant: 'error' });

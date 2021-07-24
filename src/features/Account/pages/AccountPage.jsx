@@ -173,7 +173,7 @@ function AccountPage(props) {
           </Button>
           <Container className={`${classes.root} + ${classes.sectionDesktop}`}>
             <Box>
-              {userCurrent.id ? (
+              {userCurrent ? (
                 <Box className={classes.account}>
                   <Box className={classes.userInfo}>
                     <Typography className={classes.title}>Thông tin tài khoản</Typography>
@@ -258,7 +258,7 @@ function AccountPage(props) {
 
           {/* Moblie view */}
           <Box className={`${classes.rootMobile} + ${classes.sectionMobile}`}>
-            {userCurrent.id ? (
+            {userCurrent ? (
               <>
                 <Box className={classes.userInfoMobile}>
                   <ShippingCardMobile backTo={true} />

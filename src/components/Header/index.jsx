@@ -3,7 +3,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Badge, Box, IconButton, Menu, MenuItem } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -118,6 +117,17 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  logoutMobile: {
+    width: '100%',
+    borderTop: '1px solid rgba(0, 0, 0, .3)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoutMobileText: {
+    fontSize: '18px',
+    color: 'rgb(0, 127, 240)',
+  },
 }));
 
 Header.propTypes = {
@@ -192,6 +202,7 @@ export default function Header({ showMiniCart }) {
     const action = logout();
     dispatch(action);
     setAnchorEl(null);
+    window.location.reload();
   };
 
   const handleCartClick = () => {
@@ -293,14 +304,13 @@ export default function Header({ showMiniCart }) {
         </IconButton>
         <Typography>Trang chủ</Typography>
       </MenuItem>
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={10} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <Typography>Thông báo</Typography>
-      </MenuItem>
+      {isLoggedIn && (
+        <MenuItem className={classes.logoutMobile} onClick={handleLogoutClick}>
+          <Box>
+            <Typography className={classes.logoutMobileText}>Đăng xuất</Typography>
+          </Box>
+        </MenuItem>
+      )}
     </Menu>
   );
 
