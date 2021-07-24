@@ -31,7 +31,7 @@ const useQontoStepIconStyles = makeStyles({
     width: 8,
     height: 8,
     borderRadius: '50%',
-    backgroundColor: 'currentColor',
+    // backgroundColor: '#784af4',
   },
   completed: {
     color: '#784af4',
@@ -155,19 +155,20 @@ const useStyles = makeStyles((theme) => ({
   },
   stepper: {
     padding: '15px 0 5px 0',
+    backgroundColor: theme.palette.background.default,
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2) ',
     [theme.breakpoints.down('md')]: {
-      position: 'fixed',
+      position: 'absolute',
       width: '100%',
       marginTop: theme.spacing(7),
     },
     [theme.breakpoints.down('sm')]: {
-      position: 'fixed',
+      position: 'absolute',
       width: '100%',
       marginTop: theme.spacing(6.5),
     },
     [theme.breakpoints.down('xs')]: {
-      position: 'fixed',
+      position: 'absolute',
       width: '100%',
       marginTop: theme.spacing(5.5),
     },
@@ -179,17 +180,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down('md')]: {
-      position: 'absoflute',
       width: '100%',
       paddingTop: theme.spacing(20),
     },
     [theme.breakpoints.down('sm')]: {
-      position: 'absoflute',
       width: '100%',
       paddingTop: theme.spacing(18.5),
     },
     [theme.breakpoints.down('xs')]: {
-      position: 'absoflute',
       width: '100%',
       paddingTop: theme.spacing(21),
     },

@@ -4,38 +4,40 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
-import { Button, Box, Container, Paper, Typography } from '@material-ui/core';
+import { Button, Box, Paper, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { setDeliveryPayment, setStep, setTotalOrder } from 'features/CheckOut/orderSlice';
 import ShippingCard from '../Card/ShippingCard';
 import OrderCard from '../Card/OrderCard';
 import { cartTotalSelector } from 'features/Cart/selectors';
+import OrderCardMobile from '../Card/OrderCard/mobile';
+import ShippingCardMobile from '../Card/ShippingCard/mobile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'space-between',
+    margin: '0 5vw 0',
     [theme.breakpoints.down('md')]: {
       display: 'flex',
       flexDirection: 'column',
+      width: '100%',
+      margin: '0',
     },
-    // [theme.breakpoints.down('sm')]: {
-    //   position: 'absoflute',
-    //   width: '100%',
-    //   paddingTop: theme.spacing(18.5),
-    // },
-    // [theme.breakpoints.down('xs')]: {
-    //   position: 'absoflute',
-    //   width: '100%',
-    //   paddingTop: theme.spacing(21),
-    // },
   },
   form: {
     // flex: '1 1 0',
     width: '450px',
     display: 'flex',
     flexDirection: 'column',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      margin: theme.spacing(1, 0, 1),
+      paddingBottom: theme.spacing(1),
+      backgroundColor: theme.palette.background.paper,
+      borderBottom: '1px solid rgba(0, 0, 0, .4)',
+    },
   },
   formDelivery: {
     padding: '10px',
@@ -49,12 +51,38 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '2px',
     color: 'rgb(238, 35, 71)',
   },
-  button: {},
+  buttonBox: {
+    width: '225px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      padding: theme.spacing(0, 1, 0),
+    },
+  },
+  button: {
+    width: '225px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+  },
   infoOrder: {
     // marginLeft: '10px',
   },
   infoShip: {
     marginBottom: '10px',
+  },
+  sectionDesktop: {
+    display: 'block',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+
+  sectionMobile: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      display: 'block',
+    },
   },
 }));
 
@@ -100,12 +128,18 @@ function Payment() {
 
   return (
     <Box>
-      <Container className={classes.root}>
-        <Box className={classes.infoShip}>
+      <Box className={classes.root}>
+        <Box className={`${classes.infoShip} + ${classes.sectionDesktop} `}>
           <Paper className={classes.infoShip}>
             <ShippingCard edit={true} />
           </Paper>
         </Box>
+        <Box className={`${classes.cartInfo} + ${classes.sectionMobile} `}>
+          <Paper>
+            <ShippingCardMobile edit={true} />
+          </Paper>
+        </Box>
+
         <Box className={classes.form}>
           <Box>
             <Paper className={classes.formDelivery}>
@@ -162,23 +196,30 @@ function Payment() {
               Vui lòng chọn đầy đủ hình thức giao hàng & thanh toán.
             </Typography>
           )}
-          <Button
-            size="large"
-            color="primary"
-            variant="contained"
-            onClick={handleSubmit}
-            style={{ width: '225px' }}
-          >
-            Tiếp tục
-          </Button>
+          <Box className={classes.buttonBox}>
+            <Button
+              className={classes.button}
+              size="large"
+              color="primary"
+              variant="contained"
+              onClick={handleSubmit}
+            >
+              Tiếp tục
+            </Button>
+          </Box>
         </Box>
 
-        <Box className={classes.infoOrder}>
+        <Box className={`${classes.infoOrder} + ${classes.sectionDesktop} `}>
           <Paper>
-            <OrderCard valueDelivery={valueDelivery} />
+            <OrderCard />
           </Paper>
         </Box>
-      </Container>
+        <Box className={`${classes.cartInfo} + ${classes.sectionMobile} `}>
+          <Paper>
+            <OrderCardMobile />
+          </Paper>
+        </Box>
+      </Box>
     </Box>
   );
 }

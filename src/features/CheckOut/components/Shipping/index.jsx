@@ -2,30 +2,33 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Button,
-  Container,
+  Checkbox,
+  FormControlLabel,
+  LinearProgress,
   Paper,
   Typography,
-  FormControlLabel,
-  Checkbox,
-  LinearProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import userApi from 'api/userApi';
 import InputField from 'components/form-controls/InputField';
+import StorageKeys from 'constants/storage-keys';
+import { setUser } from 'features/Auth/userSlice';
 import { setBackTo, setShipping, setStep } from 'features/CheckOut/orderSlice';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import * as yup from 'yup';
 import OrderCard from '../Card/OrderCard';
-import userApi from 'api/userApi';
-import { setUser } from 'features/Auth/userSlice';
-import StorageKeys from 'constants/storage-keys';
-import { useHistory } from 'react-router';
+import OrderCardMobile from '../Card/OrderCard/mobile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    margin: '0 5vw 0',
     [theme.breakpoints.down('md')]: {
+      width: '100%',
+      margin: '0',
       display: 'flex',
       flexDirection: 'column',
     },
@@ -55,6 +58,36 @@ const useStyles = makeStyles((theme) => ({
     width: '18vw',
     [theme.breakpoints.down('md')]: {
       width: '50vw',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '80vw',
+    },
+  },
+  buttonBox: {
+    width: '225px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      padding: theme.spacing(0, 1, 0),
+    },
+  },
+  button: {
+    width: '225px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+  },
+  sectionDesktop: {
+    display: 'block',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+
+  sectionMobile: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      display: 'block',
     },
   },
 }));
@@ -128,7 +161,6 @@ function Shipping() {
       }
     }
     if (backTo || cartItems.length < 1) {
-      dispatch(setShipping(values));
       const data = {
         id: id,
         // email: values.email,
@@ -136,11 +168,12 @@ function Shipping() {
         address: values.address,
       };
       await userApi.updateUser(data);
-      const userNew = await userApi.getInfor();
-      localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
-      dispatch(setUser());
-      dispatch(setBackTo(false));
       history.goBack();
+      // const userNew = await userApi.getInfor();
+      // localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
+      // dispatch(setUser());
+      dispatch(setBackTo(false));
+      dispatch(setShipping(values));
     }
   };
 
@@ -153,7 +186,7 @@ function Shipping() {
         <LinearProgress style={{ top: '-6px' }} />
       ) : (
         <Box>
-          <Container className={classes.root}>
+          <Box className={classes.root}>
             <Box className={classes.form}>
               <Paper className={classes.formControl}>
                 <Typography style={{ textAlign: 'center', fontWeight: '500' }}>
@@ -203,35 +236,44 @@ function Shipping() {
                     label="Đặt làm thông tin mặc định"
                   />
                   {(backTo && !edit) || cartItems.length < 1 ? (
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      style={{ width: '225px' }}
-                    >
-                      Lưu thông tin
-                    </Button>
+                    <Box className={classes.buttonBox}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        className={classes.button}
+                      >
+                        Lưu thông tin
+                      </Button>
+                    </Box>
                   ) : (
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      size="large"
-                      style={{ width: '225px' }}
-                    >
-                      Tiếp tục
-                    </Button>
+                    <Box className={classes.buttonBox}>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        className={classes.button}
+                      >
+                        Tiếp tục
+                      </Button>
+                    </Box>
                   )}
                 </form>
               </Paper>
             </Box>
-            <Box className={classes.cartInfo}>
+            <Box className={`${classes.cartInfo} + ${classes.sectionDesktop} `}>
               <Paper>
                 <OrderCard />
               </Paper>
             </Box>
-          </Container>
+            <Box className={`${classes.cartInfo} + ${classes.sectionMobile} `}>
+              <Paper>
+                <OrderCardMobile />
+              </Paper>
+            </Box>
+          </Box>
         </Box>
       )}
     </>

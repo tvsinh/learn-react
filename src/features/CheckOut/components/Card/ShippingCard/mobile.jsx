@@ -1,10 +1,11 @@
-import { Box, Button, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import StorageKeys from 'constants/storage-keys';
 import { setBackTo, setEdit, setStep } from 'features/CheckOut/orderSlice';
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import useUserCurrent from 'hook/useUserCurrent';
 import { PropTypes } from 'prop-types';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
@@ -40,7 +41,7 @@ function ShippingCardMobile({ backTo = false, edit = false }) {
   const classes = useStyles();
   const history = useHistory();
   const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
-  const userCurrent = useSelector((state) => state.user.current);
+  const { userCurrent, loading } = useUserCurrent();
   const user = backTo
     ? userCurrent
     : edit
@@ -69,26 +70,34 @@ function ShippingCardMobile({ backTo = false, edit = false }) {
     }
   };
   return (
-    <Box className={classes.root}>
-      <Button
-        className={classes.edit}
-        variant="outlined"
-        color="primary"
-        onClick={handleEdit}
-        size="small"
-      >
-        Sửa
-      </Button>
-      <Typography className={classes.title}>Địa chỉ giao hàng</Typography>
-      <Box className={classes.userInfo}>
-        <Box className={classes.user}>
-          <Typography>Tên:</Typography>
-          <Typography className={classes.userName}>{user.fullName}</Typography>
+    <>
+      {loading ? (
+        <LinearProgress />
+      ) : (
+        <Box className={classes.root}>
+          <Button
+            className={classes.edit}
+            variant="outlined"
+            color="primary"
+            onClick={handleEdit}
+            size="small"
+          >
+            Sửa
+          </Button>
+          <Typography className={classes.title}>Địa chỉ giao hàng</Typography>
+          <Box className={classes.userInfo}>
+            <Box className={classes.user}>
+              <Typography>Tên:</Typography>
+              <Typography className={classes.userName}>{user.fullName}</Typography>
+            </Box>
+            <Typography className={classes.userEmail}>Email: {user.email}</Typography>
+            <Typography className={classes.userAddress}>
+              Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ.'}
+            </Typography>
+          </Box>
         </Box>
-        <Typography className={classes.userEmail}>Email: {user.email}</Typography>
-        <Typography className={classes.userAddress}>Địa chỉ: {user.address}</Typography>
-      </Box>
-    </Box>
+      )}
+    </>
   );
 }
 

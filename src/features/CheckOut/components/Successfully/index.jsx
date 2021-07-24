@@ -6,15 +6,31 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   box: {
     paddingTop: '21vh',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      paddingTop: '10vh',
+    },
   },
   success: {
     width: '400px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '40px',
+    justifyContent: 'center',
+    padding: '10px',
+    minHeight: '20vh',
     marginRight: 'auto',
     marginLeft: 'auto',
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      // margin: '0',
+      padding: '10px',
+      minHeight: '25vh',
+      width: '100%',
+    },
   },
   successText: {
     color: 'rgb(238, 35, 71)',

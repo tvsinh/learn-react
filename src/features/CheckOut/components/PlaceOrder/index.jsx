@@ -1,4 +1,4 @@
-import { Box, Button, Container, Paper } from '@material-ui/core';
+import { Box, Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ordersApi from 'api/orderApi';
 import productApi from 'api/productApi';
@@ -7,12 +7,28 @@ import { setDeliveryPayment, setStep } from 'features/CheckOut/orderSlice';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DeliveryCard from '../Card/DeliveryCard';
+import DeliveryCardMobile from '../Card/DeliveryCard/mobile';
 import OrderCard from '../Card/OrderCard';
+import OrderCardMobile from '../Card/OrderCard/mobile';
 import ShippingCard from '../Card/ShippingCard';
+import ShippingCardMobile from '../Card/ShippingCard/mobile';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    margin: '0 5vw 0',
+    [theme.breakpoints.down('md')]: {
+      // display: 'flex',
+      // flexDirection: 'column',
+      width: '100%',
+      margin: '0',
+    },
+  },
+  paper: {
     padding: '15px 30px',
+    [theme.breakpoints.down('md')]: {
+      padding: '0',
+      paddingBottom: theme.spacing(1),
+    },
   },
   info: {
     display: 'flex',
@@ -22,12 +38,50 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
-  payment: {},
-  infoOrder: {},
-  infoShipp: {},
-  button: {
+  infoShipp: {
+    [theme.breakpoints.down('md')]: {
+      marginBottom: theme.spacing(1),
+    },
+  },
+  payment: {
+    [theme.breakpoints.down('md')]: {
+      marginBottom: theme.spacing(1),
+    },
+  },
+  infoOrder: {
+    [theme.breakpoints.down('md')]: {
+      marginBottom: theme.spacing(1),
+    },
+  },
+
+  buttonBox: {
     marginTop: '10px',
     width: '225px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      marginTop: '5px',
+      padding: theme.spacing(0, 1, 0),
+    },
+  },
+  button: {
+    width: '225px',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+  },
+  sectionDesktop: {
+    display: 'block',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+
+  sectionMobile: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      display: 'block',
+    },
   },
 }));
 function PlaceOrder() {
@@ -65,37 +119,56 @@ function PlaceOrder() {
   };
   return (
     <Box>
-      <Container>
-        <Paper className={classes.root}>
+      <Box className={classes.root}>
+        <Paper className={classes.paper}>
           <Box className={classes.info}>
-            <Box>
+            <Box className={classes.sectionDesktop}>
               <Paper className={classes.infoShipp}>
                 <ShippingCard edit={true} backTo={false} />
               </Paper>
             </Box>
-            <Box>
+            <Box className={classes.sectionMobile}>
+              <Paper className={classes.infoShipp}>
+                <ShippingCardMobile edit={true} backTo={false} />
+              </Paper>
+            </Box>
+
+            <Box className={classes.sectionDesktop}>
               <Paper className={classes.payment}>
                 <DeliveryCard />
               </Paper>
             </Box>
-            <Box className={classes.infoOrder}>
-              <Paper>
+            <Box className={classes.sectionMobile}>
+              <Paper className={classes.payment}>
+                <DeliveryCardMobile />
+              </Paper>
+            </Box>
+
+            <Box className={classes.sectionDesktop}>
+              <Paper className={classes.infoOrder}>
                 <OrderCard deliveryPriceFinal={deliveryPrice} />
               </Paper>
             </Box>
+            <Box className={classes.sectionMobile}>
+              <Paper className={classes.infoOrder}>
+                <OrderCardMobile deliveryPriceFinal={deliveryPrice} />
+              </Paper>
+            </Box>
           </Box>
-          <Button
-            className={classes.button}
-            type="submit"
-            variant="contained"
-            color="primary"
-            size="large"
-            onClick={handleSubmit}
-          >
-            Đặt hàng
-          </Button>
+          <Box className={classes.buttonBox}>
+            <Button
+              className={classes.button}
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={handleSubmit}
+            >
+              Đặt hàng
+            </Button>
+          </Box>
         </Paper>
-      </Container>
+      </Box>
     </Box>
   );
 }
