@@ -31,6 +31,7 @@ function Register(props) {
       }
 
       enqueueSnackbar('Đăng ký tài khoản thành công!', { variant: 'success' });
+      window.location.reload();
     } catch (error) {
       console.log('Failed to register:', error);
       enqueueSnackbar(error.message, { variant: 'error' });
