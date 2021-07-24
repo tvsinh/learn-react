@@ -157,6 +157,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '15px 0 5px 0',
     backgroundColor: theme.palette.background.default,
     boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.2) ',
+
     [theme.breakpoints.down('md')]: {
       position: 'absolute',
       width: '100%',
@@ -185,7 +186,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-      paddingTop: theme.spacing(18.5),
+      paddingTop: theme.spacing(19),
     },
     [theme.breakpoints.down('xs')]: {
       width: '100%',

@@ -41,7 +41,7 @@ ShippingCard.propTypes = {
 function ShippingCard({ backTo = false, edit = false }) {
   const classes = useStyles();
   const history = useHistory();
-  const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING));
+  const userShipping = JSON.parse(localStorage.getItem(StorageKeys.SHIPPING)) || {};
   const { userCurrent, loading } = useUserCurrent();
   const user = backTo
     ? userCurrent
@@ -93,7 +93,7 @@ function ShippingCard({ backTo = false, edit = false }) {
             </Box>
             <Typography className={classes.userEmail}>Email: {user.email}</Typography>
             <Typography className={classes.userAddress}>
-              Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ.'}
+              Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ mặc định.'}
             </Typography>
           </Box>
         </Box>

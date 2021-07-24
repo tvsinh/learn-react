@@ -59,9 +59,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '5px',
     flexDirection: 'column',
     justifyContent: 'center',
-    width: '100%',
+    minWidth: 'calc(100% - 80px)',
   },
   productName: {
+    width: 'calc(100% - 6px)',
     display: 'block',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
@@ -71,10 +72,11 @@ const useStyles = makeStyles((theme) => ({
   boxQty: {
     display: 'flex',
     justifyContent: 'space-between',
+    width: 'calc(100% - 9px)',
   },
   productPrice: {
     display: 'block',
-    marginRight: '5px',
+    // marginRight: '5px',
   },
   cartTotalTemp: {
     display: 'flex',

@@ -92,7 +92,7 @@ function ShippingCardMobile({ backTo = false, edit = false }) {
             </Box>
             <Typography className={classes.userEmail}>Email: {user.email}</Typography>
             <Typography className={classes.userAddress}>
-              Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ.'}
+              Địa chỉ: {user.address ? user.address : 'Bạn chưa thêm địa chỉ mặc định.'}
             </Typography>
           </Box>
         </Box>

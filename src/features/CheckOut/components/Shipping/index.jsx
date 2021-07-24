@@ -155,9 +155,9 @@ function Shipping() {
       };
       if (addressDefault) {
         await userApi.updateUser(data);
-        // const userNew = await userApi.getInfor();
-        // localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
-        // dispatch(setUser());
+        const userNew = await userApi.getInfor();
+        localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
+        dispatch(setUser());
       }
     }
     if (backTo || cartItems.length < 1) {
@@ -168,10 +168,10 @@ function Shipping() {
         address: values.address,
       };
       await userApi.updateUser(data);
+      const userNew = await userApi.getInfor();
       history.goBack();
-      // const userNew = await userApi.getInfor();
-      // localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
-      // dispatch(setUser());
+      localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
+      dispatch(setUser());
       dispatch(setBackTo(false));
       dispatch(setShipping(values));
     }

@@ -50,25 +50,24 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
   },
   img: {
-    display: 'block',
     width: '80px',
     height: '80px',
   },
   itemProduct: {
     display: 'flex',
-    marginLeft: '5px',
     flexDirection: 'column',
     justifyContent: 'center',
-    width: '70%',
+    width: 'calc(350px -100px)',
   },
   productName: {
-    display: 'block',
+    width: 'calc(350px - 100px - 8px)',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden !important',
   },
 
   boxQty: {
+    width: 'calc(350px - 100px - 6px)',
     display: 'flex',
     justifyContent: 'space-between',
   },

@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     [theme.breakpoints.down('md')]: {
+      order: '3',
       width: '100%',
       margin: theme.spacing(1, 0, 1),
       paddingBottom: theme.spacing(1),
@@ -50,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
   error: {
     marginBottom: '2px',
     color: 'rgb(238, 35, 71)',
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(1),
+    },
   },
   buttonBox: {
     width: '225px',
@@ -64,11 +68,16 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
-  infoOrder: {
-    // marginLeft: '10px',
-  },
   infoShip: {
-    marginBottom: '10px',
+    [theme.breakpoints.down('md')]: {
+      order: '1',
+      marginBottom: theme.spacing(1),
+    },
+  },
+  infoOrder: {
+    [theme.breakpoints.down('md')]: {
+      order: '2',
+    },
   },
   sectionDesktop: {
     display: 'block',
@@ -134,7 +143,7 @@ function Payment() {
             <ShippingCard edit={true} />
           </Paper>
         </Box>
-        <Box className={`${classes.cartInfo} + ${classes.sectionMobile} `}>
+        <Box className={`${classes.infoShip} + ${classes.sectionMobile} `}>
           <Paper>
             <ShippingCardMobile edit={true} />
           </Paper>
@@ -211,12 +220,12 @@ function Payment() {
 
         <Box className={`${classes.infoOrder} + ${classes.sectionDesktop} `}>
           <Paper>
-            <OrderCard />
+            <OrderCard valueDelivery={valueDelivery} />
           </Paper>
         </Box>
-        <Box className={`${classes.cartInfo} + ${classes.sectionMobile} `}>
+        <Box className={`${classes.infoOrder} + ${classes.sectionMobile} `}>
           <Paper>
-            <OrderCardMobile />
+            <OrderCardMobile valueDelivery={valueDelivery} />
           </Paper>
         </Box>
       </Box>
