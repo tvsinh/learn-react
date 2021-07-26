@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 3, 4),
     width: '100%',
     height: 'auto',
-    minHeight: '500px',
   },
   buttonBack: {
     textTransform: 'none',
@@ -120,7 +119,6 @@ const useStyles = makeStyles((theme) => ({
 
   sectionMobile: {
     display: 'block',
-    width: '100%',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -128,9 +126,8 @@ const useStyles = makeStyles((theme) => ({
   rootMobile: {
     display: 'flex',
     flexDirection: 'column',
-    padding: theme.spacing(8, 0, 20),
-    marginBottom: theme.spacing(20),
-    minHeight: '500px',
+    padding: theme.spacing(8, 0, 14),
+    width: '100%',
   },
   rootCartMobile: {
     margin: theme.spacing(0.5, 1),
@@ -268,7 +265,7 @@ function CartPage(props) {
         </Box>
 
         <Box className={classes.sectionMobile}>
-          <Container className={classes.rootMobile}>
+          <Box className={classes.rootMobile}>
             <Typography className={classes.rootCartMobile}>Giỏ hàng</Typography>
             {isLoggedIn ? (
               <Box className={classes.userInfoMobile}>
@@ -298,7 +295,7 @@ function CartPage(props) {
                 </Button>
               </Box>
             </Box>
-          </Container>
+          </Box>
         </Box>
       </>
     );

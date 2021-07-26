@@ -44,12 +44,12 @@ function LoginForm(props) {
   const schema = yup.object().shape({
     identifier: yup
       .string()
-      .required('Please enter your email address.')
-      .email('Please enter a valid email address.'),
+      .required('Vui lòng nhập email của bạn.')
+      .email('Vui lòng nhập một địa chỉ email hợp lệ.'),
     password: yup
       .string()
-      .required('Please enter your password.')
-      .min(6, 'Please enter at least 6 characters.'),
+      .required('Vui lòng nhập mật khẩu')
+      .min(6, 'Vui lòng nhập ít nhất 6 kí tự.'),
   });
   const form = useForm({
     defaultValues: {

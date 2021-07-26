@@ -34,8 +34,38 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     maxWidth: '200px',
   },
+  iconButton: {
+    [theme.breakpoints.down('md')]: {
+      width: '35px',
+    },
+  },
   input: {
     width: '80px',
+  },
+  titleDia: {
+    width: '30vw',
+    [theme.breakpoints.down('md')]: {
+      width: '85vw',
+    },
+  },
+  actionsDia: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '5px 20px 20px',
+  },
+  buttonNo: {
+    minWidth: '12.5vw',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '35vw',
+    },
+  },
+  buttonYes: {
+    minWidth: '12.5vw',
+    backgroundColor: 'rgb(255, 66, 78)',
+    color: '#FFF',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '35vw',
+    },
   },
 }));
 
@@ -95,7 +125,7 @@ function QuantityField(props) {
         })
       );
     } else if (Number.parseInt(value) + 1 > Number.parseInt(product.quantity)) {
-      enqueueSnackbar(`Sản phẩm ${product.name} số lượng tối đa là ${product.quantity}.`, {
+      enqueueSnackbar(`Sản phẩm "${product.name}" có số lượng tối đa là ${product.quantity}.`, {
         variant: 'info',
       });
     }
@@ -120,6 +150,7 @@ function QuantityField(props) {
             <Box className={classes.box}>
               <IconButton
                 disabled={disabled}
+                className={classes.iconButton}
                 onClick={() => (cartQty ? handleDownDispatch(value) : handleDownValue(value))}
               >
                 <RemoveCircleOutline />
@@ -137,6 +168,7 @@ function QuantityField(props) {
 
               <IconButton
                 disabled={disabled}
+                className={classes.iconButton}
                 onClick={() => (cartQty ? handleUpDispatch(value) : handleUpValue(value))}
               >
                 <AddCircleOutline />
@@ -151,25 +183,23 @@ function QuantityField(props) {
         )}
       </FormControl>
       <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="alert-dialog-title">
-        <DialogTitle id="alert-dialog-title" style={{ width: '30vw' }}>
+        <DialogTitle id="alert-dialog-title" className={classes.titleDia}>
           <Typography>Bạn muốn xóa sản phẩm này?</Typography>
         </DialogTitle>
 
-        <DialogActions
-          style={{ display: 'flex', justifyContent: 'center', padding: '5px 20px 20px' }}
-        >
+        <DialogActions className={classes.actionsDia}>
           <Button
             onClick={handleButtonNo}
             color="primary"
             variant="outlined"
-            style={{ minWidth: '12.5vw' }}
+            className={classes.buttonNo}
           >
             Không
           </Button>
           <Button
             onClick={handleButtonYes}
             variant="contained"
-            style={{ minWidth: '12.5vw', backgroundColor: 'rgb(255, 66, 78)', color: '#FFF' }}
+            className={classes.buttonYes}
             autoFocus
           >
             Có

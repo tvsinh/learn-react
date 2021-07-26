@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.5),
     [theme.breakpoints.down('md')]: {
       width: '100%',
-      padding: theme.spacing(0),
+      padding: '5px 5px 10px',
     },
   },
 
@@ -98,7 +98,7 @@ function DetailPage() {
       }, 100);
     } else if (quantity > Number.parseInt(product.quantity - cartItems[index].quantity)) {
       enqueueSnackbar(
-        `Số lượng mua được là ${product.quantity}.Trong giỏ ${cartItems[index].quantity}.`,
+        `Số lượng tối đa là ${product.quantity}.Trong giỏ ${cartItems[index].quantity}.`,
         {
           variant: 'info',
         }

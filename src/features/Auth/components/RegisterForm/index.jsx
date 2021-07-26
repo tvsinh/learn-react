@@ -46,8 +46,8 @@ function RegisterForm(props) {
   const schema = yup.object().shape({
     fullName: yup
       .string()
-      .required('Please enter your full name.')
-      .test('should has at least two words', 'Please enter at least two words.', (value) => {
+      .required('Vui lòng nhập đầy đủ tên của bạn.')
+      .test('should has at least two words', 'Vui lòng nhập ít nhất 2 từ.', (value) => {
         return value.split(' ').length >= 2;
       }),
     // phoneNumber: yup
@@ -57,16 +57,16 @@ function RegisterForm(props) {
     //   .min(10, 'Please check your phone number.'),
     email: yup
       .string()
-      .required('Please enter your email.')
-      .email('Please enter a valid email address.'),
+      .required('Vui lòng nhập email của bạn.')
+      .email('Vui lòng nhập một địa chỉ email hợp lệ.'),
     password: yup
       .string()
-      .required('Please enter your password.')
-      .min(6, 'Please enter at least 6 characters.'),
+      .required('Vui lòng nhập mật khẩu')
+      .min(6, 'Vui lòng nhập ít nhất 6 kí tự.'),
     retypePassword: yup
       .string()
-      .required('Please retype your password.')
-      .oneOf([yup.ref('password')], 'Password does not match.'),
+      .required('Vui lòng điền lại mật khẩu')
+      .oneOf([yup.ref('password')], 'Mật khẩu không hợp lệ.'),
   });
   const form = useForm({
     defaultValues: {
