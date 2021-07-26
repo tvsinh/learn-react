@@ -240,16 +240,6 @@ function CartPage(props) {
             </Box>
             <Box className={classes.right}>
               {isLoggedIn ? (
-                // <Box>
-                //   <Paper className={classes.userInfo}>
-                //     <Typography className={classes.userName}>
-                //       Tên: {loggedInUser.fullName}
-                //     </Typography>
-                //     <Typography className={classes.userEmail}>
-                //       Email: {loggedInUser.email}
-                //     </Typography>
-                //   </Paper>
-                // </Box>
                 <Paper className={classes.shippingCard}>
                   <ShippingCard backTo={true} />
                 </Paper>
@@ -282,16 +272,6 @@ function CartPage(props) {
             <Typography className={classes.rootCartMobile}>Giỏ hàng</Typography>
             {isLoggedIn ? (
               <Box className={classes.userInfoMobile}>
-                {/* <Typography>Thông tin nhận hàng</Typography>
-                <Typography className={classes.userNameMobile}>
-                  Tên: {loggedInUser.fullName}
-                </Typography>
-                <Typography className={classes.userMailMobile}>
-                  Email: {loggedInUser.email}
-                </Typography>
-                <Typography className={classes.userMailMobile}>
-                  Địa chỉ: {loggedInUser.address}
-                </Typography> */}
                 <ShippingCardMobile backTo={true} />
               </Box>
             ) : (

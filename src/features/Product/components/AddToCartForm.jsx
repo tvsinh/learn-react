@@ -32,6 +32,8 @@ function AddToCartForm({ onSubmit = null, productId }) {
     defaultValues: {
       quantity: 1,
     },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   });
 

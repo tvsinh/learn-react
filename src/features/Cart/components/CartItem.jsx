@@ -1,24 +1,19 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  makeStyles,
-  Paper,
-  TextField,
-  Typography,
-} from '@material-ui/core';
-import { AddCircleOutline, DeleteForever, RemoveCircleOutline } from '@material-ui/icons';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Box, Button, IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
+import { DeleteForever } from '@material-ui/icons';
+import QuantityField from 'components/form-controls/QuantityField';
+import LoadingProgress from 'components/Loading';
 import { THUMBNAIL_PLACEHOLDER } from 'constants/index';
 import useProductDetail from 'hook/useProductDetail';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 import { removeFromCart, setQuantity } from '../cartSlice';
 import { STATIC_HOST } from './../../../constants/common';
 import { formatPrice } from './../../../utils/common';
-import LoadingProgress from 'components/Loading';
-import { useEffect } from 'react';
 
 CartItem.propTypes = {
   data: PropTypes.object,
@@ -72,9 +67,11 @@ const useStyles = makeStyles((theme) => ({
   },
   boxHandleQty: {
     display: 'flex',
+    flexDirection: 'column',
     flexFlow: 'row nowrap',
     alignItems: 'center',
-    marginTop: '5px',
+    marginTop: '0',
+    paddingTop: '0',
   },
   boxQtyStock: {
     fontSize: '11px',
@@ -83,10 +80,6 @@ const useStyles = makeStyles((theme) => ({
   productTotal: {
     width: '145px',
     paddingLeft: '10px',
-    // display: '-webkit-box',
-    // '-webkit-box-orient': 'vertical',
-    // '-webkit-line-clamp': '1',
-    // overflow: 'hidden',
   },
   iconDel: {
     width: '50px',
@@ -143,6 +136,7 @@ const useStyles = makeStyles((theme) => ({
   boxQtyMobile: {
     width: 'auto',
     display: 'flex',
+    flexDirection: 'column',
     flexFlow: 'row nowrap',
     alignItems: 'center',
   },
@@ -173,28 +167,38 @@ function CartItem({ data }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { product, loading } = useProductDetail(data.product.id);
-  useEffect(() => {
-    if (data.quantity > product.quantity) {
-      dispatch(
-        setQuantity({
-          id: data.product.id,
-          quantity: product.quantity,
-        })
-      );
-    }
-  }, [dispatch, data, product]);
-  const handleUpQuantity = () => {
-    const newQuantity = Number.parseInt(data.quantity) + 1;
-    if (newQuantity >= 1 && newQuantity <= product.quantity) {
-      const action = setQuantity({
-        id: data.product.id,
-        quantity: newQuantity,
-      });
-      dispatch(action);
-    }
+
+  const handleRemoveProduct = () => {
+    const action = removeFromCart({
+      idNeedToRemove: data.product.id,
+    });
+    dispatch(action);
   };
-  const handleDownQuantity = () => {
-    const newQuantity = Number.parseInt(data.quantity) - 1;
+
+  const handleOnClickProduct = () => {
+    const idProduct = data.product.id;
+    history.push({
+      pathname: `/products/${idProduct}`,
+    });
+  };
+
+  const schema = yup.object().shape({
+    quantity: yup
+      .number()
+      .required('Vui lòng nhập số lượng')
+      .min(1, 'Giá trị nhỏ nhất là 1')
+      .max(product.quantity, `Nhập giá trị nhỏ hơn ${product.quantity}`)
+      .typeError('Vui lòng nhập số lượng'),
+  });
+  const form = useForm({
+    defaultValues: {
+      quantity: data.quantity,
+    },
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    resolver: yupResolver(schema),
+  });
+  const handleSubmit = (newQuantity) => {
     if (newQuantity >= 1 && newQuantity <= product.quantity) {
       const action = setQuantity({
         id: data.product.id,
@@ -209,20 +213,18 @@ function CartItem({ data }) {
       dispatch(action);
     }
   };
-  const handleRemoveProduct = () => {
-    const action = removeFromCart({
-      idNeedToRemove: data.product.id,
-    });
-    dispatch(action);
+  const handleChangeQty = (e) => {
+    console.log('newQuantity change', e.target.value);
+    const newQuantity = e.target.value;
+    if (newQuantity >= 1 && newQuantity <= product.quantity) {
+      const action = setQuantity({
+        id: data.product.id,
+        quantity: newQuantity,
+      });
+      dispatch(action);
+    }
   };
 
-  const handleOnClickProduct = () => {
-    const idProduct = data.product.id;
-    history.push({
-      pathname: `/products/${idProduct}`,
-      // search: queryString.stringify(idProduct),
-    });
-  };
   return (
     <>
       {loading ? (
@@ -254,17 +256,26 @@ function CartItem({ data }) {
 
                 <Box className={classes.boxQty}>
                   <Box className={classes.boxHandleQty}>
-                    <IconButton onClick={handleDownQuantity}>
+                    <Typography className={classes.boxQtyStock}>
+                      Còn trong kho: {product.quantity}
+                    </Typography>
+                    {/* <IconButton onClick={handleDownQuantity}>
                       <RemoveCircleOutline />
                     </IconButton>
                     <TextField value={Number(data.quantity)} variant="outlined" size="small" />
                     <IconButton onClick={handleUpQuantity}>
                       <AddCircleOutline />
-                    </IconButton>
+                    </IconButton> */}
+                    <form onSubmit={form.handleSubmit(handleSubmit)} onChange={handleChangeQty}>
+                      <QuantityField
+                        name="quantity"
+                        label={null}
+                        form={form}
+                        cartQty={true}
+                        data={data}
+                      />
+                    </form>
                   </Box>
-                  <Typography className={classes.boxQtyStock}>
-                    Còn trong kho: {product.quantity}
-                  </Typography>
                 </Box>
                 <Typography className={classes.productTotal}>
                   {formatPrice(data.product.salePrice * data.quantity)}
@@ -303,13 +314,25 @@ function CartItem({ data }) {
                       {data.product.name}
                     </Typography>
                     <Box className={classes.boxQtyMobile}>
-                      <IconButton className={classes.iconButton} onClick={handleDownQuantity}>
+                      {/* <IconButton className={classes.iconButton} onClick={handleDownQuantity}>
                         <RemoveCircleOutline />
                       </IconButton>
                       <TextField value={Number(data.quantity)} variant="outlined" size="small" />
                       <IconButton className={classes.iconButton} onClick={handleUpQuantity}>
                         <AddCircleOutline />
-                      </IconButton>
+                      </IconButton> */}
+                      <Typography className={classes.boxQtyStock}>
+                        Còn trong kho: {product.quantity}
+                      </Typography>
+                      <form onSubmit={form.handleSubmit(handleSubmit)} onChange={handleChangeQty}>
+                        <QuantityField
+                          name="quantity"
+                          label={null}
+                          form={form}
+                          cartQty={true}
+                          data={data}
+                        />
+                      </form>
                     </Box>
                   </Box>
                 </Box>

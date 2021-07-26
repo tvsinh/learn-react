@@ -4,7 +4,7 @@ import Header from 'components/Header';
 import { addToCart } from 'features/Cart/cartSlice';
 import useProductDetail from 'hook/useProductDetail';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router';
 import AddToCartForm from '../components/AddToCartForm';
 import ProductAdditional from '../components/ProductAdditional';
@@ -13,6 +13,7 @@ import ProductInfo from '../components/ProductInfo';
 import ProductMenu from '../components/ProductMenu';
 import ProductReviews from '../components/ProductReviews';
 import ProductThumbnail from '../components/ProductThumbnail';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,6 +63,7 @@ function DetailPage() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [showMiniCart, setShowMiniCart] = useState(false);
 
   const {
@@ -70,6 +72,8 @@ function DetailPage() {
   } = useRouteMatch();
   // const matchs = useRouteMatch();
   const { product, loading } = useProductDetail(productId);
+  const cartItems = useSelector((state) => state.cart.cartItems) || {};
+  const index = cartItems.findIndex((x) => x.id === product.id);
 
   if (loading) {
     return (
@@ -80,16 +84,26 @@ function DetailPage() {
   }
 
   const handleAddToCartSubmit = ({ quantity }) => {
-    const action = addToCart({
-      id: product.id,
-      product,
-      quantity,
-    });
-    dispatch(action);
-    setShowMiniCart(false);
-    setTimeout(() => {
-      setShowMiniCart(true);
-    }, 100);
+    if (index === -1 || quantity <= Number.parseInt(product.quantity - cartItems[index].quantity)) {
+      dispatch(
+        addToCart({
+          id: product.id,
+          product,
+          quantity,
+        })
+      );
+      setShowMiniCart(false);
+      setTimeout(() => {
+        setShowMiniCart(true);
+      }, 100);
+    } else if (quantity > Number.parseInt(product.quantity - cartItems[index].quantity)) {
+      enqueueSnackbar(
+        `Số lượng mua được là ${product.quantity}.Trong giỏ ${cartItems[index].quantity}.`,
+        {
+          variant: 'info',
+        }
+      );
+    }
   };
   const handleHideMiniCart = () => {
     setShowMiniCart(false);

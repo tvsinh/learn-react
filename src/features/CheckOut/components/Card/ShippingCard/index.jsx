@@ -57,13 +57,11 @@ function ShippingCard({ backTo = false, edit = false }) {
       history.push('/checkout');
       dispatch(setStep(0));
       dispatch(setBackTo(true));
-    }
-    if (edit && !backTo) {
+    } else if (edit && !backTo) {
       dispatch(setStep(0));
       dispatch(setBackTo(false));
       dispatch(setEdit(true));
-    }
-    if (!edit && !backTo) {
+    } else if (!edit && !backTo) {
       history.push('/checkout');
       dispatch(setStep(0));
       dispatch(setEdit(false));

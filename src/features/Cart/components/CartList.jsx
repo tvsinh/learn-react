@@ -2,6 +2,8 @@ import { Box, Grid, IconButton, makeStyles, Paper, Typography } from '@material-
 import { DeleteForever } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { removeCartItems } from '../cartSlice';
 import CartItem from './CartItem';
 
 CartList.propTypes = {
@@ -75,7 +77,10 @@ const useStyles = makeStyles((theme) => ({
 
 function CartList({ cartList }) {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
+  const handleDelAllCartItems = () => {
+    dispatch(removeCartItems());
+  };
   return (
     <>
       <Box className={classes.sectionDesktop}>
@@ -86,7 +91,7 @@ function CartList({ cartList }) {
               <Typography className={classes.navPrice}>Đơn giá</Typography>
               <Typography className={classes.navQty}>Số lượng</Typography>
               <Typography className={classes.navTotal}>Thành tiền</Typography>
-              <Box size="small" className={classes.iconDel}>
+              <Box size="small" className={classes.iconDel} onClick={handleDelAllCartItems}>
                 <IconButton>
                   <DeleteForever />
                 </IconButton>

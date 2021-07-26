@@ -15,7 +15,7 @@ const cartSlice = createSlice({
 
       if (index >= 0) {
         // increase quantity
-        state.cartItems[index].quantity += newItem.quantity;
+        state.cartItems[index].quantity += Number(newItem.quantity);
       } else {
         // add to cart
         state.cartItems.push(newItem);
