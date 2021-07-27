@@ -7,7 +7,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    margin: theme.spacing(0, 2),
+  },
 
   search: {
     flexGrow: 1,
@@ -126,6 +128,7 @@ function SearchInput({ onSubmit = {} }) {
         value={searchTerm}
         onChange={handleSearchTermChange}
         onKeyUp={handleOnkeyUp}
+        autoFocus={true}
       ></InputBase>
     </div>
   );

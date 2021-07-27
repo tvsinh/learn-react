@@ -6,6 +6,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     cartItems: JSON.parse(localStorage.getItem(StorageKeys.CARTITEMS)) || [],
+    dialog: false,
   },
   reducers: {
     addToCart(state, action) {
@@ -42,9 +43,12 @@ const cartSlice = createSlice({
       localStorage.removeItem(StorageKeys.CARTITEMS);
       state.cartItems = [];
     },
+    setDialog(state, action) {
+      state.dialog = action.payload;
+    },
   },
 });
 
 const { actions, reducer } = cartSlice;
-export const { addToCart, setQuantity, removeFromCart, removeCartItems } = actions; // named export
+export const { addToCart, setQuantity, removeFromCart, removeCartItems, setDialog } = actions; // named export
 export default reducer; // default export

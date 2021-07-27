@@ -1,4 +1,15 @@
-import { Box, Grid, IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Grid,
+  IconButton,
+  makeStyles,
+  Paper,
+  Typography,
+} from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -73,13 +84,52 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '500',
     padding: theme.spacing(1, 0, 0, 1),
   },
+
+  //Dialog
+  titleDia: {
+    width: '30vw',
+    [theme.breakpoints.down('md')]: {
+      width: '80vw',
+    },
+  },
+  actionsDia: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '5px 20px 15px',
+  },
+  buttonNo: {
+    minWidth: '12.5vw',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '35vw',
+    },
+  },
+  buttonYes: {
+    minWidth: '12.5vw',
+    backgroundColor: 'rgb(255, 66, 78)',
+    color: '#FFF',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '35vw',
+    },
+    '&:hover': {
+      backgroundColor: 'rgb(255, 101, 110)',
+    },
+  },
 }));
 
 function CartList({ cartList }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const handleDelAllCartItems = () => {
+  // Dialog
+  const [open, setOpen] = React.useState(false);
+  const handleButtonNo = () => {
+    setOpen(false);
+  };
+  const handleButtonYes = () => {
+    setOpen(false);
     dispatch(removeCartItems());
+  };
+  const handleDelAllCartItems = () => {
+    setOpen(true);
   };
   return (
     <>
@@ -106,6 +156,30 @@ function CartList({ cartList }) {
             </Paper>
           </Grid>
         </Box>
+        <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="alert-dialog-title">
+          <DialogTitle id="alert-dialog-title" className={classes.titleDia}>
+            <Typography>Bạn muốn xóa tất cả sản phẩm trong giỏ?</Typography>
+          </DialogTitle>
+
+          <DialogActions className={classes.actionsDia}>
+            <Button
+              onClick={handleButtonNo}
+              color="primary"
+              variant="outlined"
+              className={classes.buttonNo}
+            >
+              Không
+            </Button>
+            <Button
+              onClick={handleButtonYes}
+              variant="contained"
+              className={classes.buttonYes}
+              autoFocus
+            >
+              Có
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
 
       <Box className={classes.sectionMobile}>

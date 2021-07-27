@@ -14,6 +14,9 @@ import * as yup from 'yup';
 import { removeFromCart, setQuantity } from '../cartSlice';
 import { STATIC_HOST } from './../../../constants/common';
 import { formatPrice } from './../../../utils/common';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 
 CartItem.propTypes = {
   data: PropTypes.object,
@@ -160,6 +163,35 @@ const useStyles = makeStyles((theme) => ({
     right: '0',
     bottom: '2px',
   },
+  //Dialog
+  titleDia: {
+    width: '30vw',
+    [theme.breakpoints.down('md')]: {
+      width: '80vw',
+    },
+  },
+  actionsDia: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: '5px 20px 15px',
+  },
+  buttonNo: {
+    minWidth: '12.5vw',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '35vw',
+    },
+  },
+  buttonYes: {
+    minWidth: '12.5vw',
+    backgroundColor: 'rgb(255, 66, 78)',
+    color: '#FFF',
+    [theme.breakpoints.down('md')]: {
+      minWidth: '35vw',
+    },
+    '&:hover': {
+      backgroundColor: 'rgb(255, 101, 110)',
+    },
+  },
 }));
 
 function CartItem({ data }) {
@@ -168,11 +200,26 @@ function CartItem({ data }) {
   const dispatch = useDispatch();
   const { product, loading } = useProductDetail(data.product.id);
 
+  // Dialog
+  const [open, setOpen] = React.useState(false);
+  const handleButtonNo = () => {
+    setOpen(false);
+  };
+  const handleButtonYes = () => {
+    setOpen(false);
+    dispatch(
+      removeFromCart({
+        idNeedToRemove: data.product.id,
+      })
+    );
+  };
+
   const handleRemoveProduct = () => {
-    const action = removeFromCart({
-      idNeedToRemove: data.product.id,
-    });
-    dispatch(action);
+    // const action = removeFromCart({
+    //   idNeedToRemove: data.product.id,
+    // });
+    // dispatch(action);
+    setOpen(true);
   };
 
   const handleOnClickProduct = () => {
@@ -353,6 +400,30 @@ function CartItem({ data }) {
           </Box>
         </Box>
       )}
+      <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="alert-dialog-title">
+        <DialogTitle id="alert-dialog-title" className={classes.titleDia}>
+          <Typography>Bạn muốn xóa sản phẩm này?</Typography>
+        </DialogTitle>
+
+        <DialogActions className={classes.actionsDia}>
+          <Button
+            onClick={handleButtonNo}
+            color="primary"
+            variant="outlined"
+            className={classes.buttonNo}
+          >
+            Không
+          </Button>
+          <Button
+            onClick={handleButtonYes}
+            variant="contained"
+            className={classes.buttonYes}
+            autoFocus
+          >
+            Có
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

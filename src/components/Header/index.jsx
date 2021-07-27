@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
       top: '0',
     },
   },
+  input: {},
   boxUser: {
     textAlign: 'center',
   },
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   appbar: {
     padding: '0',
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(0, 4),
+      padding: theme.spacing(0, 5),
     },
   },
   toolbar: {
@@ -209,7 +210,7 @@ export default function Header({ showMiniCart }) {
     history.push('/cart');
   };
 
-  const handleFilterChange = (value) => {
+  const handleFilterSearch = (value) => {
     const formValue = {
       _q: value,
     };
@@ -340,7 +341,7 @@ export default function Header({ showMiniCart }) {
             </Link>
           </Typography>
 
-          <SearchInput onSubmit={handleFilterChange} className={classes.input} />
+          <SearchInput onSubmit={handleFilterSearch} className={classes.input} />
 
           <div className={classes.sectionDesktop}>
             {!isLoggedIn && (

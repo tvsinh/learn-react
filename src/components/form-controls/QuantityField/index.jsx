@@ -45,13 +45,13 @@ const useStyles = makeStyles((theme) => ({
   titleDia: {
     width: '30vw',
     [theme.breakpoints.down('md')]: {
-      width: '85vw',
+      width: '80vw',
     },
   },
   actionsDia: {
     display: 'flex',
     justifyContent: 'center',
-    padding: '5px 20px 20px',
+    padding: '5px 20px 15px',
   },
   buttonNo: {
     minWidth: '12.5vw',
@@ -66,13 +66,16 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       minWidth: '35vw',
     },
+    '&:hover': {
+      backgroundColor: 'rgb(255, 101, 110)',
+    },
   },
 }));
 
 function QuantityField(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [open, setOpen] = React.useState(false);
+
   const { form, name, label, disabled, data, cartQty = false } = props;
   const {
     formState: { errors },
@@ -82,6 +85,7 @@ function QuantityField(props) {
 
   const { product } = useProductDetail(data?.product.id);
 
+  const [open, setOpen] = React.useState(false);
   const handleButtonNo = () => {
     setOpen(false);
   };
