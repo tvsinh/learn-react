@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, IconButton, makeStyles, Paper, Typography } from '@material-ui/core';
 import { DeleteForever } from '@material-ui/icons';
-import QuantityField from 'components/form-controls/QuantityField';
+import CartQtyField from 'components/form-controls/CartQtyField';
 import LoadingProgress from 'components/Loading';
 import { THUMBNAIL_PLACEHOLDER } from 'constants/index';
 import useProductDetail from 'hook/useProductDetail';
@@ -17,10 +17,6 @@ import { formatPrice } from './../../../utils/common';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
-
-CartItem.propTypes = {
-  data: PropTypes.object,
-};
 
 const useStyles = makeStyles((theme) => ({
   loading: {
@@ -194,12 +190,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CartItem({ data }) {
+CartItem.propTypes = {
+  cartItem: PropTypes.object,
+};
+
+function CartItem({ cartItem }) {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { product, loading } = useProductDetail(data.product.id);
-
+  const { product, loading } = useProductDetail(cartItem.id);
   // Dialog
   const [open, setOpen] = React.useState(false);
   const handleButtonNo = () => {
@@ -209,21 +208,17 @@ function CartItem({ data }) {
     setOpen(false);
     dispatch(
       removeFromCart({
-        idNeedToRemove: data.product.id,
+        idNeedToRemove: cartItem.product.id,
       })
     );
   };
 
   const handleRemoveProduct = () => {
-    // const action = removeFromCart({
-    //   idNeedToRemove: data.product.id,
-    // });
-    // dispatch(action);
     setOpen(true);
   };
 
   const handleOnClickProduct = () => {
-    const idProduct = data.product.id;
+    const idProduct = cartItem.product.id;
     history.push({
       pathname: `/products/${idProduct}`,
     });
@@ -239,7 +234,7 @@ function CartItem({ data }) {
   });
   const form = useForm({
     defaultValues: {
-      quantity: data.quantity,
+      quantity: cartItem.quantity,
     },
     mode: 'onBlur',
     reValidateMode: 'onChange',
@@ -248,24 +243,23 @@ function CartItem({ data }) {
   const handleSubmit = (newQuantity) => {
     if (newQuantity >= 1 && newQuantity <= product.quantity) {
       const action = setQuantity({
-        id: data.product.id,
+        id: cartItem.product.id,
         quantity: newQuantity,
       });
       dispatch(action);
     }
     if (newQuantity === 0) {
       const action = removeFromCart({
-        idNeedToRemove: data.product.id,
+        idNeedToRemove: cartItem.product.id,
       });
       dispatch(action);
     }
   };
   const handleChangeQty = (e) => {
-    console.log('newQuantity change', e.target.value);
     const newQuantity = e.target.value;
     if (newQuantity >= 1 && newQuantity <= product.quantity) {
       const action = setQuantity({
-        id: data.product.id,
+        id: cartItem.product.id,
         quantity: newQuantity,
       });
       dispatch(action);
@@ -286,19 +280,19 @@ function CartItem({ data }) {
                 <Box className={classes.itemProduct} onClick={handleOnClickProduct}>
                   <img
                     src={
-                      data.product.thumbnail[0]
-                        ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
+                      cartItem.product.thumbnail[0]
+                        ? `${STATIC_HOST}${cartItem.product.thumbnail[0]?.url}`
                         : THUMBNAIL_PLACEHOLDER
                     }
-                    alt={data.product.name}
+                    alt={cartItem.product.name}
                     width="80px"
                     height="80px"
                   />
-                  <Typography className={classes.productName}>{data.product.name}</Typography>
+                  <Typography className={classes.productName}>{cartItem.product.name}</Typography>
                 </Box>
 
                 <Typography className={classes.productPrice}>
-                  {formatPrice(data.product.salePrice)}
+                  {formatPrice(cartItem.product.salePrice)}
                 </Typography>
 
                 <Box className={classes.boxQty}>
@@ -306,26 +300,21 @@ function CartItem({ data }) {
                     <Typography className={classes.boxQtyStock}>
                       Còn trong kho: {product.quantity}
                     </Typography>
-                    {/* <IconButton onClick={handleDownQuantity}>
-                      <RemoveCircleOutline />
-                    </IconButton>
-                    <TextField value={Number(data.quantity)} variant="outlined" size="small" />
-                    <IconButton onClick={handleUpQuantity}>
-                      <AddCircleOutline />
-                    </IconButton> */}
+
                     <form onSubmit={form.handleSubmit(handleSubmit)} onChange={handleChangeQty}>
-                      <QuantityField
+                      <CartQtyField
                         name="quantity"
-                        label={null}
                         form={form}
-                        cartQty={true}
-                        data={data}
+                        label={null}
+                        productId={product.id}
+                        productName={product.name}
+                        quantity={product.quantity}
                       />
                     </form>
                   </Box>
                 </Box>
                 <Typography className={classes.productTotal}>
-                  {formatPrice(data.product.salePrice * data.quantity)}
+                  {formatPrice(cartItem.product.salePrice * cartItem.quantity)}
                 </Typography>
                 <Box size="small" className={classes.iconDel}>
                   <IconButton onClick={handleRemoveProduct}>
@@ -343,11 +332,11 @@ function CartItem({ data }) {
                   <Box className={classes.imgMobile}>
                     <img
                       src={
-                        data.product.thumbnail[0]
-                          ? `${STATIC_HOST}${data.product.thumbnail[0]?.url}`
+                        cartItem.product.thumbnail[0]
+                          ? `${STATIC_HOST}${cartItem.product.thumbnail[0]?.url}`
                           : THUMBNAIL_PLACEHOLDER
                       }
-                      alt={data.product.name}
+                      alt={cartItem.product.name}
                       width="80px"
                       height="80px"
                     />
@@ -358,26 +347,20 @@ function CartItem({ data }) {
                       className={classes.productNameMobile}
                       onClick={handleOnClickProduct}
                     >
-                      {data.product.name}
+                      {cartItem.product.name}
                     </Typography>
                     <Box className={classes.boxQtyMobile}>
-                      {/* <IconButton className={classes.iconButton} onClick={handleDownQuantity}>
-                        <RemoveCircleOutline />
-                      </IconButton>
-                      <TextField value={Number(data.quantity)} variant="outlined" size="small" />
-                      <IconButton className={classes.iconButton} onClick={handleUpQuantity}>
-                        <AddCircleOutline />
-                      </IconButton> */}
                       <Typography className={classes.boxQtyStock}>
                         Còn trong kho: {product.quantity}
                       </Typography>
                       <form onSubmit={form.handleSubmit(handleSubmit)} onChange={handleChangeQty}>
-                        <QuantityField
+                        <CartQtyField
                           name="quantity"
                           label={null}
                           form={form}
-                          cartQty={true}
-                          data={data}
+                          productId={product.id}
+                          productName={product.name}
+                          quantity={product.quantity}
                         />
                       </form>
                     </Box>
@@ -387,7 +370,7 @@ function CartItem({ data }) {
                 <Box className={classes.productPriceAndDel}>
                   <Box>
                     <Typography className={classes.productPriceMobile}>
-                      {formatPrice(data.product.salePrice)}
+                      {formatPrice(cartItem.product.salePrice)}
                     </Typography>
                   </Box>
 

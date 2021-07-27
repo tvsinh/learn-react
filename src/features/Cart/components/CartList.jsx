@@ -150,7 +150,7 @@ function CartList({ cartList }) {
             <Paper className={classes.item}>
               {cartList.map((cartItem) => (
                 <Box key={cartItem.id}>
-                  <CartItem data={cartItem} />
+                  <CartItem cartItem={cartItem} />
                 </Box>
               ))}
             </Paper>
@@ -189,7 +189,7 @@ function CartList({ cartList }) {
               <Typography className={classes.itemMobileHeader}>Sản phẩm trong giỏ hàng</Typography>
               {cartList.map((cartItem) => (
                 <Box key={cartItem.id}>
-                  <CartItem data={cartItem} />
+                  <CartItem cartItem={cartItem} />
                 </Box>
               ))}
             </Box>

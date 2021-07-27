@@ -169,11 +169,10 @@ function Shipping() {
       };
       await userApi.updateUser(data);
       const userNew = await userApi.getInfor();
-      history.goBack();
       localStorage.setItem(StorageKeys.USER, JSON.stringify(userNew));
       dispatch(setUser());
       dispatch(setBackTo(false));
-      dispatch(setShipping(values));
+      history.goBack();
     }
   };
 

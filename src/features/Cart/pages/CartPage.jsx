@@ -1,5 +1,7 @@
 import { Box, Button, Container, Grid, makeStyles, Paper, Typography } from '@material-ui/core';
-import { showDialog } from 'features/Auth/userSlice';
+import userApi from 'api/userApi';
+import StorageKeys from 'constants/storage-keys';
+import { setUser, showDialog } from 'features/Auth/userSlice';
 import ShippingCard from 'features/CheckOut/components/Card/ShippingCard';
 import ShippingCardMobile from 'features/CheckOut/components/Card/ShippingCard/mobile';
 import { setBackTo, setEdit, setStep } from 'features/CheckOut/orderSlice';
@@ -212,11 +214,15 @@ function CartPage(props) {
     history.goBack();
   };
 
-  const handleCheckOut = () => {
+  const handleCheckOut = async () => {
     if (isLoggedIn) {
       dispatch(setStep(0));
       dispatch(setBackTo(false));
       dispatch(setEdit(false));
+
+      const userMe = await userApi.getInfor();
+      localStorage.setItem(StorageKeys.USER, JSON.stringify(userMe));
+      dispatch(setUser());
       history.push('/checkout');
     } else {
       dispatch(showDialog());

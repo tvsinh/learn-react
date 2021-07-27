@@ -98,7 +98,7 @@ function DetailPage() {
       }, 100);
     } else if (quantity > Number.parseInt(product.quantity - cartItems[index].quantity)) {
       enqueueSnackbar(
-        `Số lượng tối đa là ${product.quantity}.Trong giỏ ${cartItems[index].quantity}.`,
+        `Số lượng tối đa là ${product.quantity}. Trong giỏ ${cartItems[index].quantity}.`,
         {
           variant: 'info',
         }
@@ -129,7 +129,7 @@ function DetailPage() {
 
                 <Grid item className={classes.right}>
                   <ProductInfo product={product} />
-                  <AddToCartForm onSubmit={handleAddToCartSubmit} productId={productId} />
+                  <AddToCartForm onSubmit={handleAddToCartSubmit} product={product} />
                 </Grid>
               </Grid>
             </Paper>
