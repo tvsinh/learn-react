@@ -13,10 +13,18 @@ import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
 import Footer from 'components/Footer';
+import { setFocusSearch } from 'features/Cart/cartSlice';
+import { useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
   header: {},
+  containerDesk: {
+    marginTop: theme.spacing(0),
+    [theme.breakpoints.down('md')]: {
+      marginTop: theme.spacing(8),
+    },
+  },
   searchNav: {
     display: 'flex',
     alignItems: ' center',
@@ -109,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
 function ListPage() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const location = useLocation();
   const queryParams = useMemo(() => {
     const params = queryString.parse(location.search);
@@ -211,9 +220,12 @@ function ListPage() {
     setFilterBar(!filterBar);
     setOverlay(!overlay);
   };
+  const handleDisAutoFocus = () => {
+    dispatch(setFocusSearch(false));
+  };
 
   return (
-    <>
+    <Box onClick={handleDisAutoFocus}>
       <Header className={classes.header} />
       {queryParams['_q'] ? (
         <Box className={`${classes.searchNav} + ${classes.sectionDesktop}`}>
@@ -224,7 +236,7 @@ function ListPage() {
         </Box>
       ) : null}
       <Box pt={1.1} className={classes.sectionDesktop}>
-        <Container>
+        <Container className={classes.containerDesk}>
           <Grid container spacing={0}>
             <Grid item className={classes.left}>
               <Paper elevation={0}>
@@ -281,7 +293,7 @@ function ListPage() {
       </Box>
       <Footer />
       <script>$(document).ready(function(){window.scrollTo({ top: 0 })});</script>
-    </>
+    </Box>
   );
 }
 

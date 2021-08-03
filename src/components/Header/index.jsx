@@ -29,10 +29,12 @@ import { Link, useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router';
 import SuccessCart from 'features/Cart/components/MiniSuccessCart';
 import PropTypes from 'prop-types';
+import { setFocusSearch } from 'features/Cart/cartSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'static',
+
     [theme.breakpoints.down('md')]: {
       position: 'fixed',
       width: '100%',
@@ -41,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   input: {},
+  infor: {
+    display: 'flex',
+  },
+  userName: {
+    width: '130px',
+  },
   boxUser: {
     textAlign: 'center',
   },
@@ -75,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
   toolbar: {
     padding: '0',
+    display: 'flex',
+    justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(0, 4),
     },
@@ -214,6 +224,7 @@ export default function Header({ showMiniCart }) {
     const formValue = {
       _q: value,
     };
+    dispatch(setFocusSearch(true));
     history.push({
       pathname: '/products',
       search: queryString.stringify(formValue),
@@ -337,46 +348,48 @@ export default function Header({ showMiniCart }) {
           </IconButton>
           <Typography variant="h6" onClick={handleHome} className={classes.title}>
             <Link to="/" className={`${classes.link} + ${classes.sectionDesktop}`}>
-              <img alt="reactShopLogo" src="/ReactShop.png" width="140px" height="38px" />
+              <img alt="reactShopLogo" src="/ReactShop.png" width="120px" height="32px" />
             </Link>
           </Typography>
 
           <SearchInput onSubmit={handleFilterSearch} className={classes.input} />
 
-          <div className={classes.sectionDesktop}>
-            {!isLoggedIn && (
-              <Button color="inherit" onClick={handleClickOpen}>
-                <PermIdentityOutlined />
-                <Box>
-                  <Typography className={classes.login}>Đăng nhập/Đăng ký</Typography>
-                  <Typography className={classes.loginInfo}>
-                    Tài khoản
-                    <ArrowDropDown />
-                  </Typography>
-                </Box>
-              </Button>
-            )}
+          <Box className={classes.infor}>
+            <div className={classes.sectionDesktop}>
+              {!isLoggedIn && (
+                <Button color="inherit" onClick={handleClickOpen} className={classes.userName}>
+                  <PermIdentityOutlined />
+                  <Box>
+                    <Typography className={classes.login}>Đăng nhập/Đăng ký</Typography>
+                    <Typography className={classes.loginInfo}>
+                      Tài khoản
+                      <ArrowDropDown />
+                    </Typography>
+                  </Box>
+                </Button>
+              )}
 
-            {isLoggedIn && (
-              <Button color="inherit" onClick={handleUserClick}>
-                <PermIdentityOutlined />
-                <Box>
-                  <Typography className={classes.user}>Tài khoản</Typography>
-                  <Typography className={classes.userInfo}>
-                    {loggedInUser.fullName}
-                    <ArrowDropDown />
-                  </Typography>
-                </Box>
-              </Button>
-            )}
-          </div>
+              {isLoggedIn && (
+                <Button color="inherit" onClick={handleUserClick} className={classes.userName}>
+                  <PermIdentityOutlined />
+                  <Box>
+                    <Typography className={classes.user}>Tài khoản</Typography>
+                    <Typography className={classes.userInfo}>
+                      {loggedInUser.fullName}
+                      <ArrowDropDown />
+                    </Typography>
+                  </Box>
+                </Button>
+              )}
+            </div>
 
-          <IconButton aria-label="cart item" color="inherit" onClick={handleCartClick}>
-            <Badge badgeContent={cartItemsLenght} color="secondary">
-              <ShoppingCart />
-            </Badge>
-          </IconButton>
-          {showMiniCart ? <SuccessCart /> : null}
+            <IconButton aria-label="cart item" color="inherit" onClick={handleCartClick}>
+              <Badge badgeContent={cartItemsLenght} color="secondary">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
+            {showMiniCart ? <SuccessCart /> : null}
+          </Box>
         </Toolbar>
       </AppBar>
 

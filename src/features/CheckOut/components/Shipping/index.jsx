@@ -123,18 +123,18 @@ function Shipping() {
   const schema = yup.object().shape({
     fullName: yup
       .string()
-      .required('Please enter full name.')
-      .test('should has at least two words', 'Please enter at least two words.', (value) => {
+      .required('Vui lòng nhập tên đầy đủ của bạn.')
+      .test('should has at least two words', 'Vui lòng nhập ít nhất 2 từ.', (value) => {
         return value.split(' ').length >= 2;
       }),
     email: yup
       .string()
-      .required('Please enter your email.')
-      .email('Please enter a valid email address.'),
+      .required('Vui lòng nhập email của bạn.')
+      .email('Vui lòng nhập một địa chỉ email hợp lệ.'),
     address: yup
       .string()
-      .required('Please enter title.')
-      .min(4, 'Address is too short, at least 4 characters.'),
+      .required('Vui lòng nhập địa chỉ giao hàng.')
+      .min(4, 'Địa chỉ phải trên 4 kí tự.'),
   });
   const form = useForm({
     defaultValues: {

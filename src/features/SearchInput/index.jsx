@@ -5,6 +5,7 @@ import { PropTypes } from 'prop-types';
 import queryString from 'query-string';
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   search: {
-    flexGrow: 1,
+    width: '100%',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 1),
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     [theme.breakpoints.up('md')]: {
+      width: '68%',
       marginLeft: theme.spacing(2),
     },
   },
@@ -69,6 +71,7 @@ SearchInput.propTypes = {
 function SearchInput({ onSubmit = {} }) {
   const classes = useStyles();
   const location = useLocation();
+  const autoFocus = useSelector((state) => state.cart.focusSearch);
   const [searchTerm, setSearchTerm] = useState('');
   const typingTimeoutRef = useRef(null);
 
@@ -128,7 +131,7 @@ function SearchInput({ onSubmit = {} }) {
         value={searchTerm}
         onChange={handleSearchTermChange}
         onKeyUp={handleOnkeyUp}
-        autoFocus={true}
+        autoFocus={autoFocus}
       ></InputBase>
     </div>
   );

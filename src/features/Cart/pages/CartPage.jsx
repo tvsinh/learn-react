@@ -16,20 +16,32 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
-    padding: theme.spacing(0, 3, 4),
+    padding: theme.spacing(0, 3, 14),
     width: '100%',
     height: 'auto',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: theme.spacing(0, 10),
+    },
   },
   buttonBack: {
     textTransform: 'none',
     margin: theme.spacing(3, 0, 0.5, 11.5),
+
     [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(0, 10),
+      margin: theme.spacing(10, 0, 0),
+    },
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
   left: {
     width: '800px',
     marginRight: '10px',
+
     [theme.breakpoints.down('md')]: {
       width: '300px',
     },
@@ -39,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     // flex: '1 1 0',
     marginTop: '25px',
     [theme.breakpoints.down('md')]: {
+      marginTop: '0px',
       width: '100%',
     },
   },
@@ -223,6 +236,7 @@ function CartPage(props) {
       const userMe = await userApi.getInfor();
       localStorage.setItem(StorageKeys.USER, JSON.stringify(userMe));
       dispatch(setUser());
+
       history.push('/checkout');
     } else {
       dispatch(showDialog());

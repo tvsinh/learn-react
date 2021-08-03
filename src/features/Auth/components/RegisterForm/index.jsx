@@ -46,7 +46,7 @@ function RegisterForm(props) {
   const schema = yup.object().shape({
     fullName: yup
       .string()
-      .required('Vui lòng nhập đầy đủ tên của bạn.')
+      .required('Vui lòng nhập tên đầy đủ của bạn.')
       .test('should has at least two words', 'Vui lòng nhập ít nhất 2 từ.', (value) => {
         return value.split(' ').length >= 2;
       }),
