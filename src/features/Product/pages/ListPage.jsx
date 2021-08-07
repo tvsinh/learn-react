@@ -103,6 +103,11 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  productListMoblie: {
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing(0, 0.4),
+    },
+  },
   overlay: {
     zIndex: '1',
     position: 'fixed',
@@ -278,7 +283,7 @@ function ListPage() {
           <BiFilterAlt color="primary" onClick={handleFilterBar} className={classes.iconSort} />
         </Box>
         <FilterViewer filters={queryParams} onChange={setNewFilters} />
-        <Paper elevation={0}>
+        <Paper elevation={0} className={classes.productListMoblie}>
           {loading ? <ProductSkeletonList length={12} /> : <ProductList data={productList} />}
 
           <Box className={classes.pagination}>

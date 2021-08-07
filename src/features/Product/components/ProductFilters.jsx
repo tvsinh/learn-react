@@ -8,7 +8,8 @@ import FilterByPrice from './Filters/FilterByPrice';
 import FilterByService from './Filters/FilterByService';
 
 ProductFilters.propTypes = {
-  filters: PropTypes.object.isRequired,
+  // filters: PropTypes.object.isRequired,
+  filters: PropTypes.object,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
 };

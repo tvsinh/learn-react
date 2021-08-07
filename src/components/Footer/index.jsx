@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '10px',
     padding: '0 0 20px 0',
     borderTop: 'solid 1px rgba(89, 89, 89, 0.2)',
+
+    '& p': {
+      lineHeight: '1.9',
+    },
   },
   footerItem: {
     paddingLeft: '50px',

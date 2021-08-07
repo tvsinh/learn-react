@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   userName: {
-    width: '130px',
+    width: '135px',
   },
   boxUser: {
     textAlign: 'center',
