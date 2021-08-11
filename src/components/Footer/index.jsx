@@ -26,6 +26,14 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: '0px',
     },
   },
+  footerLogo: {
+    width: '230px',
+    height: '51px',
+    [theme.breakpoints.down('md')]: {
+      width: '200px',
+      height: '47px',
+    },
+  },
   infoItem: {
     display: 'flex',
     alignItems: 'center',
@@ -59,10 +67,10 @@ function Footer() {
           <Grid container>
             <Grid item xs={12} sm={6} md={3} lg={3} className={classes.footerItem}>
               <Typography>&nbsp;</Typography>
-              <img src="/Logo-shop.png" alt="logo" width="230px" height="51px" />
+              <img src="/Logo-shop.png" alt="logo" className={classes.footerLogo} />
               <Box className={classes.infoItem}>
                 <Room />
-                <Typography>&nbsp;789 Ton Duc Thang, Da Nang</Typography>
+                <Typography>&nbsp;Ton Duc Thang, Da Nang</Typography>
               </Box>
               <Box className={classes.infoItem}>
                 <Call />
