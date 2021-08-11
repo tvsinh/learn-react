@@ -354,7 +354,6 @@ function CartItem({ cartItem }) {
                       alt={cartItem.product.name}
                       width="80px"
                       height="80px"
-                      onClick={handleOnClickProduct}
                     />
                   </Box>
 
