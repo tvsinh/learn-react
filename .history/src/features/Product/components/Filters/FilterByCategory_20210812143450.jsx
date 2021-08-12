@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
   category: {
     display: 'flex',
     alignItems: 'center',
+    '&:hover': {
+      backgroundColor: '#ececec',
+    },
   },
   categoryImg: {
     width: '25px',

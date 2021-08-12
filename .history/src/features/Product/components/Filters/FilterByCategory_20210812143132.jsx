@@ -35,16 +35,14 @@ const useStyles = makeStyles((theme) => ({
   cate: {
     fontWeight: '500',
     fontSize: '15px',
-    marginLeft: '10px',
+    marginLeft: '5px',
   },
   category: {
     display: 'flex',
-    alignItems: 'center',
   },
   categoryImg: {
     width: '25px',
     height: '25px',
-    marginRight: '10px',
   },
   categoryName: {
     fontWeight: '400',

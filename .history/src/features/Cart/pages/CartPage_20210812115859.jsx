@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
   rootEmpty: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: theme.spacing(6),
+    // height: 'auto',
   },
   empty: {
     flex: '1',

@@ -97,11 +97,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   rootEmpty: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginTop: theme.spacing(6),
+    padding: theme.spacing(0, 12, 10),
+    height: 'auto',
+    [theme.breakpoints.down('md')]: {
+      height: 'auto',
+      padding: theme.spacing(10, 5, 10),
+    },
   },
   empty: {
+    display: 'flex',
     flex: '1',
     height: '500px',
   },
@@ -322,6 +326,9 @@ function CartPage(props) {
     return (
       <Box>
         <Container className={classes.rootEmpty}>
+          <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
+            Trở lại
+          </Button>
           <Grid className={classes.empty}>
             <Typography>Giỏ hàng</Typography>
             <Paper>

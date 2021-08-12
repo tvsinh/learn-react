@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
   rootEmpty: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: theme.spacing(6),
+    height: 'auto',
   },
   empty: {
     flex: '1',
@@ -322,6 +322,9 @@ function CartPage(props) {
     return (
       <Box>
         <Container className={classes.rootEmpty}>
+          <Button className={classes.buttonBack} color="primary" onClick={handleBack}>
+            Trở lại
+          </Button>
           <Grid className={classes.empty}>
             <Typography>Giỏ hàng</Typography>
             <Paper>

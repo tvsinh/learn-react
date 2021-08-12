@@ -1,7 +1,7 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
 import { Storage } from '@material-ui/icons';
 import categoryApi from 'api/categoryApi';
-import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from 'constants/index';
+import { STATIC_HOST } from 'constants/index';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import CategorySkeletonList from './../CategorySkeletonList';
@@ -32,19 +32,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  cate: {
+  category: {
     fontWeight: '500',
     fontSize: '15px',
-    marginLeft: '10px',
-  },
-  category: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  categoryImg: {
-    width: '25px',
-    height: '25px',
-    marginRight: '10px',
+    marginLeft: '5px',
   },
   categoryName: {
     fontWeight: '400',
@@ -88,7 +79,7 @@ function FilterByCategory({ onChange }) {
     <Box className={classes.root}>
       <Typography className={classes.title}>
         <Storage />
-        <Typography variant="subtitle2" className={classes.cate}>
+        <Typography variant="subtitle2" className={classes.category}>
           DANH MỤC SẢN PHẨM
         </Typography>
       </Typography>
@@ -102,11 +93,7 @@ function FilterByCategory({ onChange }) {
               onClick={() => handleCategoryClick(category)}
               className={classes.category}
             >
-              <img
-                src={category.icon ? `${STATIC_HOST}${category.icon?.url}` : THUMBNAIL_PLACEHOLDER}
-                alt="icon"
-                className={classes.categoryImg}
-              />
+              <img src={`${STATIC_HOST}${category.icon?.url}`} alt="icon" />
               <Typography variant="body2" className={classes.categoryName}>
                 {category.name}
               </Typography>

@@ -60,7 +60,7 @@ function ProductSkeletonList({ length = 6 }) {
               <Box className={classes.boxText}>
                 <Box className={classes.boxName}>
                   <Skeleton className={classes.textName} />
-                  <Skeleton width="96%" className={classes.textName} />
+                  <Skeleton width="100%" className={classes.textName} />
                 </Box>
                 <Box className={classes.boxPrice}>
                   <Skeleton width="55%" className={classes.text} />

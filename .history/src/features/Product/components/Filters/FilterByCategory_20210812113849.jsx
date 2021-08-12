@@ -1,7 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
-import { Storage } from '@material-ui/icons';
 import categoryApi from 'api/categoryApi';
-import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from 'constants/index';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import CategorySkeletonList from './../CategorySkeletonList';
@@ -26,26 +24,6 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  title: {
-    fontWeight: '500',
-    // fontSize: '15px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  cate: {
-    fontWeight: '500',
-    fontSize: '15px',
-    marginLeft: '10px',
-  },
-  category: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  categoryImg: {
-    width: '25px',
-    height: '25px',
-    marginRight: '10px',
-  },
   categoryName: {
     fontWeight: '400',
     fontSize: '15px',
@@ -68,7 +46,6 @@ function FilterByCategory({ onChange }) {
         const cateList = await list.map((x) => ({
           id: x.id,
           name: x.name,
-          icon: x.icon,
         }));
         setCategoryList(cateList);
       } catch (error) {
@@ -86,27 +63,13 @@ function FilterByCategory({ onChange }) {
 
   return (
     <Box className={classes.root}>
-      <Typography className={classes.title}>
-        <Storage />
-        <Typography variant="subtitle2" className={classes.cate}>
-          DANH MỤC SẢN PHẨM
-        </Typography>
-      </Typography>
+      <Typography variant="subtitle1">DANH MỤC SẢN PHẨM</Typography>
       {loading ? (
         <CategorySkeletonList />
       ) : (
         <ul className={classes.menu}>
           {categoryList.map((category) => (
-            <li
-              key={category.id}
-              onClick={() => handleCategoryClick(category)}
-              className={classes.category}
-            >
-              <img
-                src={category.icon ? `${STATIC_HOST}${category.icon?.url}` : THUMBNAIL_PLACEHOLDER}
-                alt="icon"
-                className={classes.categoryImg}
-              />
+            <li key={category.id} onClick={() => handleCategoryClick(category)}>
               <Typography variant="body2" className={classes.categoryName}>
                 {category.name}
               </Typography>

@@ -29,11 +29,6 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:hover $productImg': {
       transform: 'scale(1.05)',
-      transition: 'all ease .5s',
-    },
-    '&:not(:hover) $productImg': {
-      transform: 'scale(1)',
-      transition: 'all ease .5s',
     },
   },
   boxImg: {
@@ -100,25 +95,17 @@ const useStyles = makeStyles((theme) => ({
       borderStyle: 'solid',
       top: '0',
       right: '-8px',
+      color: 'rgba(255, 216, 64, 0.95)',
       borderColor: '#017fff transparent #017fff #017fff',
       // transform: 'rotate(-90deg)',
     },
   },
   percent: {
     position: 'absolute',
-    top: '5px',
+    top: '10px',
     zIndex: '1',
-    right: '8px',
-    width: '40px',
-    height: '40px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '1px solid #ed1c24',
-    borderRadius: '50%',
-    color: '#ed1c24',
-    backgroundColor: '#FFF',
-    fontWeight: '500',
+    right: '0',
+    textDecoration: 'line-through',
   },
 }));
 
@@ -144,7 +131,7 @@ function Product({ product }) {
           </Box>
         )}
         {product.promotionPercent > 0 ? (
-          <Box className={classes.percent}>-{product.promotionPercent}%</Box>
+          <Box className={classes.percent}>{product.promotionPercent}%</Box>
         ) : (
           ''
         )}
@@ -156,6 +143,9 @@ function Product({ product }) {
             {product.name}
           </Typography>
           <Box variant="body2">
+            <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
+              {formatPrice(product.salePrice)}
+            </Box>
             <Box>
               {product.promotionPercent > 0 ? (
                 <Box component="span" fontSize="12px" className={classes.originalPrice}>
@@ -164,9 +154,6 @@ function Product({ product }) {
               ) : (
                 ''
               )}
-            </Box>
-            <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
-              {formatPrice(product.salePrice)}
             </Box>
           </Box>
         </Box>

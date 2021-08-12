@@ -31,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(1.05)',
       transition: 'all ease .5s',
     },
-    '&:not(:hover) $productImg': {
-      transform: 'scale(1)',
-      transition: 'all ease .5s',
-    },
   },
   boxImg: {
     position: 'relative',
@@ -100,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
       borderStyle: 'solid',
       top: '0',
       right: '-8px',
+      color: 'rgba(255, 216, 64, 0.95)',
       borderColor: '#017fff transparent #017fff #017fff',
       // transform: 'rotate(-90deg)',
     },
@@ -108,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: '5px',
     zIndex: '1',
-    right: '8px',
+    right: '10px',
     width: '40px',
     height: '40px',
     display: 'flex',

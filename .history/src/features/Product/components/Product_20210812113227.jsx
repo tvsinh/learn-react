@@ -100,6 +100,7 @@ const useStyles = makeStyles((theme) => ({
       borderStyle: 'solid',
       top: '0',
       right: '-8px',
+      color: 'rgba(255, 216, 64, 0.95)',
       borderColor: '#017fff transparent #017fff #017fff',
       // transform: 'rotate(-90deg)',
     },

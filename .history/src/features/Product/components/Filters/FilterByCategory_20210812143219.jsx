@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   cate: {
     fontWeight: '500',
     fontSize: '15px',
-    marginLeft: '10px',
+    marginLeft: '5px',
   },
   category: {
     display: 'flex',

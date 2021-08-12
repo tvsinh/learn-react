@@ -31,10 +31,6 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(1.05)',
       transition: 'all ease .5s',
     },
-    '&:not(:hover) $productImg': {
-      transform: 'scale(1)',
-      transition: 'all ease .5s',
-    },
   },
   boxImg: {
     position: 'relative',
@@ -100,15 +96,16 @@ const useStyles = makeStyles((theme) => ({
       borderStyle: 'solid',
       top: '0',
       right: '-8px',
+      color: 'rgba(255, 216, 64, 0.95)',
       borderColor: '#017fff transparent #017fff #017fff',
       // transform: 'rotate(-90deg)',
     },
   },
   percent: {
     position: 'absolute',
-    top: '5px',
+    top: '10px',
     zIndex: '1',
-    right: '8px',
+    right: '10px',
     width: '40px',
     height: '40px',
     display: 'flex',
@@ -156,6 +153,9 @@ function Product({ product }) {
             {product.name}
           </Typography>
           <Box variant="body2">
+            <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
+              {formatPrice(product.salePrice)}
+            </Box>
             <Box>
               {product.promotionPercent > 0 ? (
                 <Box component="span" fontSize="12px" className={classes.originalPrice}>
@@ -164,9 +164,6 @@ function Product({ product }) {
               ) : (
                 ''
               )}
-            </Box>
-            <Box component="span" fontSize="16px" fontWeight="bold" mr={1}>
-              {formatPrice(product.salePrice)}
             </Box>
           </Box>
         </Box>
