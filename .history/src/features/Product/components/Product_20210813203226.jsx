@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       color: '#288ad6',
     },
     '&:hover $productImg': {
-      transform: 'scale(1.06)',
+      transform: 'scale(1.05)',
       transition: 'all ease .7s',
     },
     '&:not(:hover) $productImg': {

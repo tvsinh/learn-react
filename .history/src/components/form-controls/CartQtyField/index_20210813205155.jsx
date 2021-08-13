@@ -98,7 +98,7 @@ function CartQtyField(props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDownDispatch = async (value) => {
-    if (Number.parseInt(value) - 1 >= 1 && Number.parseInt(value) - 1 < Number.parseInt(quantity)) {
+    if (Number.parseInt(value) - 1 >= 1) {
       await setValue(name, Number.parseInt(value) ? Number.parseInt(value) - 1 : 1);
       dispatch(
         setQuantity({
@@ -106,7 +106,7 @@ function CartQtyField(props) {
           quantity: Number.parseInt(value) > 1 ? Number.parseInt(value) - 1 : 1,
         })
       );
-    } else if (Number.parseInt(value) - 1 > Number.parseInt(quantity)) {
+    } else if (Number.parseInt(value) + 1 > Number.parseInt(quantity)) {
       enqueueSnackbar(`Sản phẩm "${productName}" có số lượng tối đa là ${quantity}.`, {
         variant: 'info',
       });

@@ -23,18 +23,16 @@ const useStyles = makeStyles((theme) => ({
     '&:hover $freeship': {
       transform: 'translateY(-1px)',
       boxShadow: '0 2px 12px 0 rgba(0, 0, 0, .12)',
-      transition: 'all ease .7s',
     },
     '&:hover $percent': {
       transform: 'translateY(-1px)',
       boxShadow: '0 2px 12px 0 rgba(0, 0, 0, .12)',
-      transition: 'all ease .7s',
     },
     '&:hover $productName': {
       color: '#288ad6',
     },
     '&:hover $productImg': {
-      transform: 'scale(1.06)',
+      transform: 'scale(1.05)',
       transition: 'all ease .7s',
     },
     '&:not(:hover) $productImg': {

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   iconRight: {
-    display: 'none',
     [theme.breakpoints.down('md')]: {
       right: '0',
       position: 'fixed',
@@ -29,28 +28,31 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
+    position: 'fixed',
+    padding: '11px',
+    bottom: '0',
+    width: '80%',
+    backgroundColor: '#fff',
+    borderTop: '1px solid rgba(0,0,0,0.1)',
+  },
+  sectionDesktop: {
     display: 'none',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'block',
-      position: 'fixed',
-      padding: '11px',
-      bottom: '0',
-      width: '80%',
-      backgroundColor: '#fff',
-      borderTop: '1px solid rgba(0,0,0,0.1)',
     },
   },
-  section: {
-    [theme.breakpoints.down('md')]: {
-      position: 'fixed',
-      backgroundColor: 'white',
-      right: '0',
-      zIndex: '100',
-      transition: '500ms',
-      paddingBottom: '110px',
-      width: '80%',
-      height: '100%',
-      overflowY: 'scroll',
+  sectionMobile: {
+    position: 'fixed',
+    backgroundColor: 'white',
+    right: '0',
+    zIndex: '100',
+    transition: '500ms',
+    paddingBottom: '110px',
+    width: '80%',
+    height: '100%',
+    overflowY: 'scroll',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
     },
   },
 }));
@@ -62,6 +64,7 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
     const newFilters = {
       'category.name': newCategoryName,
       _page: 1, // Reset page to first
+      // 'category.searchTerm': null,
     };
     onChange(newFilters);
   };
@@ -76,20 +79,28 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
   };
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.section}>
-        <Close onClick={handleClose} className={classes.iconRight} />
+    <>
+      {/* <Box className={classes.sectionDesktop}>
         <FilterByCategory onChange={handleCategoryChange} />
         <FilterByPrice onChange={handeChange} />
         <FilterByService filters={filters} onChange={handeChange} />
+      </Box> */}
 
-        <Box className={classes.button}>
-          <Button onClick={handleClose} variant="contained" color="primary" fullWidth>
-            Xong
-          </Button>
+      <Box className={classes.root}>
+        <Box className={classes.section}>
+          <Close onClick={handleClose} className={classes.iconRight} />
+          <FilterByCategory onChange={handleCategoryChange} />
+          <FilterByPrice onChange={handeChange} />
+          <FilterByService filters={filters} onChange={handeChange} />
+
+          <Box className={classes.button}>
+            <Button onClick={handleClose} variant="contained" color="primary" fullWidth>
+              Xong
+            </Button>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 

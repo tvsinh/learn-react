@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     margin: theme.spacing(0.5, 0),
   },
-  skeletonName: {
-    marginLeft: '10px',
-  },
 }));
 
 function CategorySkeletonList({ length = 6 }) {
@@ -30,7 +27,7 @@ function CategorySkeletonList({ length = 6 }) {
         {Array.from(new Array(length)).map((x, index) => (
           <Box className={classes.skeleton}>
             <Skeleton variant="rect" width={25} height={25} />
-            <Skeleton key={index} variant="text" width={140} className={classes.skeletonName} />
+            <Skeleton key={index} variant="text" width={140} />
           </Box>
         ))}
       </Grid>

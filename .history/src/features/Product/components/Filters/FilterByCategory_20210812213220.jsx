@@ -3,7 +3,7 @@ import { Storage } from '@material-ui/icons';
 import categoryApi from 'api/categoryApi';
 import { STATIC_HOST, THUMBNAIL_PLACEHOLDER } from 'constants/index';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import CategorySkeletonList from './../CategorySkeletonList';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,21 +58,36 @@ FilterByCategory.propTypes = {
 
 function FilterByCategory({ onChange }) {
   const [loading, setLoading] = useState(true);
-  const [categoryList, setCategoryList] = useState([]);
+  // const [categoryList, setCategoryList] = useState([]);
   const classes = useStyles();
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const list = await categoryApi.getAll();
+  //       const cateList = await list.map((x) => ({
+  //         id: x.id,
+  //         name: x.name,
+  //         icon: x.icon,
+  //       }));
+  //       setCategoryList(cateList);
+  //     } catch (error) {
+  //       console.log('Failed to fetch category list', error);
+  //     }
+  //     setLoading(false);
+  //   })();
+  // }, []);
+  const categoryList = useMemo(() => {
     (async () => {
       try {
-        setLoading(true);
         const list = await categoryApi.getAll();
-        console.log('list category', list);
-        // const cateList = await list.map((x) => ({
-        //   id: x.id,
-        //   name: x.name,
-        //   icon: x.icon,
-        // }));
-        setCategoryList(list);
+        const cateList = await list.map((x) => ({
+          id: x.id,
+          name: x.name,
+          icon: x.icon,
+        }));
+        setCategoryList(cateList);
+        return cateList;
       } catch (error) {
         console.log('Failed to fetch category list', error);
       }
@@ -88,12 +103,12 @@ function FilterByCategory({ onChange }) {
 
   return (
     <Box className={classes.root}>
-      <Box className={classes.title}>
+      <Typography className={classes.title}>
         <Storage />
         <Typography variant="subtitle2" className={classes.cate}>
           DANH MỤC SẢN PHẨM
         </Typography>
-      </Box>
+      </Typography>
       {loading ? (
         <CategorySkeletonList />
       ) : (

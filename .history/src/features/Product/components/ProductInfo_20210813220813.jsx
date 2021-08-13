@@ -43,7 +43,7 @@ function ProductInfo({ product = {} }) {
 
   return (
     <Box className={classes.root}>
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h6">
         {name}
       </Typography>
 

@@ -40,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
       borderTop: '1px solid rgba(0,0,0,0.1)',
     },
   },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+    },
+  },
   section: {
     [theme.breakpoints.down('md')]: {
       position: 'fixed',
@@ -62,6 +68,7 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
     const newFilters = {
       'category.name': newCategoryName,
       _page: 1, // Reset page to first
+      // 'category.searchTerm': null,
     };
     onChange(newFilters);
   };
@@ -76,20 +83,28 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
   };
 
   return (
-    <Box className={classes.root}>
-      <Box className={classes.section}>
-        <Close onClick={handleClose} className={classes.iconRight} />
+    <>
+      {/* <Box className={classes.sectionDesktop}>
         <FilterByCategory onChange={handleCategoryChange} />
         <FilterByPrice onChange={handeChange} />
         <FilterByService filters={filters} onChange={handeChange} />
+      </Box> */}
 
-        <Box className={classes.button}>
-          <Button onClick={handleClose} variant="contained" color="primary" fullWidth>
-            Xong
-          </Button>
+      <Box className={classes.root}>
+        <Box className={classes.section}>
+          <Close onClick={handleClose} className={classes.iconRight} />
+          <FilterByCategory onChange={handleCategoryChange} />
+          <FilterByPrice onChange={handeChange} />
+          <FilterByService filters={filters} onChange={handeChange} />
+
+          <Box className={classes.button}>
+            <Button onClick={handleClose} variant="contained" color="primary" fullWidth>
+              Xong
+            </Button>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 

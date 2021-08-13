@@ -62,6 +62,7 @@ function ProductFilters({ filters, onChange = {}, onClick = {} }) {
     const newFilters = {
       'category.name': newCategoryName,
       _page: 1, // Reset page to first
+      // 'category.searchTerm': null,
     };
     onChange(newFilters);
   };

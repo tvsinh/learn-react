@@ -64,14 +64,14 @@ function FilterByCategory({ onChange }) {
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true);
         const list = await categoryApi.getAll();
-        console.log('list category', list);
+        console.log('list', list);
         // const cateList = await list.map((x) => ({
         //   id: x.id,
         //   name: x.name,
         //   icon: x.icon,
         // }));
+        // console.log('cateList', cateList);
         setCategoryList(list);
       } catch (error) {
         console.log('Failed to fetch category list', error);

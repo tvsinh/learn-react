@@ -64,7 +64,6 @@ function FilterByCategory({ onChange }) {
   useEffect(() => {
     (async () => {
       try {
-        setLoading(true);
         const list = await categoryApi.getAll();
         console.log('list category', list);
         // const cateList = await list.map((x) => ({

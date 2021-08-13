@@ -98,7 +98,7 @@ function CartQtyField(props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleDownDispatch = async (value) => {
-    if (Number.parseInt(value) - 1 >= 1 && Number.parseInt(value) - 1 < Number.parseInt(quantity)) {
+    if (Number.parseInt(value) - 1 >= 1) {
       await setValue(name, Number.parseInt(value) ? Number.parseInt(value) - 1 : 1);
       dispatch(
         setQuantity({

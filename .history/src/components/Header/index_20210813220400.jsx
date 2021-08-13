@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   },
   logout: {
     // fontSize: '18px',
-    borderTop: '1px solid rgba(0, 127, 240, .5)',
+    borderTop: '1px solid rgb(0, 127, 240)',
     color: 'rgb(0, 127, 240)',
   },
   appbar: {

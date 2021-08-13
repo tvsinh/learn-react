@@ -30,7 +30,13 @@ function CategorySkeletonList({ length = 6 }) {
         {Array.from(new Array(length)).map((x, index) => (
           <Box className={classes.skeleton}>
             <Skeleton variant="rect" width={25} height={25} />
-            <Skeleton key={index} variant="text" width={140} className={classes.skeletonName} />
+            <Skeleton
+              key={index}
+              variant="text"
+              width={140}
+              className={classes.skeletonName}
+              animation="pulse"
+            />
           </Box>
         ))}
       </Grid>

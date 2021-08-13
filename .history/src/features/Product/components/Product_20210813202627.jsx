@@ -23,23 +23,17 @@ const useStyles = makeStyles((theme) => ({
     '&:hover $freeship': {
       transform: 'translateY(-1px)',
       boxShadow: '0 2px 12px 0 rgba(0, 0, 0, .12)',
-      transition: 'all ease .7s',
-    },
-    '&:hover $percent': {
-      transform: 'translateY(-1px)',
-      boxShadow: '0 2px 12px 0 rgba(0, 0, 0, .12)',
-      transition: 'all ease .7s',
     },
     '&:hover $productName': {
       color: '#288ad6',
     },
     '&:hover $productImg': {
-      transform: 'scale(1.06)',
-      transition: 'all ease .7s',
+      transform: 'scale(1.05)',
+      transition: 'all ease .5s',
     },
     '&:not(:hover) $productImg': {
       transform: 'scale(1)',
-      transition: 'all ease .7s',
+      transition: 'all ease .5s',
     },
   },
   boxImg: {
@@ -114,12 +108,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.9rem',
     margin: '0  0 0 5px',
   },
-  freeshipIcon: {
-    fontSize: '0.7rem',
-  },
   percent: {
     position: 'absolute',
-    top: '7px',
+    top: '5px',
     zIndex: '1',
     right: '8px',
     width: '40px',
@@ -152,7 +143,7 @@ function Product({ product }) {
         {product.isFreeShip && (
           <Box className={classes.freeship}>
             <span className={classes.freeshipLabel}>
-              <FaCheck className={classes.freeshipIcon} /> FREESHIP
+              <FaCheck style={{ fontSize: '0.7rem' }} /> FREESHIP
             </span>
           </Box>
         )}

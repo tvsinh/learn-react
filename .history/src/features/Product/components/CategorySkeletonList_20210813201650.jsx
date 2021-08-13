@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0.5, 0),
   },
   skeletonName: {
-    marginLeft: '10px',
+    marginLeft: theme.spacing(8),
   },
 }));
 
