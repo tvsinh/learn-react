@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
-    padding: theme.spacing(0, 3, 4),
+    padding: theme.spacing(0, 3, 1),
     width: '100%',
     height: 'auto',
     [theme.breakpoints.down('md')]: {

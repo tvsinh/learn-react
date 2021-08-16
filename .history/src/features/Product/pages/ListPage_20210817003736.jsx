@@ -32,10 +32,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: ' center',
     padding: '11px 7px 3px',
+    marginLeft: '30px',
   },
   searchNavHome: {
     color: 'rgb(50, 50, 50)',
-    margin: '0 30px 0 10px',
+    margin: '0 30px 0 28px',
     cursor: 'pointer',
     '&::before': {
       top: '70px',

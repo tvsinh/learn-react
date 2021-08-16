@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   searchNavHome: {
     color: 'rgb(50, 50, 50)',
-    margin: '0 30px 0 10px',
+    margin: '0 30px 0 5px',
     cursor: 'pointer',
     '&::before': {
       top: '70px',

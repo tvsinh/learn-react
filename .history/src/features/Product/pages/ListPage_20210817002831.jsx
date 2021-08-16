@@ -19,9 +19,6 @@ import { useDispatch } from 'react-redux';
 const useStyles = makeStyles((theme) => ({
   root: {},
   header: {},
-  taskSearch: {
-    // marginLeft: '-10px',
-  },
   containerDesk: {
     marginTop: theme.spacing(0),
     [theme.breakpoints.down('md')]: {
@@ -32,10 +29,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: ' center',
     padding: '11px 7px 3px',
+    marginLeft: '30px',
   },
   searchNavHome: {
     color: 'rgb(50, 50, 50)',
-    margin: '0 30px 0 10px',
+    margin: '0 30px 0 28px',
     cursor: 'pointer',
     '&::before': {
       top: '70px',
@@ -101,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
   sectionMobile: {
     zIndex: '2',
     display: 'block',
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
@@ -237,16 +235,14 @@ function ListPage() {
   return (
     <Box onClick={handleDisAutoFocus}>
       <Header className={classes.header} />
-      <Container className={classes.taskSearch}>
-        {queryParams['_q'] ? (
-          <Box className={`${classes.searchNav} + ${classes.sectionDesktop}`}>
-            <Box className={classes.searchNavHome}>
-              <Typography onClick={handleHome}>Trang chủ</Typography>
-            </Box>
-            <Typography>{queryParams['_q'].toLowerCase()}</Typography>
+      {queryParams['_q'] ? (
+        <Box className={`${classes.searchNav} + ${classes.sectionDesktop}`}>
+          <Box className={classes.searchNavHome}>
+            <Typography onClick={handleHome}>Trang chủ</Typography>
           </Box>
-        ) : null}
-      </Container>
+          <Typography>{queryParams['_q'].toLowerCase()}</Typography>
+        </Box>
+      ) : null}
       <Box pt={1.1} className={classes.sectionDesktop}>
         <Container className={classes.containerDesk}>
           <Grid container spacing={0}>
