@@ -54,8 +54,11 @@ const useStyles = makeStyles((theme) => ({
     borderTop: 'solid 1px rgba(89, 89, 89, 0.2)',
     textAlign: 'center',
     padding: '5px 0',
-    color: '#3f51b5',
-    cursor: 'pointer',
+    color: 'rgba(89, 89, 89, 0.6)',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  textBottom: {
     display: 'flex',
     justifyContent: 'center',
   },
@@ -153,6 +156,7 @@ function Footer() {
         </Container>
       </Box>
       <Box className={classes.bottom}>
+        <Typography>@2021- ReactShop</Typography>
         <Typography onClick={handleGoTodoApp}>Open Todo App</Typography>
       </Box>
     </Box>

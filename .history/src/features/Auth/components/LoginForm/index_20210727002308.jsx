@@ -57,8 +57,8 @@ function LoginForm(props) {
       password: '',
       username: '',
     },
-    mode: 'onChange',
-    // reValidateMode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   });
 

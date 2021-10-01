@@ -34,15 +34,28 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
   },
 }));
-LoginForm.propTypes = {
+RegisterForm.propTypes = {
   onSubmit: PropTypes.func,
 };
 
-function LoginForm(props) {
+function RegisterForm(props) {
   const classes = useStyles();
-
+  // const phoneRegExp =
+  // /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  // /(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})\b/;
   const schema = yup.object().shape({
-    identifier: yup
+    fullName: yup
+      .string()
+      .required('Vui lòng nhập tên đầy đủ của bạn.')
+      .test('should has at least two words', 'Vui lòng nhập ít nhất 2 từ.', (value) => {
+        return value.split(' ').length >= 2;
+      }),
+    // phoneNumber: yup
+    //   .string()
+    //   .required('Please enter your phone number.')
+    //   .matches(phoneRegExp, 'Phone number is not valid')
+    //   .min(10, 'Please check your phone number.'),
+    email: yup
       .string()
       .required('Vui lòng nhập email của bạn.')
       .email('Vui lòng nhập một địa chỉ email hợp lệ.'),
@@ -50,15 +63,21 @@ function LoginForm(props) {
       .string()
       .required('Vui lòng nhập mật khẩu')
       .min(6, 'Vui lòng nhập ít nhất 6 kí tự.'),
+    retypePassword: yup
+      .string()
+      .required('Vui lòng điền lại mật khẩu')
+      .oneOf([yup.ref('password')], 'Mật khẩu không hợp lệ.'),
   });
   const form = useForm({
     defaultValues: {
-      identifier: '',
+      fullName: '',
+      // phoneNumber: '',
+      email: '',
       password: '',
-      username: '',
+      retypePassword: '',
     },
-    mode: 'onChange',
-    // reValidateMode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   });
 
@@ -74,7 +93,6 @@ function LoginForm(props) {
     if (isSubmitSuccessful) {
       form.reset();
     }
-    // console.log('Data', values);
   };
 
   return (
@@ -85,11 +103,14 @@ function LoginForm(props) {
         <LockOutlined></LockOutlined>
       </Avatar>
       <Typography className={classes.title} component="h3" variant="h5">
-        Sign In
+        Create An Account
       </Typography>
       <form onSubmit={form.handleSubmit(handleSubmit)} className={classes.root}>
-        <InputField name="identifier" label="Email" form={form} />
+        <InputField name="fullName" label="Full Name" form={form} />
+        {/* <InputField name="phoneNumber" label="Phone Number" form={form} /> */}
+        <InputField name="email" label="Email" form={form} />
         <PasswordField name="password" label="Password" form={form} />
+        <PasswordField name="retypePassword" label="Retype Password" form={form} />
         <Button
           className={classes.submit}
           type="submit"
@@ -99,11 +120,11 @@ function LoginForm(props) {
           size="large"
           disabled={isSubmitting}
         >
-          Sign in
+          Create an account
         </Button>
       </form>
     </div>
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

@@ -2,7 +2,6 @@ import { Box, Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Call, Language, MailOutline, Room } from '@material-ui/icons';
 import React from 'react';
-import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,19 +53,12 @@ const useStyles = makeStyles((theme) => ({
     borderTop: 'solid 1px rgba(89, 89, 89, 0.2)',
     textAlign: 'center',
     padding: '5px 0',
-    color: '#3f51b5',
-    cursor: 'pointer',
-    display: 'flex',
-    justifyContent: 'center',
+    color: 'rgba(89, 89, 89, 0.6)',
   },
 }));
 
 function Footer() {
-  const history = useHistory();
   const classes = useStyles();
-  const handleGoTodoApp = () => {
-    history.push('/todos');
-  };
 
   return (
     <Box className={classes.root}>
@@ -153,7 +145,7 @@ function Footer() {
         </Container>
       </Box>
       <Box className={classes.bottom}>
-        <Typography onClick={handleGoTodoApp}>Open Todo App</Typography>
+        <Typography>@2021- ReactShop</Typography>
       </Box>
     </Box>
   );
