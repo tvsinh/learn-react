@@ -93,17 +93,17 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 0.1),
   },
   sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    display: 'flex',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
     },
   },
   sectionMobile: {
-    zIndex: '2',
-    display: 'block',
-    backgroundColor: '#fff',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      zIndex: '2',
+      display: 'block',
+      backgroundColor: '#fff',
     },
   },
 
@@ -278,13 +278,13 @@ function ListPage() {
       </Box>
       <Box className={classes.sectionMobile}>
         {overlay && <Box className={classes.overlay} onClick={handleFilterBar}></Box>}
-        {filterBar ? (
+        {filterBar && (
           <ProductFilters
             filters={queryParams}
             onChange={handleFiltersChange}
             onClick={handleFilterBar}
           />
-        ) : null}
+        ) }
         <Box className={classes.sort}>
           <ProductSort currentSort={queryParams._sort} onChange={handleSortChange} />
           <BiFilterAlt color="primary" onClick={handleFilterBar} className={classes.iconSort} />
